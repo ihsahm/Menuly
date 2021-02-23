@@ -33,16 +33,21 @@ class _SettingsContentState extends State<SettingsContent> {
                       content: TextField(
                         maxLines: 3,
                         decoration: InputDecoration(
-                            hintText: 'Send us a bug or an issue you found'),
+                            hintText: 'Send us a bug or an issue you found',
+                            border: OutlineInputBorder()),
                       ),
                       actions: [
                         FlatButton(
                           child: Text('Cancel'),
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
                         ),
                         FlatButton(
                           child: Text('Send'),
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
                         ),
                       ],
                     ));
