@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "33581573369",
+    "project_id": "menuly-e5613",
+    "storage_bucket": "menuly-e5613.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:33581573369:android:4a82025cb0ff01596bae28",
+        "android_client_info": {
+          "package_name": "com.example.e_commerce"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "33581573369-hp2ojgs9gbknp7lfap1j12avhe7tbfim.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDN04o1PYUI_sIZAscdpWLY3ju_OLDRLPo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "33581573369-hp2ojgs9gbknp7lfap1j12avhe7tbfim.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
