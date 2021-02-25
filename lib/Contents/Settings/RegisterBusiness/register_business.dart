@@ -33,14 +33,14 @@ class _RegisterBusinessState extends State<RegisterBusiness> {
         child: ListView(
           children: [
             SizedBox(height: 20),
-            TextFormField(
-              decoration: InputDecoration(
-                  hintText: 'Business name', border: OutlineInputBorder()),
-            ),
-            SizedBox(height: 20),
             OutlineButton(
               child: Text('Add a photo of your license(የንግድ ፈቃድ)'),
               onPressed: () {},
+            ),
+            SizedBox(height: 20),
+            TextFormField(
+              decoration: InputDecoration(
+                  hintText: 'Business name', border: OutlineInputBorder()),
             ),
             SizedBox(height: 20),
             TextFormField(

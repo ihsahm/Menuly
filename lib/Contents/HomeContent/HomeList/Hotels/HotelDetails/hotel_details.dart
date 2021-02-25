@@ -1,6 +1,7 @@
+import 'package:e_commerce/Contents/HomeContent/HomeList/Hotels/HotelMenu/hotel_contact.dart';
+import 'package:e_commerce/Contents/HomeContent/HomeList/Hotels/HotelMenu/hotel_room.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttericon/entypo_icons.dart';
-import 'package:fluttericon/font_awesome5_icons.dart';
+import 'package:fluttericon/font_awesome_icons.dart';
 
 class HotelDetails extends StatefulWidget {
   @override
@@ -11,151 +12,132 @@ class _HotelDetailsState extends State<HotelDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text(
-          'Sheraton Addis',
-          style: TextStyle(color: Colors.black),
-        ),
-        leading: IconButton(
-          icon: Icon(
-            Icons.clear,
-            color: Colors.black,
-          ),
-          onPressed: () {
-            Navigator.pop(context);
+      body: DefaultTabController(
+        length: 2,
+        child: NestedScrollView(
+          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+            return <Widget>[
+              SliverAppBar(
+                leading: IconButton(
+                  icon: Icon(Icons.arrow_back),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                ),
+                floating: false,
+                snap: false,
+                backgroundColor: Colors.blueGrey,
+                pinned: true,
+                expandedHeight: 300,
+                flexibleSpace: FlexibleSpaceBar(
+                  /* title: Text(
+                      widget.restaurantName,
+                    ),*/
+                  background: Container(
+                    height: 150,
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: NetworkImage(
+                                "https://media-cdn.tripadvisor.com/media/photo-s/0f/24/62/bb/sheratp-grand-conakry.jpg")),
+                        borderRadius: BorderRadius.circular(5),
+                        boxShadow: [
+                          BoxShadow(
+                              color: Colors.grey[300],
+                              offset: Offset(-2, -1),
+                              blurRadius: 5),
+                        ]),
+                    child: Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          gradient: LinearGradient(
+                              begin: Alignment.bottomRight,
+                              stops: [
+                                0.1,
+                                0.9
+                              ],
+                              colors: [
+                                Colors.black.withOpacity(.8),
+                                Colors.black.withOpacity(.1)
+                              ])),
+                    ),
+                  ),
+                ),
+                bottom: TabBar(
+                  tabs: [
+                    Tab(
+                      child: Text('Menu'),
+                    ),
+                    Tab(
+                      child: Text('Info'),
+                    ),
+                  ],
+                ),
+              ),
+            ];
           },
+          body: TabBarView(children: [
+            RoomDetails(),
+            HotelContact(),
+          ]),
         ),
-        automaticallyImplyLeading: false,
-        backgroundColor: Colors.white,
-        elevation: 1,
       ),
-      body: ListView(
-        children: [
-          SizedBox(
-            height: 250,
-            child: Image.network(
-              "https://www.jacadatravel.com/wp-content/uploads/2017/06/addis-sheraton-exterior.jpg",
-              fit: BoxFit.cover,
-            ),
+      bottomNavigationBar: Container(
+        height: 50,
+        child: FlatButton.icon(
+          icon: Icon(
+            FontAwesome.direction,
+            color: Colors.white,
           ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              'Room details',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-            ),
+          onPressed: () {},
+          label: Text(
+            'Get direction',
+            style: TextStyle(color: Colors.white),
           ),
-          /*  ListView.builder(
-              shrinkWrap: true,
-              itemBuilder: (BuildContext context, int index) {
-                return ListTile(
-                    title: Text('Deluxe room'),
-                    subtitle: Text('Price: 200 usd'));
-              }),*/
-          ListTile(
-              leading: Icon(Icons.hotel),
-              title: Text('Deluxe room'),
-              subtitle: Text('Price: 200 usd')),
-          /* Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30),
-                    color: Colors.grey[300]),
-                child: FlatButton.icon(
-                  icon: Icon(Icons.call),
-                  label: Text('Call'),
-                  onPressed: () {},
-                ),
-              ),
-              Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30),
-                    color: Colors.grey[300]),
-                child: FlatButton.icon(
-                  icon: Icon(Icons.message),
-                  label: Text('Message'),
-                  onPressed: () {},
-                ),
-              ),
-              Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30),
-                    color: Colors.grey[300]),
-                child: FlatButton.icon(
-                  icon: Icon(Icons.report_rounded),
-                  label: Text('Report'),
-                  onPressed: () {},
-                ),
-              ),
-            ],
-          ),*/
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              'Contact',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.only(left: 10, right: 10),
-            child: Align(
-              alignment: Alignment.topLeft,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  // ListTile(
-                  //   leading: Icon(
-                  //     Icons.info,
-                  //     color: Colors.blue[900],
-                  //   ),
-                  //   title: Text(widget.type),
-                  // ),
-                  ListTile(
-                    leading: Icon(
-                      Icons.phone,
-                      color: Colors.green,
-                    ),
-                    title: Text('0114192926'),
-                    onTap: () {
-                      //  launch('tel:${widget.phone}');
-                    },
-                  ),
-                  ListTile(
-                    leading: Icon(
-                      Icons.email_outlined,
-                      color: Colors.red[700],
-                    ),
-                    title: Text('sheraton@gmail.com'),
-                    onTap: () {
-                      //  launch('mailto: ${widget.email}');
-                    },
-                  ),
-                  ListTile(
-                    leading:
-                        Icon(Entypo.facebook_squared, color: Colors.blue[700]),
-                    title: Text('Like us on facebook'),
-                    onTap: () {
-                      //  launch('url: ${widget.facebook}');
-                    },
-                  ),
-                  ListTile(
-                    leading:
-                        Icon(FontAwesome5.instagram, color: Colors.pink[300]),
-                    title: Text('Follow us on instagram'),
-                    onTap: () {
-                      //launch('url:${widget.instagram}');
-                    },
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
+          color: Colors.blue,
+        ),
       ),
     );
   }
 }
+
+//   ListView(
+//     children: [
+//       /* Row(
+//     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//     children: [
+//       Container(
+//         decoration: BoxDecoration(
+//             borderRadius: BorderRadius.circular(30),
+//             color: Colors.grey[300]),
+//         child: FlatButton.icon(
+//           icon: Icon(Icons.call),
+//           label: Text('Call'),
+//           onPressed: () {},
+//         ),
+//       ),
+//       Container(
+//         decoration: BoxDecoration(
+//             borderRadius: BorderRadius.circular(30),
+//             color: Colors.grey[300]),
+//         child: FlatButton.icon(
+//           icon: Icon(Icons.message),
+//           label: Text('Message'),
+//           onPressed: () {},
+//         ),
+//       ),
+//       Container(
+//         decoration: BoxDecoration(
+//             borderRadius: BorderRadius.circular(30),
+//             color: Colors.grey[300]),
+//         child: FlatButton.icon(
+//           icon: Icon(Icons.report_rounded),
+//           label: Text('Report'),
+//           onPressed: () {},
+//         ),
+//       ),
+//     ],
+// ),*/
+//     ],
+//   )

@@ -1,5 +1,6 @@
 import 'package:e_commerce/Database/Download/getData.dart';
 import 'package:e_commerce/Screen/AreaDetailPage/area_detail_screen.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 
 class CafeList extends StatefulWidget {
@@ -53,6 +54,8 @@ class _CafeListState extends State<CafeList> {
                                         "${doc[index].data()['facebook']}",
                                     restaurantPhone:
                                         "${doc[index].data()['phone']}",
+                                    restaurantImage:
+                                        "${doc[index].data()['image']}",
                                     restaurantType:
                                         "${doc[index].data()['type']}",
                                   )));
@@ -79,9 +82,10 @@ class _CafeListState extends State<CafeList> {
                             SizedBox(
                               height: 200,
                               width: double.infinity,
-                              child: Image.network(
+                              child: ExtendedImage.network(
                                 "${doc[index].data()['image']}",
                                 fit: BoxFit.cover,
+                                cache: true,
                               ),
                             ),
                             ListTile(
@@ -110,7 +114,7 @@ class _CafeListState extends State<CafeList> {
                                             )));
                               },
                               title: Text(
-                                '${doc[index].data()['cafeName']}',
+                                '${doc[index].data()['name']}',
                                 style: TextStyle(
                                     fontSize: 17, fontWeight: FontWeight.w500),
                               ),

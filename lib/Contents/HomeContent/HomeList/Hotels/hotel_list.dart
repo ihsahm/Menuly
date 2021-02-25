@@ -1,5 +1,6 @@
 import 'package:e_commerce/Contents/HomeContent/HomeList/Hotels/HotelDetails/hotel_details.dart';
 import 'package:e_commerce/Database/Download/getData.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 
 class HotelList extends StatefulWidget {
@@ -79,9 +80,10 @@ class _HotelListState extends State<HotelList> {
                             SizedBox(
                               height: 200,
                               width: double.infinity,
-                              child: Image.network(
+                              child: ExtendedImage.network(
                                 "${doc[index].data()['image']}",
                                 fit: BoxFit.cover,
+                                cache: true,
                               ),
                             ),
                             ListTile(
@@ -110,7 +112,7 @@ class _HotelListState extends State<HotelList> {
                                             )));*/
                               },
                               title: Text(
-                                '${doc[index].data()['hotelName']}',
+                                '${doc[index].data()['name']}',
                                 style: TextStyle(
                                     fontSize: 17, fontWeight: FontWeight.w500),
                               ),

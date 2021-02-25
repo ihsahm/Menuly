@@ -1,4 +1,5 @@
-import 'package:e_commerce/Contents/HomeContent/Details/area_detail.dart';
+import 'package:e_commerce/Contents/HomeContent/Details/Menu/food_menu.dart';
+import 'package:e_commerce/Contents/HomeContent/Details/area_contact.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
 
@@ -30,31 +31,89 @@ class _AreaDetailScreenState extends State<AreaDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        centerTitle: true,
-        title: Text(
-          widget.restaurantName,
-          style: TextStyle(color: Colors.orange[800]),
-        ),
-        backgroundColor: Colors.white12,
-        leading: IconButton(
-          color: Colors.black,
-          icon: Icon(Icons.clear),
-          onPressed: () {
-            Navigator.pop(context);
+      body: DefaultTabController(
+        length: 2,
+        child: NestedScrollView(
+          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+            return <Widget>[
+              SliverAppBar(
+                leading: IconButton(
+                  icon: Icon(Icons.arrow_back),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                ),
+                floating: false,
+                snap: false,
+                backgroundColor: Colors.blueGrey,
+                pinned: true,
+                expandedHeight: 300,
+                flexibleSpace: FlexibleSpaceBar(
+                  title: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      widget.restaurantName,
+                      style: TextStyle(fontSize: 15),
+                    ),
+                  ),
+                  background: Container(
+                    height: 150,
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: NetworkImage(widget.restaurantImage)),
+                        borderRadius: BorderRadius.circular(5),
+                        boxShadow: [
+                          BoxShadow(
+                              color: Colors.grey[300],
+                              offset: Offset(-2, -1),
+                              blurRadius: 5),
+                        ]),
+                    child: Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          gradient: LinearGradient(
+                              begin: Alignment.bottomRight,
+                              stops: [
+                                0.1,
+                                0.9
+                              ],
+                              colors: [
+                                Colors.black.withOpacity(.8),
+                                Colors.black.withOpacity(.1)
+                              ])),
+                    ),
+                  ),
+                ),
+                bottom: TabBar(
+                  tabs: [
+                    Tab(
+                      child: Text('Menu'),
+                    ),
+                    Tab(
+                      child: Text('Info'),
+                    ),
+                  ],
+                ),
+              ),
+            ];
           },
+          body: TabBarView(children: [
+            FoodMenu(
+              menuList: widget.restaurantMenu,
+            ),
+            AreaDetails(
+              image: widget.restaurantImage,
+              menuDoc: widget.restaurantMenu,
+              facebook: widget.restaurantFacebook,
+              instagram: widget.restaurantInstagram,
+              phone: widget.restaurantPhone,
+              email: widget.restaurantEmail,
+              type: widget.restaurantType,
+            ),
+          ]),
         ),
-        automaticallyImplyLeading: false,
-      ),
-      body: AreaDetails(
-        image: widget.restaurantImage,
-        menuDoc: widget.restaurantMenu,
-        facebook: widget.restaurantFacebook,
-        instagram: widget.restaurantInstagram,
-        phone: widget.restaurantPhone,
-        email: widget.restaurantEmail,
-        type: widget.restaurantType,
       ),
       bottomNavigationBar: Container(
         height: 50,

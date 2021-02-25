@@ -1,7 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce/Contents/HomeContent/HomeList/Restaurant/restaurant_list.dart';
-import 'package:e_commerce/Database/Download/getData.dart';
+import 'package:e_commerce/Database/Querying/RestaurantQuery/restaurant_query_list.dart';
 import 'package:e_commerce/Screen/AreaDetailPage/area_detail_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
 
 class RestaurantMenu extends StatefulWidget {
   @override
@@ -9,89 +11,287 @@ class RestaurantMenu extends StatefulWidget {
 }
 
 class _RestaurantMenuState extends State<RestaurantMenu> {
+  final TextEditingController searchController = new TextEditingController();
+
+  final ScrollController controller = new ScrollController();
+  QuerySnapshot snapshotData;
+  bool isExecuted = false;
   final double height = 400;
 
   @override
   Widget build(BuildContext context) {
+    Widget searchedData() {
+      return ListView.builder(
+        controller: controller,
+        shrinkWrap: true,
+        physics: NeverScrollableScrollPhysics(),
+        scrollDirection: Axis.vertical,
+        itemCount: snapshotData.docs.length,
+        itemBuilder: (BuildContext context, int index) {
+          return GestureDetector(
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (BuildContext context) => AreaDetailScreen(
+                            restaurantName:
+                                "${snapshotData.docs[index].data()['name']}",
+                            restaurantMenu: snapshotData.docs[index].id,
+                            restaurantImage:
+                                "${snapshotData.docs[index].data()['image']}",
+                            restaurantEmail:
+                                "${snapshotData.docs[index].data()['email']}",
+                            restaurantInstagram:
+                                "${snapshotData.docs[index].data()['instagram']}",
+                            restaurantFacebook:
+                                "${snapshotData.docs[index].data()['facebook']}",
+                            restaurantPhone:
+                                "${snapshotData.docs[index].data()['phone']}",
+                            restaurantType:
+                                "${snapshotData.docs[index].data()['type']}",
+                          )));
+            },
+            child: Card(
+              margin: EdgeInsets.only(
+                left: 10,
+                right: 10,
+                top: 10,
+                bottom: 10,
+              ),
+              child: Container(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.white,
+                        offset: Offset(0.0, 1.0),
+                        blurRadius: 6.0,
+                      )
+                    ]),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 200,
+                      width: double.infinity,
+                      child: Image.network(
+                        snapshotData.docs[index].data()['image'],
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    ListTile(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (BuildContext context) =>
+                                    AreaDetailScreen(
+                                      restaurantName:
+                                          "${snapshotData.docs[index].data()['name']}",
+                                      restaurantMenu:
+                                          snapshotData.docs[index].id,
+                                      restaurantImage:
+                                          "${snapshotData.docs[index].data()['image']}",
+                                      restaurantEmail:
+                                          "${snapshotData.docs[index].data()['email']}",
+                                      restaurantInstagram:
+                                          "${snapshotData.docs[index].data()['instagram']}",
+                                      restaurantFacebook:
+                                          "${snapshotData.docs[index].data()['facebook']}",
+                                      restaurantPhone:
+                                          "${snapshotData.docs[index].data()['phone']}",
+                                      restaurantType:
+                                          "${snapshotData.docs[index].data()['type']}",
+                                    )));
+                      },
+                      title: Text(
+                        snapshotData.docs[index].data()['name'],
+                        style: TextStyle(
+                            fontSize: 17, fontWeight: FontWeight.w500),
+                      ),
+                      subtitle: Text("Distance: 1 km."),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        },
+      );
+    }
+
     return ListView(
       children: [
         Wrap(
           runSpacing: 0.0,
           spacing: 2.0,
           children: [
-            Padding(
-              padding: EdgeInsets.only(left: 5.0, right: 5.0, top: 10.0),
-              child: RaisedButton(
-                textColor: Colors.white,
-                color: Colors.orange,
-                child: Text("Burger & Pizza"),
-                onPressed: () {},
-                shape: new RoundedRectangleBorder(
-                  borderRadius: new BorderRadius.circular(30.0),
-                ),
-              ),
+            GetBuilder<Querying>(
+              builder: (val) {
+                return Padding(
+                  padding: EdgeInsets.only(left: 5.0, right: 5.0, top: 1.0),
+                  child: RaisedButton(
+                    textColor: Colors.white,
+                    color: Colors.orange,
+                    child: Text("All"),
+                    onPressed: () {
+                      val.getAllData().then((value) {
+                        snapshotData = value;
+                        setState(() {
+                          isExecuted = true;
+                        });
+                      });
+                    },
+                    shape: new RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(30.0),
+                    ),
+                  ),
+                );
+              },
+              init: Querying(),
             ),
-            Padding(
-              padding: EdgeInsets.only(left: 5.0, right: 5.0, top: 10.0),
-              child: RaisedButton(
-                textColor: Colors.white,
-                color: Colors.orange,
-                child: Text("Injera"),
-                onPressed: () {},
-                shape: new RoundedRectangleBorder(
-                  borderRadius: new BorderRadius.circular(30.0),
-                ),
-              ),
+            GetBuilder<Querying>(
+              builder: (val) {
+                return Padding(
+                  padding: EdgeInsets.only(left: 5.0, right: 5.0, top: 1.0),
+                  child: RaisedButton(
+                    textColor: Colors.white,
+                    color: Colors.orange,
+                    child: Text("Burger&Pizza"),
+                    onPressed: () {
+                      val.getBurgerData().then((value) {
+                        snapshotData = value;
+                        setState(() {
+                          isExecuted = true;
+                        });
+                      });
+                    },
+                    shape: new RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(30.0),
+                    ),
+                  ),
+                );
+              },
+              init: Querying(),
             ),
-            Padding(
-              padding: EdgeInsets.only(left: 5.0, right: 5.0, top: 10.0),
-              child: RaisedButton(
-                textColor: Colors.white,
-                color: Colors.orange,
-                child: Text("Combo"),
-                onPressed: () {},
-                shape: new RoundedRectangleBorder(
-                  borderRadius: new BorderRadius.circular(30.0),
-                ),
-              ),
+            GetBuilder<Querying>(
+              builder: (val) {
+                return Padding(
+                  padding: EdgeInsets.only(left: 5.0, right: 5.0, top: 1.0),
+                  child: RaisedButton(
+                    textColor: Colors.white,
+                    color: Colors.orange,
+                    child: Text("Injera"),
+                    onPressed: () {
+                      val.getInjeraData().then((value) {
+                        snapshotData = value;
+                        setState(() {
+                          isExecuted = true;
+                        });
+                      });
+                    },
+                    shape: new RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(30.0),
+                    ),
+                  ),
+                );
+              },
+              init: Querying(),
             ),
-            Padding(
-              padding: EdgeInsets.only(left: 5.0, right: 5.0, top: 1.0),
-              child: RaisedButton(
-                textColor: Colors.white,
-                color: Colors.orange,
-                child: Text("Vegeterian"),
-                onPressed: () {
-                  //  crudObj.getVegeterianData();
-                },
-                shape: new RoundedRectangleBorder(
-                  borderRadius: new BorderRadius.circular(30.0),
-                ),
-              ),
+            // GetBuilder<Querying>(
+            //   builder: (val) {
+            //     return Padding(
+            //       padding: EdgeInsets.only(left: 5.0, right: 5.0, top: 1.0),
+            //       child: RaisedButton(
+            //         textColor: Colors.white,
+            //         color: Colors.orange,
+            //         child: Text("Combo"),
+            //         onPressed: () {
+            //           val.getComboData().then((value) {
+            //             snapshotData = value;
+            //             setState(() {
+            //               isExecuted = true;
+            //             });
+            //           });
+            //         },
+            //         shape: new RoundedRectangleBorder(
+            //           borderRadius: new BorderRadius.circular(30.0),
+            //         ),
+            //       ),
+            //     );
+            //   },
+            //   init: Querying(),
+            // ),
+            GetBuilder<Querying>(
+              builder: (val) {
+                return Padding(
+                  padding: EdgeInsets.only(left: 5.0, right: 5.0, top: 1.0),
+                  child: RaisedButton(
+                    textColor: Colors.white,
+                    color: Colors.orange,
+                    child: Text("Vegeterian"),
+                    onPressed: () {
+                      val.getVegeterianData().then((value) {
+                        snapshotData = value;
+                        setState(() {
+                          isExecuted = true;
+                        });
+                      });
+                    },
+                    shape: new RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(30.0),
+                    ),
+                  ),
+                );
+              },
+              init: Querying(),
             ),
-            Padding(
-              padding: EdgeInsets.only(left: 5.0, right: 5.0, top: 1.0),
-              child: RaisedButton(
-                textColor: Colors.white,
-                color: Colors.orange,
-                child: Text("Fasting"),
-                onPressed: () {},
-                shape: new RoundedRectangleBorder(
-                  borderRadius: new BorderRadius.circular(30.0),
-                ),
-              ),
+            GetBuilder<Querying>(
+              builder: (val) {
+                return Padding(
+                  padding: EdgeInsets.only(left: 5.0, right: 5.0, top: 1.0),
+                  child: RaisedButton(
+                    textColor: Colors.white,
+                    color: Colors.orange,
+                    child: Text("Fasting"),
+                    onPressed: () {
+                      val.getFastingData().then((value) {
+                        snapshotData = value;
+                        setState(() {
+                          isExecuted = true;
+                        });
+                      });
+                    },
+                    shape: new RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(30.0),
+                    ),
+                  ),
+                );
+              },
+              init: Querying(),
             ),
-            Padding(
-              padding: EdgeInsets.only(left: 5.0, right: 5.0, top: 1.0),
-              child: RaisedButton(
-                textColor: Colors.white,
-                color: Colors.orange,
-                child: Text("Pasta"),
-                onPressed: () {},
-                shape: new RoundedRectangleBorder(
-                  borderRadius: new BorderRadius.circular(30.0),
-                ),
-              ),
+            GetBuilder<Querying>(
+              builder: (val) {
+                return Padding(
+                  padding: EdgeInsets.only(left: 5.0, right: 5.0, top: 1.0),
+                  child: RaisedButton(
+                    textColor: Colors.white,
+                    color: Colors.orange,
+                    child: Text("Pasta"),
+                    onPressed: () {
+                      val.getPastaData().then((value) {
+                        snapshotData = value;
+                        setState(() {
+                          isExecuted = true;
+                        });
+                      });
+                    },
+                    shape: new RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(30.0),
+                    ),
+                  ),
+                );
+              },
+              init: Querying(),
             ),
           ],
         ),
@@ -102,8 +302,13 @@ class _RestaurantMenuState extends State<RestaurantMenu> {
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800),
           ),
         ),
-        RestaurantList(),
+        isExecuted ? searchedData() : RestaurantList(),
       ],
     );
+  }
+
+  void _onTap(int i) {
+    controller.animateTo(0,
+        duration: Duration(milliseconds: 500), curve: Curves.easeInOut);
   }
 }

@@ -78,28 +78,8 @@ class _TabNavigationState extends State<TabNavigation> {
       length: tabIcon.length,
       child: Scaffold(
         appBar: AppBar(
-          actions: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(150),
-                  color: Colors.grey[200],
-                ),
-                child: IconButton(
-                    icon: Icon(
-                      Icons.search,
-                      color: Colors.black,
-                    ),
-                    onPressed: () {}),
-              ),
-            )
-          ],
           elevation: 1,
-          title: Text(
-            'eYelp',
-            style: TextStyle(color: Colors.blue),
-          ),
+          title: Text('eFood', style: TextStyle(color: Colors.blue[700])),
           backgroundColor: Colors.white,
           bottom: TabBar(
             indicatorColor: Colors.amber,

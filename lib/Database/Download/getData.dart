@@ -20,10 +20,4 @@ class GetData {
   getMenuData() async {
     return FirebaseFirestore.instance.collection('Restaurant/Menu').snapshots();
   }
-
-  getVegeterianData() async {
-    return FirebaseFirestore.instance
-        .collection('Restaurant')
-        .where("type", isEqualTo: "vegeterian");
-  }
 }

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:e_commerce/Database/Download/getData.dart';
 import 'package:e_commerce/Screen/AreaDetailPage/area_detail_screen.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 
@@ -62,8 +63,10 @@ class _RestaurantListState extends State<RestaurantList> {
                               builder: (BuildContext context) =>
                                   AreaDetailScreen(
                                     restaurantName:
-                                        "${doc[index].data()['restaurantName']}",
+                                        "${doc[index].data()['name']}",
                                     restaurantMenu: doc[index].documentID,
+                                    restaurantImage:
+                                        "${doc[index].data()['image']}",
                                     restaurantEmail:
                                         "${doc[index].data()['email']}",
                                     restaurantInstagram:
@@ -98,9 +101,10 @@ class _RestaurantListState extends State<RestaurantList> {
                             SizedBox(
                               height: 200,
                               width: double.infinity,
-                              child: Image.network(
+                              child: ExtendedImage.network(
                                 "${doc[index].data()['image']}",
                                 fit: BoxFit.cover,
+                                cache: true,
                               ),
                             ),
                             ListTile(
@@ -111,7 +115,7 @@ class _RestaurantListState extends State<RestaurantList> {
                                         builder: (BuildContext context) =>
                                             AreaDetailScreen(
                                               restaurantName:
-                                                  "${doc[index].data()['restaurantName']}",
+                                                  "${doc[index].data()['name']}",
                                               restaurantImage:
                                                   "${doc[index].data()['image']}",
                                               restaurantMenu:
@@ -129,7 +133,7 @@ class _RestaurantListState extends State<RestaurantList> {
                                             )));
                               },
                               title: Text(
-                                '${doc[index].data()['restaurantName']}',
+                                '${doc[index].data()['name']}',
                                 style: TextStyle(
                                     fontSize: 17, fontWeight: FontWeight.w500),
                               ),

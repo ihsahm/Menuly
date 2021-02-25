@@ -29,7 +29,7 @@ class _HotelState extends State<Hotel> {
             child: RaisedButton(
               textColor: Colors.white,
               color: Colors.orange,
-              child: Text("250 br-500 br"),
+              child: Text("250 br-450 br"),
               onPressed: () {},
               shape: new RoundedRectangleBorder(
                 borderRadius: new BorderRadius.circular(30.0),
