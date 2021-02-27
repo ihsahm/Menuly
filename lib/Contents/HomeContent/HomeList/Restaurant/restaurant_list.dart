@@ -18,6 +18,8 @@ class _RestaurantListState extends State<RestaurantList> {
 
   double distance = 0;
   var locationMessage = "";
+  var passlat;
+  var passlong;
   @override
   void initState() {
     crudObj.getRestaurantData().then((results) {
@@ -28,16 +30,18 @@ class _RestaurantListState extends State<RestaurantList> {
     super.initState();
   }
 
-  void getCurrentLocation(double slatitude, double slongitude) async {
+  Future<String> getCurrentLocation(String slatitude, String slongitude) async {
+    var slat = double.parse(slatitude);
+    var slon = double.parse(slongitude);
     var position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.bestForNavigation);
-    var lastPosition = await Geolocator.getLastKnownPosition();
-    print(lastPosition);
-    setState(() {
-      locationMessage = "${position.latitude},${position.longitude}";
-      distance = Geolocator.distanceBetween(
-          position.latitude, position.longitude, slatitude, slongitude);
-    });
+    passlat = position.latitude;
+    passlong = position.longitude;
+    distance = Geolocator.distanceBetween(
+        position.latitude, position.longitude, slat, slon);
+    distance = distance / 1000;
+    String temp = distance.toStringAsFixed(3) + ' Km';
+    return temp;
   }
 
   @override
@@ -77,6 +81,12 @@ class _RestaurantListState extends State<RestaurantList> {
                                         "${doc[index].data()['phone']}",
                                     restaurantType:
                                         "${doc[index].data()['type']}",
+                                    restaurantLatitude:
+                                        "${doc[index].data()['latitude']}",
+                                    restaurantLongtitude:
+                                        "${doc[index].data()['longtiude']}",
+                                    userlocationLatitude: passlat,
+                                    userlocationLongtiude: passlong,
                                   )));
                     },
                     child: Card(
@@ -137,7 +147,36 @@ class _RestaurantListState extends State<RestaurantList> {
                                 style: TextStyle(
                                     fontSize: 17, fontWeight: FontWeight.w500),
                               ),
-                              subtitle: Text("Distance: $distance km."),
+                              subtitle: Container(
+                                child: FutureBuilder<String>(
+                                  future: getCurrentLocation(
+                                      '${doc[index].data()['latitude']}',
+                                      '${doc[index].data()['longtiude']}'),
+                                  builder: (BuildContext context,
+                                      AsyncSnapshot<String> snapshot) {
+                                    List<Widget> children;
+                                    if (snapshot.hasData) {
+                                      children = <Widget>[
+                                        Text('${snapshot.data}'),
+                                      ];
+                                    } else {
+                                      children = <Widget>[
+                                        CircularProgressIndicator()
+                                      ];
+                                    }
+
+                                    return Column(
+                                      children: children,
+                                    );
+                                  },
+                                ),
+                              ),
+
+                              // subtitle: Text(
+                              //   getCurrentLocation(
+                              //       doc[index].data()['latitude'],
+                              //       doc[index].data()['longtiude']),
+                              // ),
                             ),
                           ],
                         ),

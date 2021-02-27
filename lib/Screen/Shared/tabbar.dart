@@ -17,7 +17,7 @@ class _TabNavigationState extends State<TabNavigation> {
   Widget build(BuildContext context) {
     final tabPages = <Widget>[
       RestaurantMenu(),
-      CafeMenu(),
+      //  CafeMenu(),
       Hotel(),
       Parking(),
       CafeMenu(),
@@ -33,16 +33,16 @@ class _TabNavigationState extends State<TabNavigation> {
           style: TextStyle(color: Colors.red[800]),
         ),
       ),
-      Tab(
-        icon: Icon(
-          LineariconsFree.coffee_cup,
-          color: Colors.red[800],
-        ),
-        child: Text(
-          'Cafes',
-          style: TextStyle(color: Colors.red[800]),
-        ),
-      ),
+      // Tab(
+      //   icon: Icon(
+      //     LineariconsFree.coffee_cup,
+      //     color: Colors.red[800],
+      //   ),
+      //   child: Text(
+      //     'Cafes',
+      //     style: TextStyle(color: Colors.red[800]),
+      //   ),
+      // ),
       Tab(
         icon: Icon(
           Icons.hotel,
