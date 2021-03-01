@@ -8,6 +8,7 @@ class HotelDetails extends StatefulWidget {
   final name;
   final phone;
   final instagram;
+  final image;
   final facebook;
   final room;
   final latitude;
@@ -27,16 +28,17 @@ class HotelDetails extends StatefulWidget {
       this.longitude,
       this.email,
       this.userlocationLatitude,
-      this.userlocationLongitude})
+      this.userlocationLongitude,
+      this.image})
       : super(key: key);
   @override
   _HotelDetailsState createState() => _HotelDetailsState();
 }
 
 class _HotelDetailsState extends State<HotelDetails> {
-  /*  Future<void> _launchInApp() async {
+  Future<void> _launchInApp() async {
     var url =
-        "https://www.google.com/maps/dir/${widget.userlocationLatitude},${widget.userlocationLongitude}/${widget.restaurantLatitude},${widget.restaurantLongitude}/@8.9937498,38.7062355,13z/data=!4m11!4m10!1m1!4e1!1m5!1m1!1s0x164b8f10bc299b27:0xf9ac2c481a9b40d9!2m2!1d38.7625901!2d9.0381429!3e2!5i1";
+        "https://www.google.com/maps/dir/${widget.userlocationLatitude},${widget.userlocationLongitude}/${widget.latitude},${widget.longitude}/@8.9937498,38.7062355,13z/data=!4m11!4m10!1m1!4e1!1m5!1m1!1s0x164b8f10bc299b27:0xf9ac2c481a9b40d9!2m2!1d38.7625901!2d9.0381429!3e2!5i1";
     if (await canLaunch(url)) {
       await launch(
         url,
@@ -46,7 +48,8 @@ class _HotelDetailsState extends State<HotelDetails> {
         enableJavaScript: true,
       );
     }
-  }*/
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -77,8 +80,7 @@ class _HotelDetailsState extends State<HotelDetails> {
                         color: Colors.white,
                         image: DecorationImage(
                             fit: BoxFit.cover,
-                            image: NetworkImage(
-                                "https://media-cdn.tripadvisor.com/media/photo-s/0f/24/62/bb/sheratp-grand-conakry.jpg")),
+                            image: NetworkImage(widget.image)),
                         borderRadius: BorderRadius.circular(5),
                         boxShadow: [
                           BoxShadow(
@@ -105,7 +107,7 @@ class _HotelDetailsState extends State<HotelDetails> {
                 bottom: TabBar(
                   tabs: [
                     Tab(
-                      child: Text('Menu'),
+                      child: Text('Rooms'),
                     ),
                     Tab(
                       child: Text('Info'),
@@ -117,7 +119,7 @@ class _HotelDetailsState extends State<HotelDetails> {
           },
           body: TabBarView(children: [
             RoomDetails(
-              roomName: widget.room,
+              room: widget.room,
               //  price: widget.,
             ),
             HotelContact(
@@ -136,7 +138,9 @@ class _HotelDetailsState extends State<HotelDetails> {
             FontAwesome.direction,
             color: Colors.white,
           ),
-          onPressed: () {},
+          onPressed: () {
+            _launchInApp();
+          },
           label: Text(
             'Get direction',
             style: TextStyle(color: Colors.white),

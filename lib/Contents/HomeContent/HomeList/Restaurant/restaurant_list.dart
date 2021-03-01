@@ -1,6 +1,6 @@
 import 'dart:async';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:e_commerce/Database/Download/getData.dart';
-import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:progress_indicators/progress_indicators.dart';
@@ -112,10 +112,9 @@ class _RestaurantListState extends State<RestaurantList> {
                             SizedBox(
                               height: 200,
                               width: double.infinity,
-                              child: ExtendedImage.network(
-                                "${doc[index].data()['image']}",
+                              child: CachedNetworkImage(
+                                imageUrl: "${doc[index].data()['image']}",
                                 fit: BoxFit.cover,
-                                cache: true,
                               ),
                             ),
                             ListTile(

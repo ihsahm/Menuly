@@ -1,6 +1,6 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:e_commerce/Contents/HomeContent/HomeList/Shopping/Details/shopping_details.dart';
 import 'package:e_commerce/Database/Download/getData.dart';
-import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:progress_indicators/progress_indicators.dart';
@@ -57,6 +57,24 @@ class _ShoppingListState extends State<ShoppingList> {
                   itemCount: doc.length,
                   itemBuilder: (BuildContext context, int index) {
                     return GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (BuildContext context) =>
+                                    ShoppingDetails(
+                                      name: "${doc[index].data()['name']}",
+                                      phone: "${doc[index].data()['phone']}",
+                                      type: "${doc[index].data()['type']}",
+                                      image: "${doc[index].data()['image']}",
+                                      latitude:
+                                          "${doc[index].data()['latitude']}",
+                                      longitude:
+                                          "${doc[index].data()['longitude']}",
+                                      userlocationLatitude: passlat,
+                                      userlocationLongitude: passlong,
+                                    )));
+                      },
                       child: Card(
                         margin: EdgeInsets.only(
                           left: 10,
@@ -79,10 +97,10 @@ class _ShoppingListState extends State<ShoppingList> {
                               SizedBox(
                                 height: 200,
                                 width: double.infinity,
-                                child: ExtendedImage.network(
-                                  "${doc[index].data()['image']}",
+                                child: CachedNetworkImage(
+                                  imageUrl: "${doc[index].data()['image']}",
                                   fit: BoxFit.cover,
-                                  cache: true,
+                                  //  cache: true,
                                 ),
                               ),
                               ListTile(
@@ -93,13 +111,13 @@ class _ShoppingListState extends State<ShoppingList> {
                                           builder: (BuildContext context) =>
                                               ShoppingDetails(
                                                 name:
-                                                    "${doc[index].data()['restaurantName']}",
+                                                    "${doc[index].data()['name']}",
                                                 phone:
                                                     "${doc[index].data()['phone']}",
                                                 type:
                                                     "${doc[index].data()['type']}",
                                                 image:
-                                                    "$doc[index].data()['image']",
+                                                    "${doc[index].data()['image']}",
                                                 latitude:
                                                     "${doc[index].data()['latitude']}",
                                                 longitude:
@@ -132,7 +150,6 @@ class _ShoppingListState extends State<ShoppingList> {
                                         ),
                                       ];
                                     }
-
                                     return Column(
                                       mainAxisAlignment:
                                           MainAxisAlignment.start,

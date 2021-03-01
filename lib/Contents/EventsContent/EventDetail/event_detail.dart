@@ -1,4 +1,4 @@
-import 'package:extended_image/extended_image.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class EventDetail extends StatefulWidget {
@@ -28,9 +28,9 @@ class _EventDetailState extends State<EventDetail> {
         SizedBox(
           height: 300,
           width: double.infinity,
-          child: ExtendedImage.network(
-            widget.eventPicture,
-            cache: true,
+          child: CachedNetworkImage(
+            imageUrl: widget.eventPicture,
+            // cache: true,
             fit: BoxFit.cover,
           ),
         ),

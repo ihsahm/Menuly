@@ -1,8 +1,9 @@
 import 'dart:async';
-
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:e_commerce/Contents/HomeContent/HomeList/Entertainment/Details/entertainment_details.dart';
 import 'package:e_commerce/Database/Download/getData.dart';
-import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 
 class EntertainmentList extends StatefulWidget {
@@ -24,20 +25,57 @@ class _EntertainmentListState extends State<EntertainmentList> {
     super.initState();
   }
 
+  double distance = 0;
+  var locationMessage = "";
+  var passlat;
+  var passlong;
+
+  Future<String> getCurrentLocation(String slatitude, String slongitude) async {
+    var slat = double.parse(slatitude);
+    var slon = double.parse(slongitude);
+    var position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.bestForNavigation);
+    passlat = position.latitude;
+    passlong = position.longitude;
+    distance = Geolocator.distanceBetween(
+        position.latitude, position.longitude, slat, slon);
+    distance = distance.roundToDouble() / 1000;
+    String temp = distance.toStringAsFixed(2);
+    return temp;
+  }
+
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
       child: StreamBuilder(
           stream: items,
           builder: (context, snapshot) {
-            var doc = snapshot.data.documents;
             if (snapshot.data != null) {
+              var doc = snapshot.data.documents;
               return ListView.builder(
                 physics: NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
+                itemCount: doc.length,
                 scrollDirection: Axis.vertical,
                 itemBuilder: (BuildContext context, int index) {
                   return GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  EntertainmentDetails(
+                                    name: "${doc[index].data()['name']}",
+                                    phone: "${doc[index].data()['phone']}",
+                                    image: "${doc[index].data()['image']}",
+                                    latitude:
+                                        "${doc[index].data()['latitude']}",
+                                    longitude:
+                                        "${doc[index].data()['longitude']}",
+                                    userlocationLatitude: passlat,
+                                    userlocationLongitude: passlong,
+                                  )));
+                    },
                     child: Card(
                       margin: EdgeInsets.only(
                         left: 10,
@@ -60,48 +98,33 @@ class _EntertainmentListState extends State<EntertainmentList> {
                             SizedBox(
                               height: 200,
                               width: double.infinity,
-                              child: ExtendedImage.network(
-                                "${doc[index].data()['image']}",
+                              child: CachedNetworkImage(
+                                imageUrl: "${doc[index].data()['image']}",
                                 fit: BoxFit.cover,
-                                cache: true,
+                                //    cache: true,
                               ),
                             ),
                             ListTile(
                               onTap: () {
-                                /*    Navigator.push(
+                                Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                         builder: (BuildContext context) =>
-                                            HotelDetails(
+                                            EntertainmentDetails(
                                               name:
-                                                  "${doc[index].data()['restaurantName']}",
-                                              room: doc[index].documentID,
-                                              email:
-                                                  "${doc[index].data()['email']}",
-                                              instagram:
-                                                  "${doc[index].data()['instagram']}",
-                                              facebook:
-                                                  "${doc[index].data()['facebook']}",
+                                                  "${doc[index].data()['name']}",
                                               phone:
                                                   "${doc[index].data()['phone']}",
-                                              /* restaurantType:
-                                        "${doc[index].data()['type']}",
-                                  ))*/
-
-                                         //     latitude:
-                                                  "${doc[index].data()['latitude']}",
-                                           //   longitude:
-                                                  "${doc[index].data()['longitude']}",
-                                           //   userlocationLatitude: passlat,
-                                            //  userlocationLongitude: passlong,
-                                            )));*/
+                                              image:
+                                                  "${doc[index].data()['image']}",
+                                            )));
                               },
                               title: Text(
                                 '${doc[index].data()['name']}',
                                 style: TextStyle(
                                     fontSize: 17, fontWeight: FontWeight.w500),
                               ),
-                              /*  subtitle: FutureBuilder<String>(
+                              subtitle: FutureBuilder<String>(
                                 future: getCurrentLocation(
                                     '${doc[index].data()['latitude']}',
                                     '${doc[index].data()['longitude']}'),
@@ -127,7 +150,7 @@ class _EntertainmentListState extends State<EntertainmentList> {
                                     children: children,
                                   );
                                 },
-                              ),*/
+                              ),
                             )
                           ],
                         ),
@@ -137,7 +160,7 @@ class _EntertainmentListState extends State<EntertainmentList> {
                 },
               );
             } else {
-              return CircularProgressIndicator();
+              return Center(child: CircularProgressIndicator());
             }
           }),
     );

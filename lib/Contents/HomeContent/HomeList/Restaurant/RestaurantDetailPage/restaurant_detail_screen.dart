@@ -72,13 +72,13 @@ class _AreaDetailScreenState extends State<AreaDetailScreen> {
                 pinned: true,
                 expandedHeight: 300,
                 flexibleSpace: FlexibleSpaceBar(
-                  title: Align(
+                  /*    title: Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
                       widget.restaurantName,
                       style: TextStyle(fontSize: 15),
                     ),
-                  ),
+                  ),*/
                   background: Container(
                     height: 150,
                     decoration: BoxDecoration(

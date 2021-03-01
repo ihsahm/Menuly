@@ -1,9 +1,11 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce/Contents/HomeContent/HomeList/Restaurant/restaurant_list.dart';
 import 'package:e_commerce/Database/Querying/RestaurantQuery/restaurant_query_list.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:progress_indicators/progress_indicators.dart';
 
 import 'RestaurantDetailPage/restaurant_detail_screen.dart';
 
@@ -94,8 +96,8 @@ class _RestaurantMenuState extends State<RestaurantMenu> {
                     SizedBox(
                       height: 200,
                       width: double.infinity,
-                      child: Image.network(
-                        snapshotData.docs[index].data()['image'],
+                      child: CachedNetworkImage(
+                        imageUrl: snapshotData.docs[index].data()['image'],
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -141,7 +143,11 @@ class _RestaurantMenuState extends State<RestaurantMenu> {
                               Text('Distance: ${snapshot.data} km.'),
                             ];
                           } else {
-                            children = <Widget>[CircularProgressIndicator()];
+                            children = <Widget>[
+                              JumpingText(
+                                'Calculating distance...',
+                              ),
+                            ];
                           }
 
                           return Column(

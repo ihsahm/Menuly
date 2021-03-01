@@ -1,11 +1,12 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:e_commerce/Contents/HomeContent/HomeList/Shopping/Details/shopping_contact.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ShoppingDetails extends StatefulWidget {
   final name;
   final phone;
-
   final userlocationLatitude;
   final userlocationLongitude;
   final latitude;
@@ -29,6 +30,20 @@ class ShoppingDetails extends StatefulWidget {
 }
 
 class _ShoppingDetailsState extends State<ShoppingDetails> {
+  Future<void> _launchInApp() async {
+    var url =
+        "https://www.google.com/maps/dir/${widget.userlocationLatitude},${widget.userlocationLongitude}/${widget.latitude},${widget.longitude}/@8.9937498,38.7062355,13z/data=!4m11!4m10!1m1!4e1!1m5!1m1!1s0x164b8f10bc299b27:0xf9ac2c481a9b40d9!2m2!1d38.7625901!2d9.0381429!3e2!5i1";
+    if (await canLaunch(url)) {
+      await launch(
+        url,
+        forceSafariVC: false,
+        forceWebView: true,
+        enableDomStorage: true,
+        enableJavaScript: true,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,10 +63,13 @@ class _ShoppingDetailsState extends State<ShoppingDetails> {
               pinned: true,
               expandedHeight: 300,
               flexibleSpace: FlexibleSpaceBar(
-                /* title: Text(
+                  /* title: Text(
                  widget.restaurantName,
                ),*/
-                background: Container(
+                  background: CachedNetworkImage(
+                imageUrl: widget.image,
+                fit: BoxFit.cover,
+              ) /*Container(
                   height: 150,
                   decoration: BoxDecoration(
                       color: Colors.white,
@@ -80,12 +98,16 @@ class _ShoppingDetailsState extends State<ShoppingDetails> {
                               Colors.black.withOpacity(.1)
                             ])),
                   ),
-                ),
-              ),
+                ),*/
+                  ),
             ),
           ];
         },
-        body: ShoppingContact(),
+        body: ShoppingContact(
+          name: widget.name,
+          phone: widget.phone,
+          type: widget.type,
+        ),
       ),
       bottomNavigationBar: Container(
         height: 50,
@@ -94,7 +116,9 @@ class _ShoppingDetailsState extends State<ShoppingDetails> {
             FontAwesome.direction,
             color: Colors.white,
           ),
-          onPressed: () {},
+          onPressed: () {
+            _launchInApp();
+          },
           label: Text(
             'Get direction',
             style: TextStyle(color: Colors.white),

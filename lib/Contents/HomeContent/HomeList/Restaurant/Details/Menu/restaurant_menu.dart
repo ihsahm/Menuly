@@ -41,17 +41,6 @@ class _FoodMenuState extends State<FoodMenu> {
             scrollDirection: Axis.vertical,
             child: Column(
               children: [
-                // Padding(
-                //   padding: const EdgeInsets.all(8.0),
-                //   child: Align(
-                //     child: Text(
-                //       'Menu',
-                //       style:
-                //           TextStyle(fontSize: 21, fontWeight: FontWeight.w600),
-                //     ),
-                //     alignment: Alignment.topLeft,
-                //   ),
-                // ),
                 ListView.separated(
                   physics: NeverScrollableScrollPhysics(),
                   separatorBuilder: (context, index) => Divider(

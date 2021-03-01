@@ -18,7 +18,7 @@ class _EntertainmentState extends State<Entertainment> {
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800),
           ),
         ),
-        //     EntertainmentList(),
+        EntertainmentList(),
       ],
     );
   }

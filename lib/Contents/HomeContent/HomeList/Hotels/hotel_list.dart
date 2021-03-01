@@ -1,8 +1,8 @@
 import 'dart:async';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:e_commerce/Contents/HomeContent/HomeList/Hotels/HotelDetails/hotel_details.dart';
 import 'package:e_commerce/Database/Download/getData.dart';
-import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:progress_indicators/progress_indicators.dart';
@@ -78,7 +78,7 @@ class _HotelListState extends State<HotelList> {
                                     /* restaurantType:
                                         "${doc[index].data()['type']}",
                                   ))*/
-
+                                    image: "${doc[index].data()['image']}",
                                     latitude:
                                         "${doc[index].data()['latitude']}",
                                     longitude:
@@ -109,10 +109,10 @@ class _HotelListState extends State<HotelList> {
                             SizedBox(
                               height: 200,
                               width: double.infinity,
-                              child: ExtendedImage.network(
-                                "${doc[index].data()['image']}",
+                              child: CachedNetworkImage(
+                                imageUrl: "${doc[index].data()['image']}",
                                 fit: BoxFit.cover,
-                                cache: true,
+                                // cache: true,
                               ),
                             ),
                             ListTile(

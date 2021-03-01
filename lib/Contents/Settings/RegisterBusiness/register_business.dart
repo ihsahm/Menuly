@@ -64,7 +64,6 @@ class _RegisterBusinessState extends State<RegisterBusiness> {
                           padding: EdgeInsets.fromLTRB(8.0, 26, 8.0, 26),
                           child: Text(
                             'Click to add a photo of \n your license(የንግድ ፈቃድ)',
-                            //    getImage();
                           ),
                         )),
               SizedBox(height: 20),
