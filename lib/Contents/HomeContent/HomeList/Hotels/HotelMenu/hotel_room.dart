@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 
 class RoomDetails extends StatefulWidget {
+  final roomName;
+  final price;
+
+  const RoomDetails({Key key, this.roomName, this.price}) : super(key: key);
   @override
   _RoomDetailsState createState() => _RoomDetailsState();
 }

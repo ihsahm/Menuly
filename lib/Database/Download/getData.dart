@@ -17,6 +17,14 @@ class GetData {
     return FirebaseFirestore.instance.collection('Hotels').snapshots();
   }
 
+  getEntertainmentData() async {
+    return FirebaseFirestore.instance.collection('Entertainment').snapshots();
+  }
+
+  getShoppingData() async {
+    return FirebaseFirestore.instance.collection('Shopping').snapshots();
+  }
+
   getMenuData() async {
     return FirebaseFirestore.instance.collection('Restaurant/Menu').snapshots();
   }

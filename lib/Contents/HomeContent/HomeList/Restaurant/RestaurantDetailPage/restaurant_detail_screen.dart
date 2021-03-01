@@ -1,5 +1,5 @@
-import 'package:e_commerce/Contents/HomeContent/Details/Menu/food_menu.dart';
-import 'package:e_commerce/Contents/HomeContent/Details/area_contact.dart';
+import 'package:e_commerce/Contents/HomeContent/HomeList/Restaurant/Details/Menu/restaurant_menu.dart';
+import 'package:e_commerce/Contents/HomeContent/HomeList/Restaurant/Details/restaurant_contact.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:url_launcher/url_launcher.dart';

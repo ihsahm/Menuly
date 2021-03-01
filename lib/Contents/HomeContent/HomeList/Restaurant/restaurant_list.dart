@@ -1,10 +1,11 @@
 import 'dart:async';
-
 import 'package:e_commerce/Database/Download/getData.dart';
-import 'package:e_commerce/Screen/AreaDetailPage/area_detail_screen.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:progress_indicators/progress_indicators.dart';
+
+import 'RestaurantDetailPage/restaurant_detail_screen.dart';
 
 class RestaurantList extends StatefulWidget {
   @override
@@ -39,8 +40,8 @@ class _RestaurantListState extends State<RestaurantList> {
     passlong = position.longitude;
     distance = Geolocator.distanceBetween(
         position.latitude, position.longitude, slat, slon);
-    distance = distance / 1000;
-    String temp = distance.toStringAsFixed(3) + ' Km';
+    distance = distance.roundToDouble() / 1000;
+    String temp = distance.toStringAsFixed(2);
     return temp;
   }
 
@@ -147,29 +148,30 @@ class _RestaurantListState extends State<RestaurantList> {
                                 style: TextStyle(
                                     fontSize: 17, fontWeight: FontWeight.w500),
                               ),
-                              subtitle: Container(
-                                child: FutureBuilder<String>(
-                                  future: getCurrentLocation(
-                                      '${doc[index].data()['latitude']}',
-                                      '${doc[index].data()['longtiude']}'),
-                                  builder: (BuildContext context,
-                                      AsyncSnapshot<String> snapshot) {
-                                    List<Widget> children;
-                                    if (snapshot.hasData) {
-                                      children = <Widget>[
-                                        Text('${snapshot.data}'),
-                                      ];
-                                    } else {
-                                      children = <Widget>[
-                                        CircularProgressIndicator()
-                                      ];
-                                    }
+                              subtitle: FutureBuilder<String>(
+                                future: getCurrentLocation(
+                                    '${doc[index].data()['latitude']}',
+                                    '${doc[index].data()['longtiude']}'),
+                                builder: (BuildContext context,
+                                    AsyncSnapshot<String> snapshot) {
+                                  List<Widget> children;
+                                  if (snapshot.hasData) {
+                                    children = <Widget>[
+                                      Text('Distance: ${snapshot.data} km.'),
+                                    ];
+                                  } else {
+                                    children = <Widget>[
+                                      JumpingText('Calculating distance...'),
+                                    ];
+                                  }
 
-                                    return Column(
-                                      children: children,
-                                    );
-                                  },
-                                ),
+                                  return Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: children,
+                                  );
+                                },
                               ),
 
                               // subtitle: Text(

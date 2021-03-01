@@ -1,24 +1,22 @@
 import 'dart:async';
 
-import 'package:e_commerce/Contents/HomeContent/HomeList/Hotels/HotelDetails/hotel_details.dart';
 import 'package:e_commerce/Database/Download/getData.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 
-class HotelList extends StatefulWidget {
+class EntertainmentList extends StatefulWidget {
   @override
-  _HotelListState createState() => _HotelListState();
+  _EntertainmentListState createState() => _EntertainmentListState();
 }
 
-class _HotelListState extends State<HotelList> {
+class _EntertainmentListState extends State<EntertainmentList> {
   Timer timer;
   Stream items;
   GetData crudObj = new GetData();
   @override
   void initState() {
-    crudObj.getHotelData().then((results) {
+    crudObj.getEntertainmentData().then((results) {
       setState(() {
         items = results;
       });
@@ -26,67 +24,20 @@ class _HotelListState extends State<HotelList> {
     super.initState();
   }
 
-  double distance = 0;
-  var locationMessage = "";
-  var passlat;
-  var passlong;
-
-  Future<String> getCurrentLocation(String slatitude, String slongitude) async {
-    var slat = double.parse(slatitude);
-    var slon = double.parse(slongitude);
-    var position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.bestForNavigation);
-    passlat = position.latitude;
-    passlong = position.longitude;
-    distance = Geolocator.distanceBetween(
-        position.latitude, position.longitude, slat, slon);
-    distance = distance.roundToDouble() / 1000;
-    String temp = distance.toStringAsFixed(2);
-    return temp;
-  }
-
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(10),
       child: StreamBuilder(
           stream: items,
           builder: (context, snapshot) {
+            var doc = snapshot.data.documents;
             if (snapshot.data != null) {
-              var doc = snapshot.data.documents;
               return ListView.builder(
-                shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
                 scrollDirection: Axis.vertical,
-                itemCount: doc.length,
                 itemBuilder: (BuildContext context, int index) {
                   return GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (BuildContext context) => HotelDetails(
-                                    name:
-                                        "${doc[index].data()['restaurantName']}",
-                                    room: doc[index].documentID,
-                                    email: "${doc[index].data()['email']}",
-                                    instagram:
-                                        "${doc[index].data()['instagram']}",
-                                    facebook:
-                                        "${doc[index].data()['facebook']}",
-                                    phone: "${doc[index].data()['phone']}",
-                                    /* restaurantType:
-                                        "${doc[index].data()['type']}",
-                                  ))*/
-
-                                    latitude:
-                                        "${doc[index].data()['latitude']}",
-                                    longitude:
-                                        "${doc[index].data()['longitude']}",
-                                    userlocationLatitude: passlat,
-                                    userlocationLongitude: passlong,
-                                  )));
-                    },
                     child: Card(
                       margin: EdgeInsets.only(
                         left: 10,
@@ -117,7 +68,7 @@ class _HotelListState extends State<HotelList> {
                             ),
                             ListTile(
                               onTap: () {
-                                Navigator.push(
+                                /*    Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                         builder: (BuildContext context) =>
@@ -137,20 +88,20 @@ class _HotelListState extends State<HotelList> {
                                         "${doc[index].data()['type']}",
                                   ))*/
 
-                                              latitude:
+                                         //     latitude:
                                                   "${doc[index].data()['latitude']}",
-                                              longitude:
+                                           //   longitude:
                                                   "${doc[index].data()['longitude']}",
-                                              userlocationLatitude: passlat,
-                                              userlocationLongitude: passlong,
-                                            )));
+                                           //   userlocationLatitude: passlat,
+                                            //  userlocationLongitude: passlong,
+                                            )));*/
                               },
                               title: Text(
                                 '${doc[index].data()['name']}',
                                 style: TextStyle(
                                     fontSize: 17, fontWeight: FontWeight.w500),
                               ),
-                              subtitle: FutureBuilder<String>(
+                              /*  subtitle: FutureBuilder<String>(
                                 future: getCurrentLocation(
                                     '${doc[index].data()['latitude']}',
                                     '${doc[index].data()['longitude']}'),
@@ -176,7 +127,7 @@ class _HotelListState extends State<HotelList> {
                                     children: children,
                                   );
                                 },
-                              ),
+                              ),*/
                             )
                           ],
                         ),
@@ -186,10 +137,7 @@ class _HotelListState extends State<HotelList> {
                 },
               );
             } else {
-              return Padding(
-                padding: const EdgeInsets.only(top: 18.0),
-                child: Center(child: CircularProgressIndicator()),
-              );
+              return CircularProgressIndicator();
             }
           }),
     );

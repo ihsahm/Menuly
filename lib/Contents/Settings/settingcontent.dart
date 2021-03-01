@@ -56,7 +56,9 @@ class _SettingsContentState extends State<SettingsContent> {
         ListTile(
           leading: Icon(Icons.headset_mic_outlined),
           title: Text('Contact support'),
-          onTap: () {},
+          onTap: () {
+            launch(('tel:+251910873541'));
+          },
         ),
         Divider(
           indent: 10,
@@ -67,13 +69,6 @@ class _SettingsContentState extends State<SettingsContent> {
           leading: Icon(Icons.star_outline),
           title: Text('Rate us on playstore'),
           onTap: () {},
-        ),
-        ListTile(
-          leading: Icon(Icons.mail_outline),
-          title: Text('Send us an email'),
-          onTap: () {
-            launch('mailto:ihsahm11@gmail.com');
-          },
         ),
         Divider(
           indent: 10,

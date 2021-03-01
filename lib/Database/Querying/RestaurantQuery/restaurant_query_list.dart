@@ -13,24 +13,24 @@ class Querying extends GetxController {
         .get();
   }
 
+  getRestaurantData() async {
+    return FirebaseFirestore.instance
+        .collection('Restaurant')
+        .where("type", isEqualTo: "Restaurant")
+        .get();
+  }
+
+  getCafeData() async {
+    return FirebaseFirestore.instance
+        .collection('Restaurant')
+        .where("type", isEqualTo: "Cafe")
+        .get();
+  }
+
   getBurgerData() async {
     return FirebaseFirestore.instance
         .collection('Restaurant')
         .where("type", isEqualTo: "Fast food")
-        .get();
-  }
-
-  getComboData() async {
-    return FirebaseFirestore.instance
-        .collection('Restaurant')
-        .where("type", isEqualTo: "Combo")
-        .get();
-  }
-
-  getInjeraData() async {
-    return FirebaseFirestore.instance
-        .collection('Restaurant')
-        .where("type", isEqualTo: "Injera")
         .get();
   }
 

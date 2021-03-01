@@ -37,9 +37,12 @@ dependencies:
   get: ^3.25.4
   cached_network_image: ^2.3.2+1
   photo_view: ^0.10.2
+  progress_indicators: ^0.1.5
   ussd: ^0.0.2+1
   fluttericon: ^1.0.7
-  google_maps_flutter:
+  #google_maps_flutter:
+
+  image_picker: ^0.6.7+6
   firebase_storage: ^4.0.0
   uuid: ^2.2.2
   geolocator: ^6.2.0

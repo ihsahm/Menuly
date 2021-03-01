@@ -3,6 +3,15 @@ import 'package:fluttericon/entypo_icons.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
 
 class HotelContact extends StatefulWidget {
+  final phone;
+  final instagram;
+  final facebook;
+  final email;
+
+  const HotelContact(
+      {Key key, this.phone, this.instagram, this.facebook, this.email})
+      : super(key: key);
+  // final
   @override
   _HotelContactState createState() => _HotelContactState();
 }
@@ -40,7 +49,7 @@ class _HotelContactState extends State<HotelContact> {
                       Icons.phone,
                       color: Colors.green,
                     ),
-                    title: Text('0114192926'),
+                    title: Text(widget.phone),
                     onTap: () {
                       //  launch('tel:${widget.phone}');
                     },
@@ -50,7 +59,7 @@ class _HotelContactState extends State<HotelContact> {
                       Icons.email_outlined,
                       color: Colors.red[700],
                     ),
-                    title: Text('sheraton@gmail.com'),
+                    title: Text(widget.email),
                     onTap: () {
                       //  launch('mailto: ${widget.email}');
                     },
@@ -58,7 +67,7 @@ class _HotelContactState extends State<HotelContact> {
                   ListTile(
                     leading:
                         Icon(Entypo.facebook_squared, color: Colors.blue[700]),
-                    title: Text('Like us on facebook'),
+                    title: Text(widget.facebook),
                     onTap: () {
                       //  launch('url: ${widget.facebook}');
                     },
@@ -66,7 +75,7 @@ class _HotelContactState extends State<HotelContact> {
                   ListTile(
                     leading:
                         Icon(FontAwesome5.instagram, color: Colors.pink[300]),
-                    title: Text('Follow us on instagram'),
+                    title: Text(widget.instagram),
                     onTap: () {
                       //launch('url:${widget.instagram}');
                     },

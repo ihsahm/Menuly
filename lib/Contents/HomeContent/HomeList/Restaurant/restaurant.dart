@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce/Contents/HomeContent/HomeList/Restaurant/restaurant_list.dart';
 import 'package:e_commerce/Database/Querying/RestaurantQuery/restaurant_query_list.dart';
-import 'package:e_commerce/Screen/AreaDetailPage/area_detail_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
+
+import 'RestaurantDetailPage/restaurant_detail_screen.dart';
 
 class RestaurantMenu extends StatefulWidget {
   @override
@@ -17,6 +19,25 @@ class _RestaurantMenuState extends State<RestaurantMenu> {
   QuerySnapshot snapshotData;
   bool isExecuted = false;
   final double height = 400;
+
+  double distance = 0;
+  var locationMessage = "";
+  var passlat;
+  var passlong;
+  @override
+  Future<String> getCurrentLocation(String slatitude, String slongitude) async {
+    var slat = double.parse(slatitude);
+    var slon = double.parse(slongitude);
+    var position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.bestForNavigation);
+    passlat = position.latitude;
+    passlong = position.longitude;
+    distance = Geolocator.distanceBetween(
+        position.latitude, position.longitude, slat, slon);
+    distance = distance.roundToDouble() / 1000;
+    String temp = distance.toStringAsFixed(2);
+    return temp;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -108,7 +129,28 @@ class _RestaurantMenuState extends State<RestaurantMenu> {
                         style: TextStyle(
                             fontSize: 17, fontWeight: FontWeight.w500),
                       ),
-                      subtitle: Text("Distance: 1 km."),
+                      subtitle: FutureBuilder<String>(
+                        future: getCurrentLocation(
+                            '${snapshotData.docs[index].data()['latitude']}',
+                            '${snapshotData.docs[index].data()['longtiude']}'),
+                        builder: (BuildContext context,
+                            AsyncSnapshot<String> snapshot) {
+                          List<Widget> children;
+                          if (snapshot.hasData) {
+                            children = <Widget>[
+                              Text('Distance: ${snapshot.data} km.'),
+                            ];
+                          } else {
+                            children = <Widget>[CircularProgressIndicator()];
+                          }
+
+                          return Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: children,
+                          );
+                        },
+                      ),
                     ),
                   ],
                 ),
@@ -156,81 +198,57 @@ class _RestaurantMenuState extends State<RestaurantMenu> {
                   child: RaisedButton(
                     textColor: Colors.white,
                     color: Colors.orange,
+                    child: Text("Restaurant"),
+                    onPressed: () {
+                      val.getRestaurantData().then((value) {
+                        snapshotData = value;
+                        setState(() {
+                          isExecuted = true;
+                        });
+                      });
+                    },
+                    shape: new RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(30.0),
+                    ),
+                  ),
+                );
+              },
+              init: Querying(),
+            ),
+            GetBuilder<Querying>(
+              builder: (val) {
+                return Padding(
+                  padding: EdgeInsets.only(left: 5.0, right: 5.0, top: 1.0),
+                  child: RaisedButton(
+                    textColor: Colors.white,
+                    color: Colors.orange,
+                    child: Text("Cafe"),
+                    onPressed: () {
+                      val.getCafeData().then((value) {
+                        snapshotData = value;
+                        setState(() {
+                          isExecuted = true;
+                        });
+                      });
+                    },
+                    shape: new RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(30.0),
+                    ),
+                  ),
+                );
+              },
+              init: Querying(),
+            ),
+            GetBuilder<Querying>(
+              builder: (val) {
+                return Padding(
+                  padding: EdgeInsets.only(left: 5.0, right: 5.0, top: 1.0),
+                  child: RaisedButton(
+                    textColor: Colors.white,
+                    color: Colors.orange,
                     child: Text("Burger&Pizza"),
                     onPressed: () {
                       val.getBurgerData().then((value) {
-                        snapshotData = value;
-                        setState(() {
-                          isExecuted = true;
-                        });
-                      });
-                    },
-                    shape: new RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(30.0),
-                    ),
-                  ),
-                );
-              },
-              init: Querying(),
-            ),
-            GetBuilder<Querying>(
-              builder: (val) {
-                return Padding(
-                  padding: EdgeInsets.only(left: 5.0, right: 5.0, top: 1.0),
-                  child: RaisedButton(
-                    textColor: Colors.white,
-                    color: Colors.orange,
-                    child: Text("Injera"),
-                    onPressed: () {
-                      val.getInjeraData().then((value) {
-                        snapshotData = value;
-                        setState(() {
-                          isExecuted = true;
-                        });
-                      });
-                    },
-                    shape: new RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(30.0),
-                    ),
-                  ),
-                );
-              },
-              init: Querying(),
-            ),
-            // GetBuilder<Querying>(
-            //   builder: (val) {
-            //     return Padding(
-            //       padding: EdgeInsets.only(left: 5.0, right: 5.0, top: 1.0),
-            //       child: RaisedButton(
-            //         textColor: Colors.white,
-            //         color: Colors.orange,
-            //         child: Text("Combo"),
-            //         onPressed: () {
-            //           val.getComboData().then((value) {
-            //             snapshotData = value;
-            //             setState(() {
-            //               isExecuted = true;
-            //             });
-            //           });
-            //         },
-            //         shape: new RoundedRectangleBorder(
-            //           borderRadius: new BorderRadius.circular(30.0),
-            //         ),
-            //       ),
-            //     );
-            //   },
-            //   init: Querying(),
-            // ),
-            GetBuilder<Querying>(
-              builder: (val) {
-                return Padding(
-                  padding: EdgeInsets.only(left: 5.0, right: 5.0, top: 1.0),
-                  child: RaisedButton(
-                    textColor: Colors.white,
-                    color: Colors.orange,
-                    child: Text("Vegeterian"),
-                    onPressed: () {
-                      val.getVegeterianData().then((value) {
                         snapshotData = value;
                         setState(() {
                           isExecuted = true;

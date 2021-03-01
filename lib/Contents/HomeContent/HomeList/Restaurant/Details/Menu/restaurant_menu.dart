@@ -85,8 +85,7 @@ class _FoodMenuState extends State<FoodMenu> {
                         color: Colors.amber[900],
                       ),
                       title: Text("${doc[index].data()['foodName']}"),
-                      subtitle: Text(
-                          "${doc[index].data()['price']} Br.\n${doc[index].data()['contents']}"),
+                      subtitle: Text("${doc[index].data()['price']} Br."),
                     );
                   },
                 ),

@@ -1,11 +1,11 @@
-import 'package:e_commerce/Contents/HomeContent/HomeList/Cafe/cafe.dart';
+import 'package:e_commerce/Contents/HomeContent/HomeList/Entertainment/entertainment.dart';
 import 'package:e_commerce/Contents/HomeContent/HomeList/Hotels/hotel.dart';
 import 'package:e_commerce/Contents/HomeContent/HomeList/Parking/parking.dart';
 import 'package:e_commerce/Contents/HomeContent/HomeList/Restaurant/restaurant.dart';
+import 'package:e_commerce/Contents/HomeContent/HomeList/Shopping/shopping.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
-import 'package:fluttericon/linearicons_free_icons.dart';
 
 class TabNavigation extends StatefulWidget {
   @override
@@ -19,8 +19,10 @@ class _TabNavigationState extends State<TabNavigation> {
       RestaurantMenu(),
       //  CafeMenu(),
       Hotel(),
+
+      Shopping(),
+      Entertainment(),
       Parking(),
-      CafeMenu(),
     ];
     final tabIcon = <Tab>[
       Tab(
@@ -53,6 +55,28 @@ class _TabNavigationState extends State<TabNavigation> {
           style: TextStyle(color: Colors.red[800]),
         ),
       ),
+
+      Tab(
+        icon: Icon(
+          FontAwesome.shopping_bag,
+          color: Colors.red[800],
+        ),
+        child: Text(
+          'Shopping',
+          style: TextStyle(color: Colors.red[800]),
+        ),
+      ),
+
+      Tab(
+        icon: Icon(
+          FontAwesome.gamepad,
+          color: Colors.red[800],
+        ),
+        child: Text(
+          'Entertainment',
+          style: TextStyle(color: Colors.red[800]),
+        ),
+      ),
       Tab(
         icon: Icon(
           FontAwesome5.parking,
@@ -60,16 +84,6 @@ class _TabNavigationState extends State<TabNavigation> {
         ),
         child: Text(
           'Parking',
-          style: TextStyle(color: Colors.red[800]),
-        ),
-      ),
-      Tab(
-        icon: Icon(
-          FontAwesome.building,
-          color: Colors.red[800],
-        ),
-        child: Text(
-          'Guest House',
           style: TextStyle(color: Colors.red[800]),
         ),
       ),
