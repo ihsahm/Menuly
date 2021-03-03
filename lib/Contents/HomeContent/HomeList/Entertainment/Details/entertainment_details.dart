@@ -27,7 +27,7 @@ class EntertainmentDetails extends StatefulWidget {
 class _EntertainmentDetailsState extends State<EntertainmentDetails> {
   Future<void> _launchInApp() async {
     var url =
-        "https://www.google.com/maps/dir/${widget.userlocationLatitude},${widget.userlocationLongitude}/${widget.latitude},${widget.longitude}/@8.9937498,38.7062355,13z/data=!4m11!4m10!1m1!4e1!1m5!1m1!1s0x164b8f10bc299b27:0xf9ac2c481a9b40d9!2m2!1d38.7625901!2d9.0381429!3e2!5i1";
+        "https://www.google.com/maps/dir/${widget.userlocationLatitude},${widget.userlocationLongitude}/${widget.latitude},${widget.longitude}/@8.9817088,38.7284248,15z";
     if (await canLaunch(url)) {
       await launch(
         url,

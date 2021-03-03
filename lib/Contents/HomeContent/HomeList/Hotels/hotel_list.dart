@@ -125,6 +125,8 @@ class _HotelListState extends State<HotelList> {
                                               name:
                                                   "${doc[index].data()['restaurantName']}",
                                               room: doc[index].documentID,
+                                              image:
+                                                  "${doc[index].data()['image']}",
                                               email:
                                                   "${doc[index].data()['email']}",
                                               instagram:
