@@ -8,6 +8,7 @@ class ShoppingDetails extends StatefulWidget {
   final name;
   final phone;
   final userlocationLatitude;
+  final info;
   final userlocationLongitude;
   final latitude;
   final image;
@@ -23,7 +24,8 @@ class ShoppingDetails extends StatefulWidget {
       this.type,
       this.image,
       this.userlocationLatitude,
-      this.userlocationLongitude})
+      this.userlocationLongitude,
+      this.info})
       : super(key: key);
   @override
   _ShoppingDetailsState createState() => _ShoppingDetailsState();
@@ -51,11 +53,21 @@ class _ShoppingDetailsState extends State<ShoppingDetails> {
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
             SliverAppBar(
-              leading: IconButton(
-                icon: Icon(Icons.arrow_back),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
+              leading: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    // borderRadius: BorderRadius.circular(50),
+                    color: Colors.grey[600],
+                  ),
+                  child: IconButton(
+                    icon: Icon(Icons.arrow_back),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                ),
               ),
               floating: false,
               snap: false,
@@ -107,6 +119,7 @@ class _ShoppingDetailsState extends State<ShoppingDetails> {
           name: widget.name,
           phone: widget.phone,
           type: widget.type,
+          info: widget.info,
         ),
       ),
       bottomNavigationBar: Container(

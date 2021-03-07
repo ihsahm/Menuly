@@ -66,6 +66,7 @@ class _EntertainmentListState extends State<EntertainmentList> {
                               builder: (BuildContext context) =>
                                   EntertainmentDetails(
                                     name: "${doc[index].data()['name']}",
+                                    info: "${doc[index].data()['info']}",
                                     phone: "${doc[index].data()['phone']}",
                                     image: "${doc[index].data()['image']}",
                                     latitude:
@@ -160,7 +161,7 @@ class _EntertainmentListState extends State<EntertainmentList> {
                 },
               );
             } else {
-              return Center(child: CircularProgressIndicator());
+              return Center(child: Image.asset('assets/loading.gif'));
             }
           }),
     );

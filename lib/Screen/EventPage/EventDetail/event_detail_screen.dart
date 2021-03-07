@@ -5,6 +5,7 @@ import 'package:ussd/ussd.dart';
 class EventDetailScreen extends StatefulWidget {
   final ticketPrice;
   final ticketName;
+  final ticketDate;
   final ticketDescription;
   final ticketImage;
 
@@ -13,7 +14,8 @@ class EventDetailScreen extends StatefulWidget {
       this.ticketPrice,
       this.ticketDescription,
       this.ticketImage,
-      this.ticketName});
+      this.ticketName,
+      this.ticketDate});
   @override
   _EventDetailScreenState createState() => _EventDetailScreenState();
 }
@@ -23,13 +25,6 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        actions: [
-          IconButton(
-            icon: Icon(Icons.favorite),
-            color: Colors.red,
-            onPressed: () {},
-          ),
-        ],
         title: Text(
           'Event Details',
           style: TextStyle(color: Colors.blue),
@@ -44,7 +39,7 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
         elevation: 0,
         backgroundColor: Colors.white24,
       ),
-      bottomNavigationBar: Container(
+      /*bottomNavigationBar: Container(
         color: Colors.blue,
         height: 50,
         child: FlatButton.icon(
@@ -79,8 +74,9 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                 color: Colors.white,
               )),
         ),
-      ),
+      ),*/
       body: EventDetail(
+        eventDate: widget.ticketDate,
         eventDetail: widget.ticketDescription,
         eventPicture: widget.ticketImage,
         eventPrice: widget.ticketPrice,

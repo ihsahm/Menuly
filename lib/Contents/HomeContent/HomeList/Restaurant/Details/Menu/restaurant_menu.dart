@@ -28,13 +28,13 @@ class _FoodMenuState extends State<FoodMenu> {
       super.initState();
     }
 
-    final db = FirebaseFirestore.instance;
+    final db = FirebaseFirestore.instance
+        .collection('Restaurant')
+        .doc(widget.menuList)
+        .collection('Menu')
+        .snapshots();
     return StreamBuilder<QuerySnapshot>(
-      stream: db
-          .collection('Restaurant')
-          .doc(widget.menuList)
-          .collection('Menu')
-          .snapshots(),
+      stream: db,
       builder: (context, snapshot) {
         if (snapshot.data != null) {
           return SingleChildScrollView(
@@ -58,7 +58,10 @@ class _FoodMenuState extends State<FoodMenu> {
                           context: context,
                           builder: (BuildContext context) => AlertDialog(
                             title: Text('Contents'),
-                            content: Text('${doc[index].data()['contents']}'),
+                            content: Text(
+                                ((doc[index].data()['contents'] != null)
+                                    ? doc[index].data()['contents']
+                                    : 'No content provided')),
                             actions: [
                               FlatButton(
                                   child: Text('Okay'),
@@ -83,7 +86,7 @@ class _FoodMenuState extends State<FoodMenu> {
           );
         } else {
           return Center(
-            child: CircularProgressIndicator(),
+            child: Image.asset('assets/loading.gif'),
           );
         }
       },

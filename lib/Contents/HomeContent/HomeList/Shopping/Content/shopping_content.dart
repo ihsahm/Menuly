@@ -64,6 +64,7 @@ class _ShoppingListState extends State<ShoppingList> {
                                 builder: (BuildContext context) =>
                                     ShoppingDetails(
                                       name: "${doc[index].data()['name']}",
+                                      info: "${doc[index].data()['info']}",
                                       phone: "${doc[index].data()['phone']}",
                                       type: "${doc[index].data()['type']}",
                                       image: "${doc[index].data()['image']}",
@@ -167,7 +168,7 @@ class _ShoppingListState extends State<ShoppingList> {
                     );
                   });
             } else {
-              return Center(child: CircularProgressIndicator());
+              return Center(child: Image.asset('assets/loading.gif'));
             }
           }),
     );

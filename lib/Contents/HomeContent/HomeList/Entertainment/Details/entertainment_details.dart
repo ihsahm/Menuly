@@ -5,6 +5,7 @@ import 'package:url_launcher/url_launcher.dart';
 class EntertainmentDetails extends StatefulWidget {
   final image;
   final name;
+  final info;
   final phone;
   final latitude;
   final userlocationLatitude;
@@ -18,7 +19,8 @@ class EntertainmentDetails extends StatefulWidget {
       this.latitude,
       this.userlocationLatitude,
       this.userlocationLongitude,
-      this.longitude})
+      this.longitude,
+      this.info})
       : super(key: key);
   @override
   _EntertainmentDetailsState createState() => _EntertainmentDetailsState();
@@ -49,11 +51,21 @@ class _EntertainmentDetailsState extends State<EntertainmentDetails> {
                 (BuildContext context, bool innerBoxIsScrolled) {
               return <Widget>[
                 SliverAppBar(
-                  leading: IconButton(
-                    icon: Icon(Icons.arrow_back),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
+                  leading: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        // borderRadius: BorderRadius.circular(50),
+                        color: Colors.grey[600],
+                      ),
+                      child: IconButton(
+                        icon: Icon(Icons.arrow_back),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                      ),
+                    ),
                   ),
                   floating: false,
                   snap: false,
@@ -101,8 +113,7 @@ class _EntertainmentDetailsState extends State<EntertainmentDetails> {
               children: [
                 Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                        '''Sheraton Hotels and Resorts is an international hotel chain owned by Marriott International. As of June 30, 2020, Sheraton operates 446 hotels with 155,617 rooms globally, including locations in North America, Africa, Asia Pacific, Central and South America, Europe, the Middle East and the Caribbean, in addition to 84 hotels with 23,092 rooms in the pipeline''',
+                    child: Text(widget.info,
                         style: TextStyle(color: Colors.blueGrey))),
                 Divider(
                   endIndent: 30,

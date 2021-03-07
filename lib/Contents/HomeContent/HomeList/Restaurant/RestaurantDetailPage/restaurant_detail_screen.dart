@@ -60,11 +60,38 @@ class _AreaDetailScreenState extends State<AreaDetailScreen> {
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return <Widget>[
               SliverAppBar(
-                leading: IconButton(
-                  icon: Icon(Icons.arrow_back),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
+                //  actions: [
+                //   Padding(
+                //     padding: const EdgeInsets.all(8.0),
+                //     child: Container(
+                //       decoration: BoxDecoration(
+                //         shape: BoxShape.circle,
+                //         // borderRadius: BorderRadius.circular(50),
+                //         color: Colors.grey[600],
+                //       ),
+                //       child: IconButton(
+                //         icon: Icon(Icons.favorite),
+                //         color: Colors.white,
+                //         onPressed: () {},
+                //       ),
+                //     ),
+                //   )
+                // ],
+                leading: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      // borderRadius: BorderRadius.circular(50),
+                      color: Colors.grey[600],
+                    ),
+                    child: IconButton(
+                      icon: Icon(Icons.arrow_back),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ),
                 ),
                 floating: false,
                 snap: false,

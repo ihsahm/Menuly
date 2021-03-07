@@ -2,7 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class GetData {
   getTicketData() async {
-    return FirebaseFirestore.instance.collection('Tickets').snapshots();
+    return FirebaseFirestore.instance
+        .collection('Tickets')
+        .orderBy('date')
+        .snapshots();
   }
 
   getRestaurantData() async {

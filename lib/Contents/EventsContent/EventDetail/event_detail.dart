@@ -5,6 +5,7 @@ class EventDetail extends StatefulWidget {
   final eventPicture;
   final eventDetail;
   final eventName;
+  final eventDate;
   final eventPrice;
 
   const EventDetail(
@@ -12,7 +13,8 @@ class EventDetail extends StatefulWidget {
       this.eventPicture,
       this.eventDetail,
       this.eventPrice,
-      this.eventName})
+      this.eventName,
+      this.eventDate})
       : super(key: key);
   @override
   _EventDetailState createState() => _EventDetailState();
@@ -39,9 +41,18 @@ class _EventDetailState extends State<EventDetail> {
           child: Center(
               child: Text(
             "Price: ${widget.eventPrice} br.",
-            style: TextStyle(fontSize: 19),
+            style: TextStyle(fontSize: 19, fontWeight: FontWeight.w600),
           )),
         ),
+        // Padding(
+        //   padding: const EdgeInsets.only(top: 0, bottom: 4),
+        //   child: Center(
+        //       child: Text(
+        //     "${widget.eventDate}",
+        //     style: TextStyle(fontSize: 19),
+        //   )
+        //   ),
+        // ),
         Padding(
             padding: const EdgeInsets.all(8.0), child: Text(widget.eventDetail))
       ],

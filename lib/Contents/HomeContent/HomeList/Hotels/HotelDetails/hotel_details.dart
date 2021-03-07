@@ -15,6 +15,7 @@ class HotelDetails extends StatefulWidget {
   final userlocationLatitude;
   final userlocationLongitude;
   final longitude;
+  final info;
   final email;
 
   const HotelDetails(
@@ -29,7 +30,8 @@ class HotelDetails extends StatefulWidget {
       this.email,
       this.userlocationLatitude,
       this.userlocationLongitude,
-      this.image})
+      this.image,
+      this.info})
       : super(key: key);
   @override
   _HotelDetailsState createState() => _HotelDetailsState();
@@ -59,11 +61,20 @@ class _HotelDetailsState extends State<HotelDetails> {
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return <Widget>[
               SliverAppBar(
-                leading: IconButton(
-                  icon: Icon(Icons.arrow_back),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
+                leading: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.grey[600],
+                    ),
+                    child: IconButton(
+                      icon: Icon(Icons.arrow_back),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ),
                 ),
                 floating: false,
                 snap: false,
@@ -71,9 +82,6 @@ class _HotelDetailsState extends State<HotelDetails> {
                 pinned: true,
                 expandedHeight: 300,
                 flexibleSpace: FlexibleSpaceBar(
-                  /* title: Text(
-                      widget.restaurantName,
-                    ),*/
                   background: Container(
                     height: 150,
                     decoration: BoxDecoration(
@@ -127,6 +135,7 @@ class _HotelDetailsState extends State<HotelDetails> {
               instagram: widget.instagram,
               phone: widget.phone,
               email: widget.email,
+              info: widget.info,
             ),
           ]),
         ),

@@ -84,16 +84,18 @@ class _AreaDetailsState extends State<AreaDetails> {
                             launch('tel:${widget.phone}');
                           },
                         ),
-                        ListTile(
-                          leading: Icon(
-                            Icons.email_outlined,
-                            color: Colors.red[700],
-                          ),
-                          title: Text(widget.email),
-                          onTap: () {
-                            launch('mailto: ${widget.email}');
-                          },
-                        ),
+                        /*   ((widget.email != null)
+                            ? ListTile(
+                                leading: Icon(
+                                  Icons.email_outlined,
+                                  color: Colors.red[700],
+                                ),
+                                title: Text(widget.email),
+                                onTap: () {
+                                  launch('mailto: ${widget.email}');
+                                },
+                              )
+                            : Container()),*/
                         ListTile(
                           leading: Icon(Entypo.facebook_squared,
                               color: Colors.blue[700]),
@@ -109,7 +111,7 @@ class _AreaDetailsState extends State<AreaDetails> {
                           onTap: () {
                             launch('url:${widget.instagram}');
                           },
-                        ),
+                        )
                       ],
                     ),
                   ),
@@ -118,7 +120,7 @@ class _AreaDetailsState extends State<AreaDetails> {
             ),
           );
         } else {
-          return Center(child: CircularProgressIndicator());
+          return Center(child: Image.asset('assets/loading.gif'));
         }
       },
     );

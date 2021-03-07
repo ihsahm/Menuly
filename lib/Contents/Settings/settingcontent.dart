@@ -26,38 +26,14 @@ class _SettingsContentState extends State<SettingsContent> {
           leading: Icon(Icons.bug_report_outlined),
           title: Text('Report a bug or an issue'),
           onTap: () {
-            showDialog(
-                context: context,
-                builder: (BuildContext context) => AlertDialog(
-                      title: const Text('Report a bug'),
-                      content: TextField(
-                        maxLines: 3,
-                        decoration: InputDecoration(
-                            hintText: 'Send us a bug or an issue you found',
-                            border: OutlineInputBorder()),
-                      ),
-                      actions: [
-                        FlatButton(
-                          child: Text('Cancel'),
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                        ),
-                        FlatButton(
-                          child: Text('Send'),
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                        ),
-                      ],
-                    ));
+            launch('mailto:ihsahm@gmail.com');
           },
         ),
         ListTile(
           leading: Icon(Icons.headset_mic_outlined),
           title: Text('Contact support'),
           onTap: () {
-            launch(('tel:+251910873541'));
+            launch(('tel:+251907268733'));
           },
         ),
         Divider(
@@ -68,7 +44,9 @@ class _SettingsContentState extends State<SettingsContent> {
         ListTile(
           leading: Icon(Icons.star_outline),
           title: Text('Rate us on playstore'),
-          onTap: () {},
+          onTap: () {
+            
+          },
         ),
         Divider(
           indent: 10,
@@ -86,6 +64,7 @@ class _SettingsContentState extends State<SettingsContent> {
           onTap: () {
             showAboutDialog(
               context: context,
+              
             );
           },
         ),

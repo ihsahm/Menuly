@@ -41,6 +41,8 @@ class _EventContentState extends State<EventContent> {
                                     builder: (context) => EventDetailScreen(
                                           ticketPrice:
                                               "${snapshot.data.documents[index].data()['price']}",
+                                          ticketDate:
+                                              "${snapshot.data.documents[index].data()['date']}",
                                           ticketDescription:
                                               "${snapshot.data.documents[index].data()['details']}",
                                           ticketImage:
@@ -81,16 +83,18 @@ class _EventContentState extends State<EventContent> {
                                         Colors.black.withOpacity(.1)
                                       ])),
                               child: Align(
-                                alignment: Alignment.bottomCenter,
+                                alignment: Alignment.bottomLeft,
                                 child: Padding(
                                   padding: const EdgeInsets.all(15.0),
                                   child: Text(
-                                    "${snapshot.data.documents[index].data()['ticketName']}",
+                                    "${snapshot.data.documents[index].data()['ticketName']}" +
+                                        "\n" +
+                                        "${snapshot.data.documents[index].data()['date']}",
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
                                         color: Colors.white,
-                                        fontSize: 17,
-                                        fontWeight: FontWeight.w300),
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w600),
                                   ),
                                 ),
                               ),
@@ -107,7 +111,7 @@ class _EventContentState extends State<EventContent> {
                   );
                 });
           } else {
-            return Center(child: CircularProgressIndicator());
+            return Center(child: Image.asset('assets/loading.gif'));
           }
         });
   }

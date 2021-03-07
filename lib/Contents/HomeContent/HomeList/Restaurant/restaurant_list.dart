@@ -189,7 +189,7 @@ class _RestaurantListState extends State<RestaurantList> {
             } else {
               return Padding(
                 padding: const EdgeInsets.only(top: 18.0),
-                child: Center(child: CircularProgressIndicator()),
+                child: Center(child: Image.asset('assets/loading.gif')),
               );
             }
           }),

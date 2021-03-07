@@ -8,9 +8,15 @@ class HotelContact extends StatefulWidget {
   final instagram;
   final facebook;
   final email;
+  final info;
 
   const HotelContact(
-      {Key key, this.phone, this.instagram, this.facebook, this.email})
+      {Key key,
+      this.phone,
+      this.instagram,
+      this.facebook,
+      this.email,
+      this.info})
       : super(key: key);
   // final
   @override
@@ -33,17 +39,9 @@ class _HotelContactState extends State<HotelContact> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  // ListTile(
-                  //   leading: Icon(
-                  //     Icons.info,
-                  //     color: Colors.blue[900],
-                  //   ),
-                  //   title: Text(widget.type),
-                  // ),
                   Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                          '''Sheraton Hotels and Resorts is an international hotel chain owned by Marriott International. As of June 30, 2020, Sheraton operates 446 hotels with 155,617 rooms globally, including locations in North America, Africa, Asia Pacific, Central and South America, Europe, the Middle East and the Caribbean, in addition to 84 hotels with 23,092 rooms in the pipeline''',
+                      child: Text(widget.info,
                           style: TextStyle(color: Colors.blueGrey))),
                   Divider(
                     endIndent: 30,
@@ -59,7 +57,7 @@ class _HotelContactState extends State<HotelContact> {
                       launch('tel:${widget.phone}');
                     },
                   ),
-                  ListTile(
+                  /*  ListTile(
                     leading: Icon(
                       Icons.email_outlined,
                       color: Colors.red[700],
@@ -68,11 +66,11 @@ class _HotelContactState extends State<HotelContact> {
                     onTap: () {
                       launch('mailto: ${widget.email}');
                     },
-                  ),
+                  ),*/
                   ListTile(
                     leading:
                         Icon(Entypo.facebook_squared, color: Colors.blue[700]),
-                    title: Text(widget.facebook),
+                    title: Text('Like us on facebook'),
                     onTap: () {
                       launch('url: ${widget.facebook}');
                     },
@@ -80,7 +78,7 @@ class _HotelContactState extends State<HotelContact> {
                   ListTile(
                     leading:
                         Icon(FontAwesome5.instagram, color: Colors.pink[300]),
-                    title: Text(widget.instagram),
+                    title: Text('Follow us on instagram'),
                     onTap: () {
                       launch('url:${widget.instagram}');
                     },

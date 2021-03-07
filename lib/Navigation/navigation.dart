@@ -16,15 +16,15 @@ class _NavigationState extends State<Navigation> {
   Widget build(BuildContext context) {
     final _pages = <Widget>[
       TabNavigation(),
-      SearchScreen(),
+      // SearchScreen(),
       EventPage(),
       Settings(),
     ];
     final _items = <BottomNavigationBarItem>[
       BottomNavigationBarItem(
           icon: Icon(Icons.home_outlined), title: Text('Home')),
-      BottomNavigationBarItem(
-          icon: Icon(Icons.search_outlined), title: Text('Search')),
+      // BottomNavigationBarItem(
+      //     icon: Icon(Icons.search_outlined), title: Text('Search')),
       BottomNavigationBarItem(
           icon: Icon(Icons.event_note_outlined), title: Text('Events')),
       BottomNavigationBarItem(

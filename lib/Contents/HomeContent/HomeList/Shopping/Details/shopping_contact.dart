@@ -4,8 +4,9 @@ class ShoppingContact extends StatefulWidget {
   final phone;
   final type;
   final name;
+  final info;
 
-  const ShoppingContact({Key key, this.phone, this.type, this.name})
+  const ShoppingContact({Key key, this.phone, this.type, this.name, this.info})
       : super(key: key);
   @override
   _ShoppingContactState createState() => _ShoppingContactState();
@@ -18,9 +19,7 @@ class _ShoppingContactState extends State<ShoppingContact> {
       children: [
         Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text(
-                '''Sheraton Hotels and Resorts is an international hotel chain owned by Marriott International. As of June 30, 2020, Sheraton operates 446 hotels with 155,617 rooms globally, including locations in North America, Africa, Asia Pacific, Central and South America, Europe, the Middle East and the Caribbean, in addition to 84 hotels with 23,092 rooms in the pipeline''',
-                style: TextStyle(color: Colors.blueGrey))),
+            child: Text(widget.info, style: TextStyle(color: Colors.blueGrey))),
         Divider(
           endIndent: 30,
           indent: 30,

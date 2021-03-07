@@ -75,6 +75,7 @@ class _HotelListState extends State<HotelList> {
                                     facebook:
                                         "${doc[index].data()['facebook']}",
                                     phone: "${doc[index].data()['phone']}",
+                                    info: "${doc[index].data()['info']}",
                                     /* restaurantType:
                                         "${doc[index].data()['type']}",
                                   ))*/
@@ -125,6 +126,8 @@ class _HotelListState extends State<HotelList> {
                                               name:
                                                   "${doc[index].data()['restaurantName']}",
                                               room: doc[index].documentID,
+                                              info:
+                                                  "${doc[index].data()['info']}",
                                               image:
                                                   "${doc[index].data()['image']}",
                                               email:
@@ -135,10 +138,6 @@ class _HotelListState extends State<HotelList> {
                                                   "${doc[index].data()['facebook']}",
                                               phone:
                                                   "${doc[index].data()['phone']}",
-                                              /* restaurantType:
-                                        "${doc[index].data()['type']}",
-                                  ))*/
-
                                               latitude:
                                                   "${doc[index].data()['latitude']}",
                                               longitude:
@@ -190,7 +189,7 @@ class _HotelListState extends State<HotelList> {
             } else {
               return Padding(
                 padding: const EdgeInsets.only(top: 18.0),
-                child: Center(child: CircularProgressIndicator()),
+                child: Center(child: Image.asset('assets/loading.gif')),
               );
             }
           }),

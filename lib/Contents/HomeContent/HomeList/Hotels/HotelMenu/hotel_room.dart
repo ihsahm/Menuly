@@ -53,7 +53,7 @@ class _RoomDetailsState extends State<RoomDetails> {
           );
         } else {
           return Center(
-            child: CircularProgressIndicator(),
+            child: Image.asset('assets/loading.gif'),
           );
         }
       },
