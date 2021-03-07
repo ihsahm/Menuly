@@ -93,7 +93,7 @@ class _TabNavigationState extends State<TabNavigation> {
       child: Scaffold(
         appBar: AppBar(
           elevation: 1,
-          title: Text('eFood', style: TextStyle(color: Colors.blue[700])),
+          title: Text('Menuly', style: TextStyle(color: Colors.blue[700])),
           backgroundColor: Colors.white,
           bottom: TabBar(
             indicatorColor: Colors.amber,

@@ -44,9 +44,7 @@ class _SettingsContentState extends State<SettingsContent> {
         ListTile(
           leading: Icon(Icons.star_outline),
           title: Text('Rate us on playstore'),
-          onTap: () {
-            
-          },
+          onTap: () {},
         ),
         Divider(
           indent: 10,
@@ -62,10 +60,38 @@ class _SettingsContentState extends State<SettingsContent> {
           leading: Icon(Icons.info_outline),
           title: Text('About us'),
           onTap: () {
-            showAboutDialog(
-              context: context,
-              
-            );
+            showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                      title: Text('About us'),
+                      content: Wrap(
+                        children: [
+                          Row(
+                            children: [
+                              Text('Copyright '),
+                              Icon(
+                                Icons.copyright_outlined,
+                                color: Colors.grey[400],
+                                size: 16,
+                              ),
+                              Text(" Menuly Inc."),
+                            ],
+                          ),
+                          Text('2021\nMenuly 1.0.0'),
+                        ],
+                      ),
+                      actions: [
+                        FlatButton(
+                          child: Text(
+                            'Okay',
+                            style: TextStyle(color: Colors.blue),
+                          ),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                        )
+                      ],
+                    ));
           },
         ),
       ],
