@@ -113,6 +113,8 @@ class _ShoppingListState extends State<ShoppingList> {
                                               ShoppingDetails(
                                                 name:
                                                     "${doc[index].data()['name']}",
+                                                info:
+                                                    "${doc[index].data()['info']}",
                                                 phone:
                                                     "${doc[index].data()['phone']}",
                                                 type:

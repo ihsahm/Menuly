@@ -56,63 +56,64 @@ class _HotelDetailsState extends State<HotelDetails> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: DefaultTabController(
-        length: 2,
-        child: NestedScrollView(
-          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-            return <Widget>[
-              SliverAppBar(
-                leading: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.grey[600],
-                    ),
-                    child: IconButton(
-                      icon: Icon(Icons.arrow_back),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                    ),
-                  ),
-                ),
-                floating: false,
-                snap: false,
-                backgroundColor: Colors.blueGrey,
-                pinned: true,
-                expandedHeight: 300,
-                flexibleSpace: FlexibleSpaceBar(
-                  background: Container(
-                    height: 150,
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        image: DecorationImage(
-                            fit: BoxFit.cover,
-                            image: NetworkImage(widget.image)),
-                        borderRadius: BorderRadius.circular(5),
-                        boxShadow: [
-                          BoxShadow(
-                              color: Colors.grey[300],
-                              offset: Offset(-2, -1),
-                              blurRadius: 5),
-                        ]),
+          length: 2,
+          child: NestedScrollView(
+            headerSliverBuilder:
+                (BuildContext context, bool innerBoxIsScrolled) {
+              return <Widget>[
+                SliverAppBar(
+                  leading: Padding(
+                    padding: const EdgeInsets.all(8.0),
                     child: Container(
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          gradient: LinearGradient(
-                              begin: Alignment.bottomRight,
-                              stops: [
-                                0.1,
-                                0.9
-                              ],
-                              colors: [
-                                Colors.black.withOpacity(.8),
-                                Colors.black.withOpacity(.1)
-                              ])),
+                        shape: BoxShape.circle,
+                        color: Colors.grey[600],
+                      ),
+                      child: IconButton(
+                        icon: Icon(Icons.arrow_back),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                      ),
                     ),
                   ),
-                ),
-                bottom: TabBar(
+                  floating: false,
+                  snap: false,
+                  backgroundColor: Colors.blueGrey,
+                  pinned: true,
+                  expandedHeight: 300,
+                  flexibleSpace: FlexibleSpaceBar(
+                    background: Container(
+                      height: 150,
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: NetworkImage(widget.image)),
+                          borderRadius: BorderRadius.circular(5),
+                          boxShadow: [
+                            BoxShadow(
+                                color: Colors.grey[300],
+                                offset: Offset(-2, -1),
+                                blurRadius: 5),
+                          ]),
+                      child: Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            gradient: LinearGradient(
+                                begin: Alignment.bottomRight,
+                                stops: [
+                                  0.1,
+                                  0.9
+                                ],
+                                colors: [
+                                  Colors.black.withOpacity(.8),
+                                  Colors.black.withOpacity(.1)
+                                ])),
+                      ),
+                    ),
+                  ),
+                  /*       bottom: TabBar(
                   tabs: [
                     Tab(
                       child: Text('Rooms'),
@@ -121,25 +122,26 @@ class _HotelDetailsState extends State<HotelDetails> {
                       child: Text('Info'),
                     ),
                   ],
+                ),*/
                 ),
-              ),
-            ];
-          },
-          body: TabBarView(children: [
-            RoomDetails(
+              ];
+            },
+            body: // TabBarView(children: [
+                /* RoomDetails(
               room: widget.room,
               //  price: widget.,
-            ),
-            HotelContact(
+            ),*/
+                HotelContact(
               facebook: widget.facebook,
               instagram: widget.instagram,
               phone: widget.phone,
               email: widget.email,
               info: widget.info,
             ),
-          ]),
-        ),
-      ),
+          )
+          //  ]),
+          // ),
+          ),
       bottomNavigationBar: Container(
         height: 50,
         child: FlatButton.icon(

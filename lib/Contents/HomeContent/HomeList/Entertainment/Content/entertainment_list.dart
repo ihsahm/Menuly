@@ -114,10 +114,18 @@ class _EntertainmentListState extends State<EntertainmentList> {
                                             EntertainmentDetails(
                                               name:
                                                   "${doc[index].data()['name']}",
+                                              info:
+                                                  "${doc[index].data()['info']}",
                                               phone:
                                                   "${doc[index].data()['phone']}",
                                               image:
                                                   "${doc[index].data()['image']}",
+                                              latitude:
+                                                  "${doc[index].data()['latitude']}",
+                                              longitude:
+                                                  "${doc[index].data()['longitude']}",
+                                              userlocationLatitude: passlat,
+                                              userlocationLongitude: passlong,
                                             )));
                               },
                               title: Text(
