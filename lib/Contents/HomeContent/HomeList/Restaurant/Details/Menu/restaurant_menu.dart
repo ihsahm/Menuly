@@ -63,23 +63,68 @@ class _FoodMenuState extends State<FoodMenu> {
                     var doc = snapshot.data.docs;
                     return ListTile(
                       onTap: () {
-                        showDialog<void>(
-                          context: context,
-                          builder: (BuildContext context) => AlertDialog(
-                            title: Text('Contents'),
-                            content: Text(
-                                ((doc[index].data()['contents'] != null)
-                                    ? doc[index].data()['contents']
-                                    : 'No content provided')),
-                            actions: [
-                              FlatButton(
-                                  child: Text('Okay'),
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  })
-                            ],
-                          ),
-                        );
+                        showModalBottomSheet(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return Container(
+                                  height: 200,
+                                  child: ListView(
+                                    children: [
+                                      ListTile(
+                                          title: Text(
+                                        'Contents',
+                                        style:
+                                            TextStyle(color: Colors.blueGrey),
+                                      )),
+                                      ListTile(
+                                        title: Text(
+                                          ((doc[index].data()['contents'] !=
+                                                  null)
+                                              ? doc[index].data()['contents']
+                                              : 'Contents not provided'),
+                                          style:
+                                              TextStyle(color: Colors.blueGrey),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Align(
+                                          alignment: Alignment.bottomRight,
+                                          child: ButtonTheme(
+                                            minWidth: 30,
+                                            child: FlatButton(
+                                              child: Text(
+                                                'Okay',
+                                                style: TextStyle(
+                                                    color: Colors.blue),
+                                              ),
+                                              onPressed: () {
+                                                Navigator.pop(context);
+                                              },
+                                            ),
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ));
+                            });
+                        // showDialog<void>(
+                        //   context: context,
+                        //   builder: (BuildContext context) => showModalBottomSheet(
+                        //     title: Text('Contents'),
+                        //     content: Text(
+                        //         ((doc[index].data()['contents'] != null)
+                        //             ? doc[index].data()['contents']
+                        //             : 'Contents not provided')),
+                        //     actions: [
+                        //       FlatButton(
+                        //           child: Text('Okay'),
+                        //           onPressed: () {
+                        //             Navigator.pop(context);
+                        //           })
+                        //     ],
+                        //   ),
+                        // );
                       },
                       leading: Icon(
                         Linecons.food,

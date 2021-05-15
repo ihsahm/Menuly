@@ -3,8 +3,10 @@ import 'dart:async';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:e_commerce/Contents/HomeContent/HomeList/Hotels/HotelDetails/hotel_details.dart';
 import 'package:e_commerce/Database/Download/getData.dart';
+import 'package:e_commerce/zRealDistance/AssistantMethods.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 
 class HotelList extends StatefulWidget {
@@ -38,11 +40,16 @@ class _HotelListState extends State<HotelList> {
         desiredAccuracy: LocationAccuracy.bestForNavigation);
     passlat = position.latitude;
     passlong = position.longitude;
-    distance = Geolocator.distanceBetween(
-        position.latitude, position.longitude, slat, slon);
-    distance = distance.roundToDouble() / 1000;
-    String temp = distance.toStringAsFixed(2);
-    return temp;
+    // distance = Geolocator.distanceBetween(
+    //     position.latitude, position.longitude, slat, slon);
+    // distance = distance.roundToDouble() / 1000;
+    // String temp = distance.toStringAsFixed(2);
+
+    LatLng a = LatLng(passlat, passlong);
+    LatLng b = LatLng(slat, slon);
+
+    var details = await AssistantMethods.obtainDirectionDetails(a, b);
+    return details.distanceText;
   }
 
   @override
@@ -160,7 +167,7 @@ class _HotelListState extends State<HotelList> {
                                   List<Widget> children;
                                   if (snapshot.hasData) {
                                     children = <Widget>[
-                                      Text('Distance: ${snapshot.data} km.'),
+                                      Text('Distance: ${snapshot.data}'),
                                     ];
                                   } else {
                                     children = <Widget>[

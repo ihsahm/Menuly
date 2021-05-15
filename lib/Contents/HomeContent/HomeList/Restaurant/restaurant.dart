@@ -127,7 +127,7 @@ class _RestaurantMenuState extends State<RestaurantMenu> {
                                     )));
                       },
                       title: Text(
-                        snapshotData.docs[index].data()['name'],
+                        "${snapshotData.docs[index].data()['name']}",
                         style: TextStyle(
                             fontSize: 17, fontWeight: FontWeight.w500),
                       ),
@@ -169,155 +169,158 @@ class _RestaurantMenuState extends State<RestaurantMenu> {
 
     return ListView(
       children: [
-        Wrap(
-          runSpacing: 0.0,
-          spacing: 2.0,
-          children: [
-            GetBuilder<Querying>(
-              builder: (val) {
-                return Padding(
-                  padding: EdgeInsets.only(left: 5.0, right: 5.0, top: 1.0),
-                  child: RaisedButton(
-                    textColor: Colors.white,
-                    color: Colors.orange,
-                    child: Text("All"),
-                    onPressed: () {
-                      val.getAllData().then((value) {
-                        snapshotData = value;
-                        setState(() {
-                          isExecuted = true;
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            // runSpacing: 0.0,
+            //   spacing: 2.0,
+            children: [
+              GetBuilder<Querying>(
+                builder: (val) {
+                  return Padding(
+                    padding: EdgeInsets.only(left: 5.0, right: 5.0, top: 1.0),
+                    child: RaisedButton(
+                      textColor: Colors.white,
+                      color: Colors.greenAccent[400],
+                      child: Text("All"),
+                      onPressed: () {
+                        val.getAllData().then((value) {
+                          snapshotData = value;
+                          setState(() {
+                            isExecuted = true;
+                          });
                         });
-                      });
-                    },
-                    shape: new RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(30.0),
+                      },
+                      shape: new RoundedRectangleBorder(
+                        borderRadius: new BorderRadius.circular(30.0),
+                      ),
                     ),
-                  ),
-                );
-              },
-              init: Querying(),
-            ),
-            GetBuilder<Querying>(
-              builder: (val) {
-                return Padding(
-                  padding: EdgeInsets.only(left: 5.0, right: 5.0, top: 1.0),
-                  child: RaisedButton(
-                    textColor: Colors.white,
-                    color: Colors.orange,
-                    child: Text("Restaurant"),
-                    onPressed: () {
-                      val.getRestaurantData().then((value) {
-                        snapshotData = value;
-                        setState(() {
-                          isExecuted = true;
+                  );
+                },
+                init: Querying(),
+              ),
+              GetBuilder<Querying>(
+                builder: (val) {
+                  return Padding(
+                    padding: EdgeInsets.only(left: 5.0, right: 5.0, top: 1.0),
+                    child: RaisedButton(
+                      textColor: Colors.white,
+                      color: Colors.greenAccent[400],
+                      child: Text("Restaurant"),
+                      onPressed: () {
+                        val.getRestaurantData().then((value) {
+                          snapshotData = value;
+                          setState(() {
+                            isExecuted = true;
+                          });
                         });
-                      });
-                    },
-                    shape: new RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(30.0),
+                      },
+                      shape: new RoundedRectangleBorder(
+                        borderRadius: new BorderRadius.circular(30.0),
+                      ),
                     ),
-                  ),
-                );
-              },
-              init: Querying(),
-            ),
-            GetBuilder<Querying>(
-              builder: (val) {
-                return Padding(
-                  padding: EdgeInsets.only(left: 5.0, right: 5.0, top: 1.0),
-                  child: RaisedButton(
-                    textColor: Colors.white,
-                    color: Colors.orange,
-                    child: Text("Cafe"),
-                    onPressed: () {
-                      val.getCafeData().then((value) {
-                        snapshotData = value;
-                        setState(() {
-                          isExecuted = true;
+                  );
+                },
+                init: Querying(),
+              ),
+              GetBuilder<Querying>(
+                builder: (val) {
+                  return Padding(
+                    padding: EdgeInsets.only(left: 5.0, right: 5.0, top: 1.0),
+                    child: RaisedButton(
+                      textColor: Colors.white,
+                      color: Colors.greenAccent[400],
+                      child: Text("Cafe"),
+                      onPressed: () {
+                        val.getCafeData().then((value) {
+                          snapshotData = value;
+                          setState(() {
+                            isExecuted = true;
+                          });
                         });
-                      });
-                    },
-                    shape: new RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(30.0),
+                      },
+                      shape: new RoundedRectangleBorder(
+                        borderRadius: new BorderRadius.circular(30.0),
+                      ),
                     ),
-                  ),
-                );
-              },
-              init: Querying(),
-            ),
-            GetBuilder<Querying>(
-              builder: (val) {
-                return Padding(
-                  padding: EdgeInsets.only(left: 5.0, right: 5.0, top: 1.0),
-                  child: RaisedButton(
-                    textColor: Colors.white,
-                    color: Colors.orange,
-                    child: Text("Burger&Pizza"),
-                    onPressed: () {
-                      val.getBurgerData().then((value) {
-                        snapshotData = value;
-                        setState(() {
-                          isExecuted = true;
+                  );
+                },
+                init: Querying(),
+              ),
+              GetBuilder<Querying>(
+                builder: (val) {
+                  return Padding(
+                    padding: EdgeInsets.only(left: 5.0, right: 5.0, top: 1.0),
+                    child: RaisedButton(
+                      textColor: Colors.white,
+                      color: Colors.greenAccent[400],
+                      child: Text("Burger&Pizza"),
+                      onPressed: () {
+                        val.getBurgerData().then((value) {
+                          snapshotData = value;
+                          setState(() {
+                            isExecuted = true;
+                          });
                         });
-                      });
-                    },
-                    shape: new RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(30.0),
+                      },
+                      shape: new RoundedRectangleBorder(
+                        borderRadius: new BorderRadius.circular(30.0),
+                      ),
                     ),
-                  ),
-                );
-              },
-              init: Querying(),
-            ),
-            GetBuilder<Querying>(
-              builder: (val) {
-                return Padding(
-                  padding: EdgeInsets.only(left: 5.0, right: 5.0, top: 1.0),
-                  child: RaisedButton(
-                    textColor: Colors.white,
-                    color: Colors.orange,
-                    child: Text("Fasting"),
-                    onPressed: () {
-                      val.getFastingData().then((value) {
-                        snapshotData = value;
-                        setState(() {
-                          isExecuted = true;
+                  );
+                },
+                init: Querying(),
+              ),
+              GetBuilder<Querying>(
+                builder: (val) {
+                  return Padding(
+                    padding: EdgeInsets.only(left: 5.0, right: 5.0, top: 1.0),
+                    child: RaisedButton(
+                      textColor: Colors.white,
+                      color: Colors.greenAccent[400],
+                      child: Text("Fasting"),
+                      onPressed: () {
+                        val.getFastingData().then((value) {
+                          snapshotData = value;
+                          setState(() {
+                            isExecuted = true;
+                          });
                         });
-                      });
-                    },
-                    shape: new RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(30.0),
+                      },
+                      shape: new RoundedRectangleBorder(
+                        borderRadius: new BorderRadius.circular(30.0),
+                      ),
                     ),
-                  ),
-                );
-              },
-              init: Querying(),
-            ),
-            GetBuilder<Querying>(
-              builder: (val) {
-                return Padding(
-                  padding: EdgeInsets.only(left: 5.0, right: 5.0, top: 1.0),
-                  child: RaisedButton(
-                    textColor: Colors.white,
-                    color: Colors.orange,
-                    child: Text("Pasta"),
-                    onPressed: () {
-                      val.getPastaData().then((value) {
-                        snapshotData = value;
-                        setState(() {
-                          isExecuted = true;
+                  );
+                },
+                init: Querying(),
+              ),
+              GetBuilder<Querying>(
+                builder: (val) {
+                  return Padding(
+                    padding: EdgeInsets.only(left: 5.0, right: 5.0, top: 1.0),
+                    child: RaisedButton(
+                      textColor: Colors.white,
+                      color: Colors.greenAccent[400],
+                      child: Text("Pasta"),
+                      onPressed: () {
+                        val.getPastaData().then((value) {
+                          snapshotData = value;
+                          setState(() {
+                            isExecuted = true;
+                          });
                         });
-                      });
-                    },
-                    shape: new RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(30.0),
+                      },
+                      shape: new RoundedRectangleBorder(
+                        borderRadius: new BorderRadius.circular(30.0),
+                      ),
                     ),
-                  ),
-                );
-              },
-              init: Querying(),
-            ),
-          ],
+                  );
+                },
+                init: Querying(),
+              ),
+            ],
+          ),
         ),
         Padding(
           padding: const EdgeInsets.all(8.0),

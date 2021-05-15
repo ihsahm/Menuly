@@ -1,4 +1,5 @@
 import 'package:e_commerce/Contents/EventsContent/event_content.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 
 class EventPage extends StatefulWidget {

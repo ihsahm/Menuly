@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:e_commerce/Contents/HomeContent/HomeList/Restaurant/Details/Menu/restaurant_menu.dart';
 import 'package:e_commerce/Contents/HomeContent/HomeList/Restaurant/Details/restaurant_contact.dart';
 import 'package:flutter/material.dart';
@@ -106,34 +107,36 @@ class _AreaDetailScreenState extends State<AreaDetailScreen> {
                       style: TextStyle(fontSize: 15),
                     ),
                   ),*/
-                  background: Container(
+                  background: SizedBox(
                     height: 150,
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        image: DecorationImage(
-                            fit: BoxFit.cover,
-                            image: NetworkImage(widget.restaurantImage)),
-                        borderRadius: BorderRadius.circular(5),
-                        boxShadow: [
-                          BoxShadow(
-                              color: Colors.grey[300],
-                              offset: Offset(-2, -1),
-                              blurRadius: 5),
-                        ]),
-                    child: Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          gradient: LinearGradient(
-                              begin: Alignment.bottomRight,
-                              stops: [
-                                0.1,
-                                0.9
-                              ],
-                              colors: [
-                                Colors.black.withOpacity(.8),
-                                Colors.black.withOpacity(.1)
-                              ])),
-                    ),
+                    // decoration: BoxDecoration(
+                    //     color: Colors.white,
+                    //     image: DecorationImage(
+                    //         fit: BoxFit.cover,
+                    //         image: NetworkImage(widget.restaurantImage)),
+                    //     borderRadius: BorderRadius.circular(5),
+                    //     boxShadow: [
+                    //       BoxShadow(
+                    //           color: Colors.grey[300],
+                    //           offset: Offset(-2, -1),
+                    //           blurRadius: 5),
+                    //     ]),
+                    child: CachedNetworkImage(
+                        imageUrl: widget.restaurantImage,
+                        fit: BoxFit.cover), //Container(
+                    //   decoration: BoxDecoration(
+                    //       borderRadius: BorderRadius.circular(5),
+                    //       gradient: LinearGradient(
+                    //           begin: Alignment.bottomRight,
+                    //           stops: [
+                    //             0.1,
+                    //             0.9
+                    //           ],
+                    //           colors: [
+                    //             Colors.black.withOpacity(.8),
+                    //             Colors.black.withOpacity(.1)
+                    //           ])),
+                    // ),
                   ),
                 ),
                 bottom: TabBar(

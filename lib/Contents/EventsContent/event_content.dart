@@ -1,6 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce/Database/Download/getData.dart';
 import 'package:e_commerce/Screen/EventPage/EventDetail/event_detail_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class EventContent extends StatefulWidget {
   @override
@@ -30,6 +33,8 @@ class _EventContentState extends State<EventContent> {
             return ListView.builder(
                 itemCount: snapshot.data.docs.length,
                 itemBuilder: (BuildContext context, int index) {
+                  DateTime eventDay =
+                      (snapshot.data.documents[index].data()['date']).toDate();
                   return Container(
                     child: Column(
                       children: [
@@ -41,8 +46,9 @@ class _EventContentState extends State<EventContent> {
                                     builder: (context) => EventDetailScreen(
                                           ticketPrice:
                                               "${snapshot.data.documents[index].data()['price']}",
-                                          ticketDate:
-                                              "${snapshot.data.documents[index].data()['date']}",
+                                          ticketDate: eventDay,
+                                          ticketAvailable:
+                                              "${snapshot.data.documents[index].data()['available']}",
                                           ticketDescription:
                                               "${snapshot.data.documents[index].data()['details']}",
                                           ticketImage:
@@ -51,10 +57,53 @@ class _EventContentState extends State<EventContent> {
                                               "${snapshot.data.documents[index].data()['ticketName']}",
                                         )));
                           },
+                          // child: Stack(
+                          //   alignment: Alignment.bottomCenter,
+                          //   children: [
+                          //     Padding(
+                          //       padding: const EdgeInsets.all(8.0),
+                          //       child: Container(
+                          //         decoration: BoxDecoration(
+                          //           borderRadius: BorderRadius.circular(15),
+                          //         ),
+                          //         child: CachedNetworkImage(
+                          //           imageUrl:
+                          //               "${snapshot.data.documents[index].data()['image']}",
+                          //           fit: BoxFit.cover,
+                          //         ),
+                          //       ),
+                          //     ),
+                          //     Padding(
+                          //       padding: const EdgeInsets.all(25.0),
+                          //       child: Align(
+                          //         alignment: Alignment.bottomLeft,
+                          //         child: RichText(
+                          //           text: TextSpan(
+                          //             text:
+                          //                 "${snapshot.data.documents[index].data()['ticketName']}" +
+                          //                     "\n",
+                          //             children: <TextSpan>[
+                          //               TextSpan(
+                          //                   text: DateFormat.yMMMMd()
+                          //                       .format(eventDay),
+                          //                   style: TextStyle(
+                          //                       fontSize: 15,
+                          //                       fontWeight: FontWeight.w300))
+                          //             ],
+                          //             style: TextStyle(
+                          //                 color: Colors.white,
+                          //                 fontSize: 24,
+                          //                 fontWeight: FontWeight.w600),
+                          //           ),
+                          //         ),
+                          //       ),
+                          //     ),
+                          //   ],
+                          // ),
                           child: Container(
                             margin: const EdgeInsets.only(
                                 left: 10, right: 10, top: 8, bottom: 4),
-                            height: 150,
+                            height: 300,
                             decoration: BoxDecoration(
                                 color: Colors.white,
                                 image: DecorationImage(
@@ -62,7 +111,7 @@ class _EventContentState extends State<EventContent> {
                                     image: NetworkImage(
                                       "${snapshot.data.documents[index].data()['image']}",
                                     )),
-                                borderRadius: BorderRadius.circular(5),
+                                borderRadius: BorderRadius.circular(15),
                                 boxShadow: [
                                   BoxShadow(
                                       color: Colors.grey[300],
@@ -71,7 +120,7 @@ class _EventContentState extends State<EventContent> {
                                 ]),
                             child: Container(
                               decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5),
+                                  borderRadius: BorderRadius.circular(15),
                                   gradient: LinearGradient(
                                       begin: Alignment.bottomRight,
                                       stops: [
@@ -86,15 +135,24 @@ class _EventContentState extends State<EventContent> {
                                 alignment: Alignment.bottomLeft,
                                 child: Padding(
                                   padding: const EdgeInsets.all(15.0),
-                                  child: Text(
-                                    "${snapshot.data.documents[index].data()['ticketName']}" +
-                                        "\n" +
-                                        "${snapshot.data.documents[index].data()['date']}",
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w600),
+                                  child: RichText(
+                                    text: TextSpan(
+                                      text:
+                                          "${snapshot.data.documents[index].data()['ticketName']}" +
+                                              "\n",
+                                      children: <TextSpan>[
+                                        TextSpan(
+                                            text: DateFormat.yMMMMd()
+                                                .format(eventDay),
+                                            style: TextStyle(
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.w300))
+                                      ],
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 24,
+                                          fontWeight: FontWeight.w600),
+                                    ),
                                   ),
                                 ),
                               ),

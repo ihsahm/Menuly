@@ -72,7 +72,7 @@ class _HotelContactState extends State<HotelContact> {
                         Icon(Entypo.facebook_squared, color: Colors.blue[700]),
                     title: Text('Like us on facebook'),
                     onTap: () {
-                      launch('url: ${widget.facebook}');
+                      //launch('url: ${widget.facebook}').toString();
                     },
                   ),
                   ListTile(
@@ -80,7 +80,7 @@ class _HotelContactState extends State<HotelContact> {
                         Icon(FontAwesome5.instagram, color: Colors.pink[300]),
                     title: Text('Follow us on instagram'),
                     onTap: () {
-                      launch('url:${widget.instagram}');
+                      // launch('url:${widget.instagram}');
                     },
                   ),
                 ],

@@ -40,20 +40,30 @@ dependencies:
   progress_indicators: ^0.1.5
   ussd: ^0.0.2+1
   fluttericon: ^1.0.7
-  #google_maps_flutter:
-
+  google_maps_flutter:
   image_picker: ^0.6.7+6
   firebase_storage: ^4.0.0
   uuid: ^2.2.2
   geolocator: ^6.2.0
   mongo_dart: ^0.4.4
   algolia: ^0.1.6+1
+  flutter_local_notifications: ^4.0.0+1
   provider: ^4.3.2+1
+  flutter_launcher_icons: ^0.8.1
+  firebase_messaging: ^5.1.4
+  intl: ^0.16.1
+  add_2_calendar: ^2.0.2
+  get_it: ^6.1.1
+  syncfusion_flutter_maps: ^19.1.57-beta.1
+  connectivity: ^3.0.3
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
+flutter_icons:
+  image_path: "assets/logo.png"
+  android: true
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 

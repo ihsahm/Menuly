@@ -10,7 +10,7 @@ class PlacesService {
   }
 
   final String searchUrl =
-      "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522,151.1957362&radius=15000&type=restaurant&key=AIzaSyCiPS0HYDQt1gg04J7nGW0kjoyNLz6g_Xc";
+      "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522,151.1957362&radius=15000&type=restaurant&key=AIzaSyB9VkNZsYubmBdcWm-WkOemaRwxKdi_alk";
   Future<List<Places>> getNearbyPlaces() async {
     var response = await http.get(searchUrl, headers: {
       'Accept': 'application/json;charset=UTF-8',

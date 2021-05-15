@@ -30,7 +30,7 @@ class Querying extends GetxController {
   getBurgerData() async {
     return FirebaseFirestore.instance
         .collection('Restaurant')
-        .where("type", isEqualTo: "Fast food")
+        .where("type", isEqualTo: "Fastfood")
         .get();
   }
 

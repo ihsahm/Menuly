@@ -41,7 +41,10 @@ class _EventDetailState extends State<EventDetail> {
           child: Center(
               child: Text(
             "Price: ${widget.eventPrice} br.",
-            style: TextStyle(fontSize: 19, fontWeight: FontWeight.w600),
+            style: TextStyle(
+                fontSize: 19,
+                fontWeight: FontWeight.w600,
+                color: Colors.blueGrey[800]),
           )),
         ),
         // Padding(
@@ -54,7 +57,11 @@ class _EventDetailState extends State<EventDetail> {
         //   ),
         // ),
         Padding(
-            padding: const EdgeInsets.all(8.0), child: Text(widget.eventDetail))
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              widget.eventDetail,
+              style: TextStyle(color: Colors.blueGrey[800]),
+            ))
       ],
     );
   }

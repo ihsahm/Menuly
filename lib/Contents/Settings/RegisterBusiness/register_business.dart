@@ -177,7 +177,7 @@ class _RegisterBusinessState extends State<RegisterBusiness> {
     if (formKey.currentState.validate()) {
       setState(() => loading = true);
       if (restaurantName.isNotEmpty) {
-        if (phoneNumber.isNotEmpty) {
+        if (image1 != null) {
           saveItem(imageDownloadUrl);
           formKey.currentState.reset();
           setState(() => loading = false);
@@ -209,7 +209,7 @@ class _RegisterBusinessState extends State<RegisterBusiness> {
             context: context,
             builder: (BuildContext context) {
               return AlertDialog(
-                title: Text('Enter phone'),
+                title: Text('Enter an image'),
               );
             });
         setState(() => loading = false);

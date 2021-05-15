@@ -12,16 +12,16 @@ class _SettingsContentState extends State<SettingsContent> {
   Widget build(BuildContext context) {
     return ListView(
       children: [
-        ListTile(
-          leading: Icon(Icons.edit_outlined),
-          title: Text('Register a business'),
-          onTap: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (BuildContext context) => RegisterBusiness()));
-          },
-        ),
+        // ListTile(
+        //   leading: Icon(Icons.edit_outlined),
+        //   title: Text('Register a business'),
+        //   onTap: () {
+        //     Navigator.push(
+        //         context,
+        //         MaterialPageRoute(
+        //             builder: (BuildContext context) => RegisterBusiness()));
+        //   },
+        // ),
         ListTile(
           leading: Icon(Icons.bug_report_outlined),
           title: Text('Report a bug or an issue'),
@@ -66,6 +66,7 @@ class _SettingsContentState extends State<SettingsContent> {
                       title: Text('About us'),
                       content: Wrap(
                         children: [
+                          Text('Menuly 1.0.0'),
                           Row(
                             children: [
                               Text('Copyright '),
@@ -74,10 +75,9 @@ class _SettingsContentState extends State<SettingsContent> {
                                 color: Colors.grey[400],
                                 size: 16,
                               ),
-                              Text(" Menuly Inc."),
+                              Text(" Metrix Inc."),
                             ],
                           ),
-                          Text('2021\nMenuly 1.0.0'),
                         ],
                       ),
                       actions: [

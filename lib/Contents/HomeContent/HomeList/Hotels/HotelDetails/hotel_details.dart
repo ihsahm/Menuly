@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:e_commerce/Contents/HomeContent/HomeList/Hotels/HotelMenu/hotel_contact.dart';
 import 'package:e_commerce/Contents/HomeContent/HomeList/Hotels/HotelMenu/hotel_room.dart';
 import 'package:flutter/material.dart';
@@ -79,38 +80,42 @@ class _HotelDetailsState extends State<HotelDetails> {
                   ),
                   floating: false,
                   snap: false,
-                  backgroundColor: Colors.blueGrey,
+                  backgroundColor: Colors.transparent,
                   pinned: true,
                   expandedHeight: 300,
                   flexibleSpace: FlexibleSpaceBar(
-                    background: Container(
+                    background: SizedBox(
                       height: 150,
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: NetworkImage(widget.image)),
-                          borderRadius: BorderRadius.circular(5),
-                          boxShadow: [
-                            BoxShadow(
-                                color: Colors.grey[300],
-                                offset: Offset(-2, -1),
-                                blurRadius: 5),
-                          ]),
-                      child: Container(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            gradient: LinearGradient(
-                                begin: Alignment.bottomRight,
-                                stops: [
-                                  0.1,
-                                  0.9
-                                ],
-                                colors: [
-                                  Colors.black.withOpacity(.8),
-                                  Colors.black.withOpacity(.1)
-                                ])),
+                      child: CachedNetworkImage(
+                        imageUrl: widget.image,
+                        fit: BoxFit.cover,
                       ),
+                      // decoration: BoxDecoration(
+                      //     color: Colors.white,
+                      //     image: DecorationImage(
+                      //         fit: BoxFit.cover,
+                      //         image: ),
+                      //     borderRadius: BorderRadius.circular(5),
+                      //     boxShadow: [
+                      //       BoxShadow(
+                      //           color: Colors.grey[300],
+                      //           offset: Offset(-2, -1),
+                      //           blurRadius: 5),
+                      //     ]),
+                      // child: Container(
+                      //   decoration: BoxDecoration(
+                      //       borderRadius: BorderRadius.circular(5),
+                      //       gradient: LinearGradient(
+                      //           begin: Alignment.bottomRight,
+                      //           stops: [
+                      //             0.1,
+                      //             0.9
+                      //           ],
+                      //           colors: [
+                      //             Colors.black.withOpacity(.8),
+                      //             Colors.black.withOpacity(.1)
+                      //           ])),
+                      // ),
                     ),
                   ),
                   /*       bottom: TabBar(

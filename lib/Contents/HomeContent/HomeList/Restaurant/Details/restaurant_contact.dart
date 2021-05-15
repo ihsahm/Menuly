@@ -101,7 +101,7 @@ class _AreaDetailsState extends State<AreaDetails> {
                               color: Colors.blue[700]),
                           title: Text('Like us on facebook'),
                           onTap: () {
-                            launch('url: ${widget.facebook}');
+                            //launch('url: ${widget.facebook}').toString();
                           },
                         ),
                         ListTile(
@@ -109,7 +109,7 @@ class _AreaDetailsState extends State<AreaDetails> {
                               color: Colors.pink[300]),
                           title: Text('Follow us on instagram'),
                           onTap: () {
-                            launch('url:${widget.instagram}');
+                            //   launch('url:${widget.instagram}');
                           },
                         )
                       ],

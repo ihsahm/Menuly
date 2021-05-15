@@ -3,9 +3,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce/Contents/HomeContent/HomeList/Shopping/Content/shopping_content.dart';
 import 'package:e_commerce/Contents/HomeContent/HomeList/Shopping/Details/shopping_details.dart';
 import 'package:e_commerce/Database/Querying/ShopQuery/shop_query.dart';
+import 'package:e_commerce/zRealDistance/AssistantMethods.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 
 class Shopping extends StatefulWidget {
@@ -32,11 +34,16 @@ class _ShoppingState extends State<Shopping> {
         desiredAccuracy: LocationAccuracy.bestForNavigation);
     passlat = position.latitude;
     passlong = position.longitude;
-    distance = Geolocator.distanceBetween(
-        position.latitude, position.longitude, slat, slon);
-    distance = distance.roundToDouble() / 1000;
-    String temp = distance.toStringAsFixed(2);
-    return temp;
+    // distance = Geolocator.distanceBetween(
+    //     position.latitude, position.longitude, slat, slon);
+    // distance = distance.roundToDouble() / 1000;
+    // String temp = distance.toStringAsFixed(2);
+
+    LatLng a = LatLng(passlat, passlong);
+    LatLng b = LatLng(slat, slon);
+
+    var details = await AssistantMethods.obtainDirectionDetails(a, b);
+    return details.distanceText;
   }
 
   @override
@@ -171,7 +178,7 @@ class _ShoppingState extends State<Shopping> {
                 padding: EdgeInsets.only(left: 5.0, right: 5.0, top: 1.0),
                 child: RaisedButton(
                   textColor: Colors.white,
-                  color: Colors.orange,
+                  color: Colors.greenAccent[400],
                   child: Text("All"),
                   onPressed: () {
                     val.getAllData().then((value) {
@@ -195,7 +202,7 @@ class _ShoppingState extends State<Shopping> {
                 padding: EdgeInsets.only(left: 5.0, right: 5.0, top: 1.0),
                 child: RaisedButton(
                   textColor: Colors.white,
-                  color: Colors.orange,
+                  color: Colors.greenAccent[400],
                   child: Text("Supermarket"),
                   onPressed: () {
                     val.getSuperMarket().then((value) {
@@ -219,7 +226,7 @@ class _ShoppingState extends State<Shopping> {
                 padding: EdgeInsets.only(left: 5.0, right: 5.0, top: 1.0),
                 child: RaisedButton(
                   textColor: Colors.white,
-                  color: Colors.orange,
+                  color: Colors.greenAccent[400],
                   child: Text("Minimarket"),
                   onPressed: () {
                     val.getMiniMarket().then((value) {
