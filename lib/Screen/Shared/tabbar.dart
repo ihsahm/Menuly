@@ -3,13 +3,11 @@ import 'package:e_commerce/Contents/HomeContent/HomeList/Entertainment/Details/e
 import 'package:e_commerce/Contents/HomeContent/HomeList/Entertainment/entertainment.dart';
 import 'package:e_commerce/Contents/HomeContent/HomeList/Hotels/HotelDetails/hotel_details.dart';
 import 'package:e_commerce/Contents/HomeContent/HomeList/Hotels/hotel.dart';
-import 'package:e_commerce/Contents/HomeContent/HomeList/Parking/parking.dart';
 import 'package:e_commerce/Contents/HomeContent/HomeList/Restaurant/RestaurantDetailPage/restaurant_detail_screen.dart';
 import 'package:e_commerce/Contents/HomeContent/HomeList/Restaurant/restaurant.dart';
 import 'package:e_commerce/Contents/HomeContent/HomeList/Shopping/Details/shopping_details.dart';
 import 'package:e_commerce/Contents/HomeContent/HomeList/Shopping/shopping.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:geolocator/geolocator.dart';
 

@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:e_commerce/Screen/EventPage/event_page.dart';
-import 'package:e_commerce/Screen/Search/search_screen.dart';
 import 'package:e_commerce/Screen/Settings/settings.dart';
 import 'package:e_commerce/Screen/Shared/tabbar.dart';
 import 'package:e_commerce/Services/push_notification.dart';

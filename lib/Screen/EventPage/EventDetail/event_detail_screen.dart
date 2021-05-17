@@ -3,8 +3,6 @@ import 'package:e_commerce/Contents/EventsContent/EventDetail/event_detail.dart'
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:fluttericon/entypo_icons.dart';
-import 'package:fluttericon/typicons_icons.dart';
-import 'package:ussd/ussd.dart';
 
 import '../../../main.dart';
 
