@@ -99,45 +99,15 @@ class _AreaDetailScreenState extends State<AreaDetailScreen> {
                 backgroundColor: Colors.blueGrey,
                 pinned: true,
                 expandedHeight: 300,
-                flexibleSpace: FlexibleSpaceBar(
-                  /*    title: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      widget.restaurantName,
-                      style: TextStyle(fontSize: 15),
-                    ),
-                  ),*/
-                  background: SizedBox(
-                    height: 150,
-                    // decoration: BoxDecoration(
-                    //     color: Colors.white,
-                    //     image: DecorationImage(
-                    //         fit: BoxFit.cover,
-                    //         image: NetworkImage(widget.restaurantImage)),
-                    //     borderRadius: BorderRadius.circular(5),
-                    //     boxShadow: [
-                    //       BoxShadow(
-                    //           color: Colors.grey[300],
-                    //           offset: Offset(-2, -1),
-                    //           blurRadius: 5),
-                    //     ]),
-                    child: CachedNetworkImage(
+                flexibleSpace: Stack(
+                  children: [
+                    Positioned.fill(
+                      child: CachedNetworkImage(
                         imageUrl: widget.restaurantImage,
-                        fit: BoxFit.cover), //Container(
-                    //   decoration: BoxDecoration(
-                    //       borderRadius: BorderRadius.circular(5),
-                    //       gradient: LinearGradient(
-                    //           begin: Alignment.bottomRight,
-                    //           stops: [
-                    //             0.1,
-                    //             0.9
-                    //           ],
-                    //           colors: [
-                    //             Colors.black.withOpacity(.8),
-                    //             Colors.black.withOpacity(.1)
-                    //           ])),
-                    // ),
-                  ),
+                        fit: BoxFit.cover,
+                      ),
+                    )
+                  ],
                 ),
                 bottom: TabBar(
                   tabs: [

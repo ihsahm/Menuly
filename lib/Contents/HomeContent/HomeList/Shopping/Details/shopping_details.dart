@@ -74,44 +74,16 @@ class _ShoppingDetailsState extends State<ShoppingDetails> {
               backgroundColor: Colors.blueGrey,
               pinned: true,
               expandedHeight: 300,
-              flexibleSpace: FlexibleSpaceBar(
-                  /* title: Text(
-                 widget.restaurantName,
-               ),*/
-                  background: CachedNetworkImage(
-                imageUrl: widget.image,
-                fit: BoxFit.cover,
-              ) /*Container(
-                  height: 150,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      image: DecorationImage(
-                          fit: BoxFit.cover,
-                          image: NetworkImage(
-                              "https://addisfortune.net/wp-content/uploads/2015/02/The-New-Face-of-Retail-Trade.jpg")),
-                      borderRadius: BorderRadius.circular(5),
-                      boxShadow: [
-                        BoxShadow(
-                            color: Colors.grey[300],
-                            offset: Offset(-2, -1),
-                            blurRadius: 5),
-                      ]),
-                  child: Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        gradient: LinearGradient(
-                            begin: Alignment.bottomRight,
-                            stops: [
-                              0.1,
-                              0.9
-                            ],
-                            colors: [
-                              Colors.black.withOpacity(.8),
-                              Colors.black.withOpacity(.1)
-                            ])),
-                  ),
-                ),*/
-                  ),
+              flexibleSpace: Stack(
+                children: [
+                  Positioned.fill(
+                    child: CachedNetworkImage(
+                      imageUrl: widget.image,
+                      fit: BoxFit.cover,
+                    ),
+                  )
+                ],
+              ),
             ),
           ];
         },

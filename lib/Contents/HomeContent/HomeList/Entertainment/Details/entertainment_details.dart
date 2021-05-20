@@ -73,41 +73,15 @@ class _EntertainmentDetailsState extends State<EntertainmentDetails> {
                   backgroundColor: Colors.blueGrey,
                   pinned: true,
                   expandedHeight: 300,
-                  flexibleSpace: FlexibleSpaceBar(
-                    /* title: Text(
-                      widget.restaurantName,
-                    ),*/
-                    background: SizedBox(
-                      height: 150,
-                      // decoration: BoxDecoration(
-                      //     color: Colors.white,
-                      //     image: DecorationImage(
-                      //         fit: BoxFit.cover,
-                      //         image: NetworkImage(widget.image)),
-                      //     borderRadius: BorderRadius.circular(5),
-                      //     boxShadow: [
-                      //       BoxShadow(
-                      //           color: Colors.grey[300],
-                      //           offset: Offset(-2, -1),
-                      //           blurRadius: 5),
-                      //     ]),
-                      child: CachedNetworkImage(
-                          imageUrl: widget.image, fit: BoxFit.cover),
-                      // child: Container(
-                      //   decoration: BoxDecoration(
-                      //       borderRadius: BorderRadius.circular(5),
-                      //       gradient: LinearGradient(
-                      //           begin: Alignment.bottomRight,
-                      //           stops: [
-                      //             0.1,
-                      //             0.9
-                      //           ],
-                      //           colors: [
-                      //             Colors.black.withOpacity(.8),
-                      //             Colors.black.withOpacity(.1)
-                      //           ])),
-                      // ),
-                    ),
+                  flexibleSpace: Stack(
+                    children: [
+                      Positioned.fill(
+                        child: CachedNetworkImage(
+                          imageUrl: widget.image,
+                          fit: BoxFit.cover,
+                        ),
+                      )
+                    ],
                   ),
                 ),
               ];
