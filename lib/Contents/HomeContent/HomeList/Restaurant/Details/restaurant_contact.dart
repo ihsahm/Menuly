@@ -96,22 +96,22 @@ class _AreaDetailsState extends State<AreaDetails> {
                                 },
                               )
                             : Container()),*/
-                        ListTile(
-                          leading: Icon(Entypo.facebook_squared,
-                              color: Colors.blue[700]),
-                          title: Text('Like us on facebook'),
-                          onTap: () {
-                            //launch('url: ${widget.facebook}').toString();
-                          },
-                        ),
-                        ListTile(
-                          leading: Icon(FontAwesome5.instagram,
-                              color: Colors.pink[300]),
-                          title: Text('Follow us on instagram'),
-                          onTap: () {
-                            //   launch('url:${widget.instagram}');
-                          },
-                        )
+                        // ListTile(
+                        //   leading: Icon(Entypo.facebook_squared,
+                        //       color: Colors.blue[700]),
+                        //   title: Text('Like us on facebook'),
+                        //   onTap: () {
+                        //     //launch('url: ${widget.facebook}').toString();
+                        //   },
+                        // ),
+                        // ListTile(
+                        //   leading: Icon(FontAwesome5.instagram,
+                        //       color: Colors.pink[300]),
+                        //   title: Text('Follow us on instagram'),
+                        //   onTap: () {
+                        //     //   launch('url:${widget.instagram}');
+                        //   },
+                        // )
                       ],
                     ),
                   ),

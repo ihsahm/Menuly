@@ -61,7 +61,7 @@ class _EventContentState extends State<EventContent> {
                           child: Container(
                             // margin: const EdgeInsets.only(
                             //     left: 3, right: 3, bottom: 4),
-                            height: MediaQuery.of(context).size.height / 1.5,
+                            height: MediaQuery.of(context).size.height / 1.6,
                             //   width: MediaQuery.of(context).size.width / 1.02,
                             // decoration: BoxDecoration(
                             //     color: Colors.white,

@@ -4,9 +4,11 @@ import 'package:e_commerce/Contents/HomeContent/HomeList/Entertainment/Content/e
 import 'package:e_commerce/Contents/HomeContent/HomeList/Entertainment/Details/entertainment_details.dart';
 import 'package:e_commerce/Database/Querying/EntertainmentQuery/entertainment_query_list.dart';
 import 'package:e_commerce/Database/Querying/RestaurantQuery/restaurant_query_list.dart';
+import 'package:e_commerce/zRealDistance/AssistantMethods.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 
 class Entertainment extends StatefulWidget {
@@ -34,11 +36,16 @@ class _EntertainmentState extends State<Entertainment> {
         desiredAccuracy: LocationAccuracy.bestForNavigation);
     passlat = position.latitude;
     passlong = position.longitude;
-    distance = Geolocator.distanceBetween(
-        position.latitude, position.longitude, slat, slon);
-    distance = distance.roundToDouble() / 1000;
-    String temp = distance.toStringAsFixed(2);
-    return temp;
+    // distance = Geolocator.distanceBetween(
+    //     position.latitude, position.longitude, slat, slon);
+    // distance = distance.roundToDouble() / 1000;
+    // String temp = distance.toStringAsFixed(2);
+
+    LatLng a = LatLng(passlat, passlong);
+    LatLng b = LatLng(slat, slon);
+
+    var details = await AssistantMethods.obtainDirectionDetails(a, b);
+    return details.distanceText;
   }
 
   @override
