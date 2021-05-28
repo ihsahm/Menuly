@@ -9,6 +9,7 @@ class AreaDetailScreen extends StatefulWidget {
   final restaurantName;
   final restaurantMenu;
   final restaurantType;
+  final restaurantRating;
   final restaurantImage;
   final restaurantPhone;
   final restaurantEmail;
@@ -32,7 +33,8 @@ class AreaDetailScreen extends StatefulWidget {
       this.restaurantLatitude,
       this.restaurantLongtitude,
       this.userlocationLatitude,
-      this.userlocationLongtiude});
+      this.userlocationLongtiude,
+      this.restaurantRating});
   @override
   _AreaDetailScreenState createState() => _AreaDetailScreenState();
 }
@@ -84,10 +86,13 @@ class _AreaDetailScreenState extends State<AreaDetailScreen> {
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       // borderRadius: BorderRadius.circular(50),
-                      color: Colors.grey[600],
+                      color: Colors.white,
                     ),
                     child: IconButton(
-                      icon: Icon(Icons.arrow_back),
+                      icon: Icon(
+                        Icons.arrow_back,
+                        color: Colors.black,
+                      ),
                       onPressed: () {
                         Navigator.pop(context);
                       },
@@ -96,7 +101,7 @@ class _AreaDetailScreenState extends State<AreaDetailScreen> {
                 ),
                 floating: false,
                 snap: false,
-                backgroundColor: Colors.blueGrey,
+                backgroundColor: Colors.white,
                 pinned: true,
                 expandedHeight: 300,
                 flexibleSpace: Stack(
@@ -128,6 +133,7 @@ class _AreaDetailScreenState extends State<AreaDetailScreen> {
             ),
             AreaDetails(
               image: widget.restaurantImage,
+              rating: widget.restaurantRating,
               menuDoc: widget.restaurantMenu,
               facebook: widget.restaurantFacebook,
               instagram: widget.restaurantInstagram,
@@ -140,7 +146,7 @@ class _AreaDetailScreenState extends State<AreaDetailScreen> {
       ),
       bottomNavigationBar: Container(
         height: 50,
-        child: FlatButton.icon(
+        child: TextButton.icon(
           icon: Icon(
             FontAwesome.direction,
             color: Colors.white,
@@ -152,7 +158,9 @@ class _AreaDetailScreenState extends State<AreaDetailScreen> {
             'Get direction',
             style: TextStyle(color: Colors.white),
           ),
-          color: Colors.blue,
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+          ),
         ),
       ),
     );

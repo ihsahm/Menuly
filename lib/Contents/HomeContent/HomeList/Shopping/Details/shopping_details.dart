@@ -59,10 +59,13 @@ class _ShoppingDetailsState extends State<ShoppingDetails> {
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     // borderRadius: BorderRadius.circular(50),
-                    color: Colors.grey[600],
+                    color: Colors.white,
                   ),
                   child: IconButton(
-                    icon: Icon(Icons.arrow_back),
+                    icon: Icon(
+                      Icons.arrow_back,
+                      color: Colors.black,
+                    ),
                     onPressed: () {
                       Navigator.pop(context);
                     },
@@ -71,7 +74,7 @@ class _ShoppingDetailsState extends State<ShoppingDetails> {
               ),
               floating: false,
               snap: false,
-              backgroundColor: Colors.blueGrey,
+              backgroundColor: Colors.white,
               pinned: true,
               expandedHeight: 300,
               flexibleSpace: Stack(
@@ -96,7 +99,7 @@ class _ShoppingDetailsState extends State<ShoppingDetails> {
       ),
       bottomNavigationBar: Container(
         height: 50,
-        child: FlatButton.icon(
+        child: TextButton.icon(
           icon: Icon(
             FontAwesome.direction,
             color: Colors.white,
@@ -108,7 +111,9 @@ class _ShoppingDetailsState extends State<ShoppingDetails> {
             'Get direction',
             style: TextStyle(color: Colors.white),
           ),
-          color: Colors.blue,
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+          ),
         ),
       ),
     );

@@ -1,10 +1,11 @@
 import 'dart:async';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:e_commerce/Database/Download/getData.dart';
-import 'package:e_commerce/zRealDistance/AssistantMethods.dart';
+import 'package:e_commerce/Services/GetCurrentLocation/getLocation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:lottie/lottie.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 
 import 'RestaurantDetailPage/restaurant_detail_screen.dart';
@@ -18,11 +19,8 @@ class _RestaurantListState extends State<RestaurantList> {
   Timer timer;
   Stream items;
   GetData crudObj = new GetData();
+  LocationProvider locationProvider = new LocationProvider();
 
-  double distance = 0;
-  var locationMessage = "";
-  var passlat;
-  var passlong;
   @override
   void initState() {
     crudObj.getRestaurantData().then((results) {
@@ -31,25 +29,6 @@ class _RestaurantListState extends State<RestaurantList> {
       });
     });
     super.initState();
-  }
-
-  Future<String> getCurrentLocation(String slatitude, String slongitude) async {
-    var slat = double.parse(slatitude);
-    var slon = double.parse(slongitude);
-    var position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.bestForNavigation);
-    passlat = position.latitude;
-    passlong = position.longitude;
-    // distance = Geolocator.distanceBetween(
-    //     position.latitude, position.longitude, slat, slon);
-    // distance = distance.roundToDouble() / 1000;
-    // String temp = distance.toStringAsFixed(2);
-
-    LatLng a = LatLng(passlat, passlong);
-    LatLng b = LatLng(slat, slon);
-
-    var details = await AssistantMethods.obtainDirectionDetails(a, b);
-    return details.distanceText;
   }
 
   @override
@@ -81,6 +60,8 @@ class _RestaurantListState extends State<RestaurantList> {
                                         "${doc[index].data()['image']}",
                                     restaurantEmail:
                                         "${doc[index].data()['email']}",
+                                    restaurantRating:
+                                        doc[index].data()["rating"].toDouble(),
                                     restaurantInstagram:
                                         "${doc[index].data()['instagram']}",
                                     restaurantFacebook:
@@ -93,8 +74,10 @@ class _RestaurantListState extends State<RestaurantList> {
                                         "${doc[index].data()['latitude']}",
                                     restaurantLongtitude:
                                         "${doc[index].data()['longtiude']}",
-                                    userlocationLatitude: passlat,
-                                    userlocationLongtiude: passlong,
+                                    userlocationLatitude:
+                                        locationProvider.passlat,
+                                    userlocationLongtiude:
+                                        locationProvider.passlong,
                                   )));
                     },
                     child: Card(
@@ -126,65 +109,77 @@ class _RestaurantListState extends State<RestaurantList> {
                             ),
                             ListTile(
                               onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (BuildContext context) =>
-                                            AreaDetailScreen(
-                                              restaurantName:
-                                                  "${doc[index].data()['name']}",
-                                              restaurantImage:
-                                                  "${doc[index].data()['image']}",
-                                              restaurantMenu:
-                                                  doc[index].documentID,
-                                              restaurantEmail:
-                                                  "${doc[index].data()['email']}",
-                                              restaurantInstagram:
-                                                  "${doc[index].data()['instagram']}",
-                                              restaurantFacebook:
-                                                  "${doc[index].data()['facebook']}",
-                                              restaurantPhone:
-                                                  "${doc[index].data()['phone']}",
-                                              restaurantType:
-                                                  "${doc[index].data()['type']}",
-                                            )));
+                                // Navigator.push(
+                                //     context,
+                                //     MaterialPageRoute(
+                                //         builder: (BuildContext context) =>
+                                //             AreaDetailScreen(
+                                //               restaurantName:
+                                //                   "${doc[index].data()['name']}",
+                                //               restaurantImage:
+                                //                   "${doc[index].data()['image']}",
+                                //               restaurantMenu:
+                                //                   doc[index].documentID,
+                                //               restaurantEmail:
+                                //                   "${doc[index].data()['email']}",
+                                //               restaurantInstagram:
+                                //                   "${doc[index].data()['instagram']}",
+                                //               restaurantFacebook:
+                                //                   "${doc[index].data()['facebook']}",
+                                //               restaurantPhone:
+                                //                   "${doc[index].data()['phone']}",
+                                //               restaurantType:
+                                //                   "${doc[index].data()['type']}",
+                                //             )));
                               },
                               title: Text(
                                 '${doc[index].data()['name']}',
                                 style: TextStyle(
                                     fontSize: 17, fontWeight: FontWeight.w500),
                               ),
-                              subtitle: FutureBuilder<String>(
-                                future: getCurrentLocation(
-                                    '${doc[index].data()['latitude']}',
-                                    '${doc[index].data()['longtiude']}'),
-                                builder: (BuildContext context,
-                                    AsyncSnapshot<String> snapshot) {
-                                  List<Widget> children;
-                                  if (snapshot.hasData) {
-                                    children = <Widget>[
-                                      Text('Distance: ${snapshot.data}'),
-                                    ];
-                                  } else {
-                                    children = <Widget>[
-                                      JumpingText('Calculating distance...'),
-                                    ];
-                                  }
+                              subtitle: ListView(
+                                physics: NeverScrollableScrollPhysics(),
+                                shrinkWrap: true,
+                                children: [
+                                  FutureBuilder<String>(
+                                    future: locationProvider.getCurrentLocation(
+                                        '${doc[index].data()['latitude']}',
+                                        '${doc[index].data()['longtiude']}'),
+                                    builder: (BuildContext context,
+                                        AsyncSnapshot<String> snapshot) {
+                                      List<Widget> children;
+                                      if (snapshot.hasData) {
+                                        children = <Widget>[
+                                          Text('Distance: ${snapshot.data}'),
+                                        ];
+                                      } else {
+                                        children = <Widget>[
+                                          JumpingText(
+                                              'Calculating distance...'),
+                                        ];
+                                      }
 
-                                  return Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: children,
-                                  );
-                                },
+                                      return Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: children);
+                                    },
+                                  ),
+                                  RatingBarIndicator(
+                                    rating:
+                                        doc[index].data()["rating"].toDouble(),
+                                    itemBuilder: (context, index) => Icon(
+                                      Icons.star,
+                                      color: Colors.amber,
+                                    ),
+                                    itemCount: 5,
+                                    itemSize: 20.0,
+                                    direction: Axis.horizontal,
+                                  ),
+                                ],
                               ),
-
-                              // subtitle: Text(
-                              //   getCurrentLocation(
-                              //       doc[index].data()['latitude'],
-                              //       doc[index].data()['longtiude']),
-                              // ),
                             ),
                           ],
                         ),
@@ -194,9 +189,11 @@ class _RestaurantListState extends State<RestaurantList> {
                 },
               );
             } else {
-              return Padding(
-                padding: const EdgeInsets.only(top: 18.0),
-                child: Center(child: Image.asset('assets/loading.gif')),
+              return Column(
+                children: [
+                  Lottie.asset('assets/loading.json', animate: true),
+                  Text('Loading, please wait'),
+                ],
               );
             }
           }),

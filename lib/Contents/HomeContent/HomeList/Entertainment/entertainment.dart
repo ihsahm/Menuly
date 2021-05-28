@@ -3,12 +3,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce/Contents/HomeContent/HomeList/Entertainment/Content/entertainment_list.dart';
 import 'package:e_commerce/Contents/HomeContent/HomeList/Entertainment/Details/entertainment_details.dart';
 import 'package:e_commerce/Database/Querying/EntertainmentQuery/entertainment_query_list.dart';
-import 'package:e_commerce/Database/Querying/RestaurantQuery/restaurant_query_list.dart';
-import 'package:e_commerce/zRealDistance/AssistantMethods.dart';
+import 'package:e_commerce/Services/GetCurrentLocation/getLocation.dart';
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 
 class Entertainment extends StatefulWidget {
@@ -19,34 +16,10 @@ class Entertainment extends StatefulWidget {
 class _EntertainmentState extends State<Entertainment> {
   final TextEditingController searchController = new TextEditingController();
 
+  LocationProvider locationProvider = new LocationProvider();
   final ScrollController controller = new ScrollController();
   QuerySnapshot snapshotData;
   bool isExecuted = false;
-  final double height = 400;
-
-  double distance = 0;
-  var locationMessage = "";
-  var passlat;
-  var passlong;
-  @override
-  Future<String> getCurrentLocation(String slatitude, String slongitude) async {
-    var slat = double.parse(slatitude);
-    var slon = double.parse(slongitude);
-    var position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.bestForNavigation);
-    passlat = position.latitude;
-    passlong = position.longitude;
-    // distance = Geolocator.distanceBetween(
-    //     position.latitude, position.longitude, slat, slon);
-    // distance = distance.roundToDouble() / 1000;
-    // String temp = distance.toStringAsFixed(2);
-
-    LatLng a = LatLng(passlat, passlong);
-    LatLng b = LatLng(slat, slon);
-
-    var details = await AssistantMethods.obtainDirectionDetails(a, b);
-    return details.distanceText;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -74,8 +47,8 @@ class _EntertainmentState extends State<Entertainment> {
                                 "${snapshotData.docs[index].data()['latitude']}",
                             longitude:
                                 "${snapshotData.docs[index].data()['longitude']}",
-                            userlocationLatitude: passlat,
-                            userlocationLongitude: passlong,
+                            userlocationLatitude: locationProvider.passlat,
+                            userlocationLongitude: locationProvider.passlong,
                           )));
             },
             child: Card(
@@ -124,8 +97,10 @@ class _EntertainmentState extends State<Entertainment> {
                                           "${snapshotData.docs[index].data()['latitude']}",
                                       longitude:
                                           "${snapshotData.docs[index].data()['longitude']}",
-                                      userlocationLatitude: passlat,
-                                      userlocationLongitude: passlong,
+                                      userlocationLatitude:
+                                          locationProvider.passlat,
+                                      userlocationLongitude:
+                                          locationProvider.passlong,
                                     )));
                       },
                       title: Text(
@@ -134,7 +109,7 @@ class _EntertainmentState extends State<Entertainment> {
                             fontSize: 17, fontWeight: FontWeight.w500),
                       ),
                       subtitle: FutureBuilder<String>(
-                        future: getCurrentLocation(
+                        future: locationProvider.getCurrentLocation(
                             '${snapshotData.docs[index].data()['latitude']}',
                             '${snapshotData.docs[index].data()['longtiude']}'),
                         builder: (BuildContext context,
@@ -142,7 +117,7 @@ class _EntertainmentState extends State<Entertainment> {
                           List<Widget> children;
                           if (snapshot.hasData) {
                             children = <Widget>[
-                              Text('Distance: ${snapshot.data} km.'),
+                              Text('Distance: ${snapshot.data}'),
                             ];
                           } else {
                             children = <Widget>[
@@ -181,10 +156,21 @@ class _EntertainmentState extends State<Entertainment> {
                 builder: (val) {
                   return Padding(
                     padding: EdgeInsets.only(left: 5.0, right: 5.0, top: 1.0),
-                    child: RaisedButton(
-                      textColor: Colors.white,
-                      color: Colors.greenAccent[400],
-                      child: Text("All"),
+                    child: ElevatedButton(
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              Colors.greenAccent[400]),
+                          shape:
+                              MaterialStateProperty.resolveWith<OutlinedBorder>(
+                                  (_) {
+                            return RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(30.0),
+                            );
+                          })),
+                      child: Text(
+                        "All",
+                        style: TextStyle(color: Colors.white),
+                      ),
                       onPressed: () {
                         val.getAllData().then((value) {
                           snapshotData = value;
@@ -193,9 +179,6 @@ class _EntertainmentState extends State<Entertainment> {
                           });
                         });
                       },
-                      shape: new RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(30.0),
-                      ),
                     ),
                   );
                 },
@@ -205,9 +188,17 @@ class _EntertainmentState extends State<Entertainment> {
                 builder: (val) {
                   return Padding(
                     padding: EdgeInsets.only(left: 5.0, right: 5.0, top: 1.0),
-                    child: RaisedButton(
-                      textColor: Colors.white,
-                      color: Colors.greenAccent[400],
+                    child: ElevatedButton(
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              Colors.greenAccent[400]),
+                          shape:
+                              MaterialStateProperty.resolveWith<OutlinedBorder>(
+                                  (_) {
+                            return RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(30.0),
+                            );
+                          })),
                       child: Text("Gamezones"),
                       onPressed: () {
                         val.getGameZoneData().then((value) {
@@ -217,9 +208,6 @@ class _EntertainmentState extends State<Entertainment> {
                           });
                         });
                       },
-                      shape: new RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(30.0),
-                      ),
                     ),
                   );
                 },
@@ -229,9 +217,17 @@ class _EntertainmentState extends State<Entertainment> {
                 builder: (val) {
                   return Padding(
                     padding: EdgeInsets.only(left: 5.0, right: 5.0, top: 1.0),
-                    child: RaisedButton(
-                      textColor: Colors.white,
-                      color: Colors.greenAccent[400],
+                    child: ElevatedButton(
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              Colors.greenAccent[400]),
+                          shape:
+                              MaterialStateProperty.resolveWith<OutlinedBorder>(
+                                  (_) {
+                            return RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(30.0),
+                            );
+                          })),
                       child: Text("Cinema"),
                       onPressed: () {
                         val.getCinemaData().then((value) {
@@ -241,9 +237,6 @@ class _EntertainmentState extends State<Entertainment> {
                           });
                         });
                       },
-                      shape: new RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(30.0),
-                      ),
                     ),
                   );
                 },
@@ -253,9 +246,7 @@ class _EntertainmentState extends State<Entertainment> {
                 builder: (val) {
                   return Padding(
                     padding: EdgeInsets.only(left: 5.0, right: 5.0, top: 1.0),
-                    child: RaisedButton(
-                      textColor: Colors.white,
-                      color: Colors.greenAccent[400],
+                    child: ElevatedButton(
                       child: Text("Theater"),
                       onPressed: () {
                         val.getTheaterData().then((value) {
@@ -265,9 +256,16 @@ class _EntertainmentState extends State<Entertainment> {
                           });
                         });
                       },
-                      shape: new RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(30.0),
-                      ),
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              Colors.greenAccent[400]),
+                          shape:
+                              MaterialStateProperty.resolveWith<OutlinedBorder>(
+                                  (_) {
+                            return RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(30.0),
+                            );
+                          })),
                     ),
                   );
                 },
@@ -277,9 +275,7 @@ class _EntertainmentState extends State<Entertainment> {
                 builder: (val) {
                   return Padding(
                     padding: EdgeInsets.only(left: 5.0, right: 5.0, top: 1.0),
-                    child: RaisedButton(
-                      textColor: Colors.white,
-                      color: Colors.greenAccent[400],
+                    child: ElevatedButton(
                       child: Text("Parks"),
                       onPressed: () {
                         val.getParksData().then((value) {
@@ -289,9 +285,16 @@ class _EntertainmentState extends State<Entertainment> {
                           });
                         });
                       },
-                      shape: new RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(30.0),
-                      ),
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              Colors.greenAccent[400]),
+                          shape:
+                              MaterialStateProperty.resolveWith<OutlinedBorder>(
+                                  (_) {
+                            return RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(30.0),
+                            );
+                          })),
                     ),
                   );
                 },

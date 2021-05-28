@@ -2,8 +2,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce/Contents/HomeContent/HomeList/Restaurant/restaurant_list.dart';
 import 'package:e_commerce/Database/Querying/RestaurantQuery/restaurant_query_list.dart';
+import 'package:e_commerce/Services/GetCurrentLocation/getLocation.dart';
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 
@@ -20,26 +21,8 @@ class _RestaurantMenuState extends State<RestaurantMenu> {
   final ScrollController controller = new ScrollController();
   QuerySnapshot snapshotData;
   bool isExecuted = false;
-  final double height = 400;
 
-  double distance = 0;
-  var locationMessage = "";
-  var passlat;
-  var passlong;
-  @override
-  Future<String> getCurrentLocation(String slatitude, String slongitude) async {
-    var slat = double.parse(slatitude);
-    var slon = double.parse(slongitude);
-    var position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.bestForNavigation);
-    passlat = position.latitude;
-    passlong = position.longitude;
-    distance = Geolocator.distanceBetween(
-        position.latitude, position.longitude, slat, slon);
-    distance = distance.roundToDouble() / 1000;
-    String temp = distance.toStringAsFixed(2);
-    return temp;
-  }
+  LocationProvider locationProvider = new LocationProvider();
 
   @override
   Widget build(BuildContext context) {
@@ -72,6 +55,11 @@ class _RestaurantMenuState extends State<RestaurantMenu> {
                                 "${snapshotData.docs[index].data()['phone']}",
                             restaurantType:
                                 "${snapshotData.docs[index].data()['type']}",
+                            restaurantRating: snapshotData.docs[index]
+                                .data()["rating"]
+                                .toDouble(),
+                            userlocationLatitude: locationProvider.passlat,
+                            userlocationLongtiude: locationProvider.passlong,
                           )));
             },
             child: Card(
@@ -103,60 +91,80 @@ class _RestaurantMenuState extends State<RestaurantMenu> {
                     ),
                     ListTile(
                       onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (BuildContext context) =>
-                                    AreaDetailScreen(
-                                      restaurantName:
-                                          "${snapshotData.docs[index].data()['name']}",
-                                      restaurantMenu:
-                                          snapshotData.docs[index].id,
-                                      restaurantImage:
-                                          "${snapshotData.docs[index].data()['image']}",
-                                      restaurantEmail:
-                                          "${snapshotData.docs[index].data()['email']}",
-                                      restaurantInstagram:
-                                          "${snapshotData.docs[index].data()['instagram']}",
-                                      restaurantFacebook:
-                                          "${snapshotData.docs[index].data()['facebook']}",
-                                      restaurantPhone:
-                                          "${snapshotData.docs[index].data()['phone']}",
-                                      restaurantType:
-                                          "${snapshotData.docs[index].data()['type']}",
-                                    )));
+                        // Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         builder: (BuildContext context) =>
+                        //             AreaDetailScreen(
+                        //               restaurantName:
+                        //                   "${snapshotData.docs[index].data()['name']}",
+                        //               restaurantMenu:
+                        //                   snapshotData.docs[index].id,
+                        //               restaurantImage:
+                        //                   "${snapshotData.docs[index].data()['image']}",
+                        //               restaurantEmail:
+                        //                   "${snapshotData.docs[index].data()['email']}",
+                        //               restaurantInstagram:
+                        //                   "${snapshotData.docs[index].data()['instagram']}",
+                        //               restaurantFacebook:
+                        //                   "${snapshotData.docs[index].data()['facebook']}",
+                        //               restaurantPhone:
+                        //                   "${snapshotData.docs[index].data()['phone']}",
+                        //               restaurantType:
+                        //                   "${snapshotData.docs[index].data()['type']}",
+                        //               restaurantRating: snapshotData.docs[index]
+                        //                   .data()["rating"]
+                        //                   .toDouble(),
+                        //             )));
                       },
                       title: Text(
                         "${snapshotData.docs[index].data()['name']}",
                         style: TextStyle(
                             fontSize: 17, fontWeight: FontWeight.w500),
                       ),
-                      subtitle: FutureBuilder<String>(
-                        future: getCurrentLocation(
-                            '${snapshotData.docs[index].data()['latitude']}',
-                            '${snapshotData.docs[index].data()['longtiude']}'),
-                        builder: (BuildContext context,
-                            AsyncSnapshot<String> snapshot) {
-                          List<Widget> children;
-                          if (snapshot.hasData) {
-                            children = <Widget>[
-                              Text('Distance: ${snapshot.data} km.'),
-                            ];
-                          } else {
-                            children = <Widget>[
-                              JumpingText(
-                                'Calculating distance...',
-                              ),
-                            ];
-                          }
+                      subtitle: ListView(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          children: [
+                            FutureBuilder<String>(
+                              future: locationProvider.getCurrentLocation(
+                                  '${snapshotData.docs[index].data()['latitude']}',
+                                  '${snapshotData.docs[index].data()['longtiude']}'),
+                              builder: (BuildContext context,
+                                  AsyncSnapshot<String> snapshot) {
+                                List<Widget> children;
+                                if (snapshot.hasData) {
+                                  children = <Widget>[
+                                    Text('Distance: ${snapshot.data}'),
+                                  ];
+                                } else {
+                                  children = <Widget>[
+                                    JumpingText(
+                                      'Calculating distance...',
+                                    ),
+                                  ];
+                                }
 
-                          return Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: children,
-                          );
-                        },
-                      ),
+                                return Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: children,
+                                );
+                              },
+                            ),
+                            RatingBarIndicator(
+                              rating: snapshotData.docs[index]
+                                  .data()["rating"]
+                                  .toDouble(),
+                              itemBuilder: (context, index) => Icon(
+                                Icons.star,
+                                color: Colors.amber,
+                              ),
+                              itemCount: 5,
+                              itemSize: 20.0,
+                              direction: Axis.horizontal,
+                            ),
+                          ]),
                     ),
                   ],
                 ),
@@ -179,9 +187,17 @@ class _RestaurantMenuState extends State<RestaurantMenu> {
                 builder: (val) {
                   return Padding(
                     padding: EdgeInsets.only(left: 5.0, right: 5.0, top: 1.0),
-                    child: RaisedButton(
-                      textColor: Colors.white,
-                      color: Colors.greenAccent[400],
+                    child: ElevatedButton(
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              Colors.greenAccent[400]),
+                          shape:
+                              MaterialStateProperty.resolveWith<OutlinedBorder>(
+                                  (_) {
+                            return RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(30.0),
+                            );
+                          })),
                       child: Text("All"),
                       onPressed: () {
                         val.getAllData().then((value) {
@@ -191,9 +207,6 @@ class _RestaurantMenuState extends State<RestaurantMenu> {
                           });
                         });
                       },
-                      shape: new RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(30.0),
-                      ),
                     ),
                   );
                 },
@@ -203,9 +216,17 @@ class _RestaurantMenuState extends State<RestaurantMenu> {
                 builder: (val) {
                   return Padding(
                     padding: EdgeInsets.only(left: 5.0, right: 5.0, top: 1.0),
-                    child: RaisedButton(
-                      textColor: Colors.white,
-                      color: Colors.greenAccent[400],
+                    child: ElevatedButton(
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              Colors.greenAccent[400]),
+                          shape:
+                              MaterialStateProperty.resolveWith<OutlinedBorder>(
+                                  (_) {
+                            return RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(30.0),
+                            );
+                          })),
                       child: Text("Restaurant"),
                       onPressed: () {
                         val.getRestaurantData().then((value) {
@@ -215,9 +236,6 @@ class _RestaurantMenuState extends State<RestaurantMenu> {
                           });
                         });
                       },
-                      shape: new RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(30.0),
-                      ),
                     ),
                   );
                 },
@@ -227,9 +245,17 @@ class _RestaurantMenuState extends State<RestaurantMenu> {
                 builder: (val) {
                   return Padding(
                     padding: EdgeInsets.only(left: 5.0, right: 5.0, top: 1.0),
-                    child: RaisedButton(
-                      textColor: Colors.white,
-                      color: Colors.greenAccent[400],
+                    child: ElevatedButton(
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              Colors.greenAccent[400]),
+                          shape:
+                              MaterialStateProperty.resolveWith<OutlinedBorder>(
+                                  (_) {
+                            return RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(30.0),
+                            );
+                          })),
                       child: Text("Cafe"),
                       onPressed: () {
                         val.getCafeData().then((value) {
@@ -239,9 +265,6 @@ class _RestaurantMenuState extends State<RestaurantMenu> {
                           });
                         });
                       },
-                      shape: new RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(30.0),
-                      ),
                     ),
                   );
                 },
@@ -251,9 +274,17 @@ class _RestaurantMenuState extends State<RestaurantMenu> {
                 builder: (val) {
                   return Padding(
                     padding: EdgeInsets.only(left: 5.0, right: 5.0, top: 1.0),
-                    child: RaisedButton(
-                      textColor: Colors.white,
-                      color: Colors.greenAccent[400],
+                    child: ElevatedButton(
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              Colors.greenAccent[400]),
+                          shape:
+                              MaterialStateProperty.resolveWith<OutlinedBorder>(
+                                  (_) {
+                            return RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(30.0),
+                            );
+                          })),
                       child: Text("Burger&Pizza"),
                       onPressed: () {
                         val.getBurgerData().then((value) {
@@ -263,9 +294,6 @@ class _RestaurantMenuState extends State<RestaurantMenu> {
                           });
                         });
                       },
-                      shape: new RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(30.0),
-                      ),
                     ),
                   );
                 },
@@ -275,9 +303,17 @@ class _RestaurantMenuState extends State<RestaurantMenu> {
                 builder: (val) {
                   return Padding(
                     padding: EdgeInsets.only(left: 5.0, right: 5.0, top: 1.0),
-                    child: RaisedButton(
-                      textColor: Colors.white,
-                      color: Colors.greenAccent[400],
+                    child: ElevatedButton(
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              Colors.greenAccent[400]),
+                          shape:
+                              MaterialStateProperty.resolveWith<OutlinedBorder>(
+                                  (_) {
+                            return RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(30.0),
+                            );
+                          })),
                       child: Text("Fasting"),
                       onPressed: () {
                         val.getFastingData().then((value) {
@@ -287,9 +323,6 @@ class _RestaurantMenuState extends State<RestaurantMenu> {
                           });
                         });
                       },
-                      shape: new RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(30.0),
-                      ),
                     ),
                   );
                 },
@@ -299,9 +332,17 @@ class _RestaurantMenuState extends State<RestaurantMenu> {
                 builder: (val) {
                   return Padding(
                     padding: EdgeInsets.only(left: 5.0, right: 5.0, top: 1.0),
-                    child: RaisedButton(
-                      textColor: Colors.white,
-                      color: Colors.greenAccent[400],
+                    child: ElevatedButton(
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              Colors.greenAccent[400]),
+                          shape:
+                              MaterialStateProperty.resolveWith<OutlinedBorder>(
+                                  (_) {
+                            return RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(30.0),
+                            );
+                          })),
                       child: Text("Pasta"),
                       onPressed: () {
                         val.getPastaData().then((value) {
@@ -311,9 +352,6 @@ class _RestaurantMenuState extends State<RestaurantMenu> {
                           });
                         });
                       },
-                      shape: new RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(30.0),
-                      ),
                     ),
                   );
                 },
@@ -332,10 +370,5 @@ class _RestaurantMenuState extends State<RestaurantMenu> {
         isExecuted ? searchedData() : RestaurantList(),
       ],
     );
-  }
-
-  void _onTap(int i) {
-    controller.animateTo(0,
-        duration: Duration(milliseconds: 500), curve: Curves.easeInOut);
   }
 }

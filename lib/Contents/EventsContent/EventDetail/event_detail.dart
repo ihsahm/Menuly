@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 class EventDetail extends StatefulWidget {
   final eventPicture;
   final eventDetail;
+  final eventLocation;
+  final eventAvailable;
   final eventName;
   final eventDate;
   final eventPrice;
@@ -14,7 +16,9 @@ class EventDetail extends StatefulWidget {
       this.eventDetail,
       this.eventPrice,
       this.eventName,
-      this.eventDate})
+      this.eventDate,
+      this.eventAvailable,
+      this.eventLocation})
       : super(key: key);
   @override
   _EventDetailState createState() => _EventDetailState();
@@ -37,25 +41,56 @@ class _EventDetailState extends State<EventDetail> {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.only(top: 18.0, bottom: 10),
-          child: Center(
-              child: Text(
-            "Price: ${widget.eventPrice} br.",
-            style: TextStyle(
-                fontSize: 19,
-                fontWeight: FontWeight.w600,
-                color: Colors.blueGrey[800]),
-          )),
+          padding: const EdgeInsets.only(top: 18.0, bottom: 10, left: 5.0),
+          child: RichText(
+            text: TextSpan(
+                text: 'Price: ',
+                style: TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.blueGrey[500]),
+                children: <TextSpan>[
+                  TextSpan(
+                    text: "${widget.eventPrice} br.",
+                    style: TextStyle(color: Colors.blueAccent, fontSize: 18),
+                  )
+                ]),
+          ),
         ),
-        // Padding(
-        //   padding: const EdgeInsets.only(top: 0, bottom: 4),
-        //   child: Center(
-        //       child: Text(
-        //     "${widget.eventDate}",
-        //     style: TextStyle(fontSize: 19),
-        //   )
-        //   ),
-        // ),
+        Padding(
+          padding: const EdgeInsets.only(top: 4.0, bottom: 10, left: 5.0),
+          child: RichText(
+            text: TextSpan(
+                text: 'Location: ',
+                style: TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.blueGrey[500]),
+                children: <TextSpan>[
+                  TextSpan(
+                    text: "${widget.eventLocation}",
+                    style: TextStyle(color: Colors.blueAccent, fontSize: 18),
+                  )
+                ]),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: 4.0, bottom: 10, left: 5.0),
+          child: RichText(
+            text: TextSpan(
+                text: 'Tickets available at: ',
+                style: TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.blueGrey[500]),
+                children: <TextSpan>[
+                  TextSpan(
+                    text: widget.eventAvailable,
+                    style: TextStyle(color: Colors.blueAccent, fontSize: 18),
+                  )
+                ]),
+          ),
+        ),
         Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(

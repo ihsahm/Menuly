@@ -1,26 +1,26 @@
 import 'dart:async';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:e_commerce/Contents/HomeContent/HomeList/Entertainment/Details/entertainment_details.dart';
+import 'package:e_commerce/Contents/HomeContent/HomeList/Hospitals/HospitalDetails/hospital_details.dart';
 import 'package:e_commerce/Database/Download/getData.dart';
 import 'package:e_commerce/Services/GetCurrentLocation/getLocation.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 
-class EntertainmentList extends StatefulWidget {
+class HospitalList extends StatefulWidget {
   @override
-  _EntertainmentListState createState() => _EntertainmentListState();
+  _HospitalListState createState() => _HospitalListState();
 }
 
-class _EntertainmentListState extends State<EntertainmentList> {
+class _HospitalListState extends State<HospitalList> {
   Timer timer;
   Stream items;
-
-  LocationProvider locationProvider = new LocationProvider();
   GetData crudObj = new GetData();
+  LocationProvider locationProvider = new LocationProvider();
+
   @override
   void initState() {
-    crudObj.getEntertainmentData().then((results) {
+    crudObj.getHospitalData().then((results) {
       setState(() {
         items = results;
       });
@@ -31,16 +31,17 @@ class _EntertainmentListState extends State<EntertainmentList> {
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
+      borderRadius: BorderRadius.circular(10),
       child: StreamBuilder(
           stream: items,
           builder: (context, snapshot) {
             if (snapshot.data != null) {
               var doc = snapshot.data.documents;
               return ListView.builder(
-                physics: NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
-                itemCount: doc.length,
+                physics: NeverScrollableScrollPhysics(),
                 scrollDirection: Axis.vertical,
+                itemCount: doc.length,
                 itemBuilder: (BuildContext context, int index) {
                   return GestureDetector(
                     onTap: () {
@@ -48,10 +49,13 @@ class _EntertainmentListState extends State<EntertainmentList> {
                           context,
                           MaterialPageRoute(
                               builder: (BuildContext context) =>
-                                  EntertainmentDetails(
-                                    name: "${doc[index].data()['name']}",
-                                    info: "${doc[index].data()['info']}",
+                                  HospitalDetails(
+                                    name:
+                                        "${doc[index].data()['restaurantName']}",
+                                    email: "${doc[index].data()['email']}",
                                     phone: "${doc[index].data()['phone']}",
+                                    info: "${doc[index].data()['info']}",
+                                    type: "${doc[index].data()['type']}",
                                     image: "${doc[index].data()['image']}",
                                     latitude:
                                         "${doc[index].data()['latitude']}",
@@ -85,15 +89,11 @@ class _EntertainmentListState extends State<EntertainmentList> {
                             SizedBox(
                               height: 200,
                               width: double.infinity,
-                              child: doc[index].data()['image'] != null
-                                  ? CachedNetworkImage(
-                                      imageUrl: doc[index].data()['image'],
-                                      fit: BoxFit.cover,
-                                    )
-                                  : Image.asset(
-                                      'assets/noimage.jpg',
-                                      fit: BoxFit.cover,
-                                    ),
+                              child: CachedNetworkImage(
+                                imageUrl: "${doc[index].data()['image']}",
+                                fit: BoxFit.cover,
+                                // cache: true,
+                              ),
                             ),
                             ListTile(
                               onTap: () {
@@ -101,15 +101,19 @@ class _EntertainmentListState extends State<EntertainmentList> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (BuildContext context) =>
-                                            EntertainmentDetails(
+                                            HospitalDetails(
                                               name:
-                                                  "${doc[index].data()['name']}",
+                                                  "${doc[index].data()['restaurantName']}",
                                               info:
                                                   "${doc[index].data()['info']}",
-                                              phone:
-                                                  "${doc[index].data()['phone']}",
+                                              type:
+                                                  "${doc[index].data()['type']}",
                                               image:
                                                   "${doc[index].data()['image']}",
+                                              email:
+                                                  "${doc[index].data()['email']}",
+                                              phone:
+                                                  "${doc[index].data()['phone']}",
                                               latitude:
                                                   "${doc[index].data()['latitude']}",
                                               longitude:
@@ -161,13 +165,16 @@ class _EntertainmentListState extends State<EntertainmentList> {
                 },
               );
             } else {
-              return Center(
-                  child: Column(
-                children: [
-                  Lottie.asset('assets/loading.json', animate: true),
-                  Text('Loading, please wait'),
-                ],
-              ));
+              return Padding(
+                padding: const EdgeInsets.only(top: 18.0),
+                child: Center(
+                    child: Column(
+                  children: [
+                    Lottie.asset('assets/loading.json', animate: true),
+                    Text('Loading, please wait'),
+                  ],
+                )),
+              );
             }
           }),
     );

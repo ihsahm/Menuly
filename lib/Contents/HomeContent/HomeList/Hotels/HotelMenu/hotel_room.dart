@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
+import 'package:lottie/lottie.dart';
 
 class RoomDetails extends StatefulWidget {
   final room;
@@ -53,7 +54,12 @@ class _RoomDetailsState extends State<RoomDetails> {
           );
         } else {
           return Center(
-            child: Image.asset('assets/loading.gif'),
+            child: Column(
+              children: [
+                Lottie.asset('assets/loading.json', animate: true),
+                Text('Loading, please wait'),
+              ],
+            ),
           );
         }
       },

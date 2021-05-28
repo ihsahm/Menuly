@@ -1,31 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class HotelContact extends StatefulWidget {
+class HospitalContact extends StatefulWidget {
   final phone;
   final instagram;
+  final type;
   final facebook;
-  final rating;
   final email;
   final info;
 
-  const HotelContact(
+  const HospitalContact(
       {Key key,
       this.phone,
       this.instagram,
       this.facebook,
       this.email,
       this.info,
-      this.rating})
+      this.type})
       : super(key: key);
-  // final
   @override
-  _HotelContactState createState() => _HotelContactState();
+  _HospitalContactState createState() => _HospitalContactState();
 }
 
-class _HotelContactState extends State<HotelContact> {
+class _HospitalContactState extends State<HospitalContact> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -54,7 +51,7 @@ class _HotelContactState extends State<HotelContact> {
                       Icons.phone,
                       color: Colors.green,
                     ),
-                    title: Text('Phone'),
+                    title: Text('Phone number'),
                     subtitle: Text(widget.phone),
                     onTap: () {
                       launch('tel:${widget.phone}');
@@ -62,29 +59,23 @@ class _HotelContactState extends State<HotelContact> {
                   ),
                   ListTile(
                     leading: Icon(
-                      Icons.star,
-                      color: Colors.yellow[800],
+                      Icons.info,
+                      color: Colors.blue,
                     ),
-                    title: Text('Rating'),
-                    subtitle: RatingBarIndicator(
-                      rating: widget.rating.toDouble(),
-                      itemBuilder: (context, index) => Icon(
-                        Icons.star,
-                        color: Colors.amber,
-                      ),
-                      itemCount: 5,
-                      itemSize: 20.0,
-                      direction: Axis.horizontal,
-                    ),
+                    title: Text('Type'),
+                    subtitle: Text(widget.type),
+                    onTap: () {},
                   ),
-                  ListTile(
-                    leading: Icon(FontAwesome.internet_explorer,
-                        color: Colors.blue[700]),
-                    title: Text('Visit our website'),
+                  /*  ListTile(
+                    leading: Icon(
+                      Icons.email_outlined,
+                      color: Colors.red[700],
+                    ),
+                    title: Text(widget.email),
                     onTap: () {
-                      //launch('url: ${widget.facebook}').toString();
+                      launch('mailto: ${widget.email}');
                     },
-                  ),
+                  ),*/
                 ],
               ),
             ),

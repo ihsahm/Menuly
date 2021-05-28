@@ -1,4 +1,3 @@
-import 'package:e_commerce/Contents/Settings/RegisterBusiness/register_business.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -81,7 +80,7 @@ class _SettingsContentState extends State<SettingsContent> {
                         ],
                       ),
                       actions: [
-                        FlatButton(
+                        TextButton(
                           child: Text(
                             'Okay',
                             style: TextStyle(color: Colors.blue),

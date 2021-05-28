@@ -1,8 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:e_commerce/Contents/HomeContent/HomeList/Shopping/Details/shopping_details.dart';
 import 'package:e_commerce/Database/Download/getData.dart';
+import 'package:e_commerce/Services/GetCurrentLocation/getLocation.dart';
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
+import 'package:lottie/lottie.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 
 class ShoppingList extends StatefulWidget {
@@ -23,24 +24,7 @@ class _ShoppingListState extends State<ShoppingList> {
     super.initState();
   }
 
-  double distance = 0;
-  var locationMessage = "";
-  var passlat;
-  var passlong;
-
-  Future<String> getCurrentLocation(String slatitude, String slongitude) async {
-    var slat = double.parse(slatitude);
-    var slon = double.parse(slongitude);
-    var position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.bestForNavigation);
-    passlat = position.latitude;
-    passlong = position.longitude;
-    distance = Geolocator.distanceBetween(
-        position.latitude, position.longitude, slat, slon);
-    distance = distance.roundToDouble() / 1000;
-    String temp = distance.toStringAsFixed(2);
-    return temp;
-  }
+  LocationProvider locationProvider = new LocationProvider();
 
   @override
   Widget build(BuildContext context) {
@@ -72,8 +56,10 @@ class _ShoppingListState extends State<ShoppingList> {
                                           "${doc[index].data()['latitude']}",
                                       longitude:
                                           "${doc[index].data()['longitude']}",
-                                      userlocationLatitude: passlat,
-                                      userlocationLongitude: passlong,
+                                      userlocationLatitude:
+                                          locationProvider.passlat,
+                                      userlocationLongitude:
+                                          locationProvider.passlong,
                                     )));
                       },
                       child: Card(
@@ -125,8 +111,10 @@ class _ShoppingListState extends State<ShoppingList> {
                                                     "${doc[index].data()['latitude']}",
                                                 longitude:
                                                     "${doc[index].data()['longitude']}",
-                                                userlocationLatitude: passlat,
-                                                userlocationLongitude: passlong,
+                                                userlocationLatitude:
+                                                    locationProvider.passlat,
+                                                userlocationLongitude:
+                                                    locationProvider.passlong,
                                               )));
                                 },
                                 title: Text(
@@ -136,7 +124,7 @@ class _ShoppingListState extends State<ShoppingList> {
                                       fontWeight: FontWeight.w500),
                                 ),
                                 subtitle: FutureBuilder<String>(
-                                  future: getCurrentLocation(
+                                  future: locationProvider.getCurrentLocation(
                                       '${doc[index].data()['latitude']}',
                                       '${doc[index].data()['longitude']}'),
                                   builder: (BuildContext context,
@@ -144,7 +132,7 @@ class _ShoppingListState extends State<ShoppingList> {
                                     List<Widget> children;
                                     if (snapshot.hasData) {
                                       children = <Widget>[
-                                        Text('Distance: ${snapshot.data} km.'),
+                                        Text('Distance: ${snapshot.data}'),
                                       ];
                                     } else {
                                       children = <Widget>[
@@ -170,7 +158,13 @@ class _ShoppingListState extends State<ShoppingList> {
                     );
                   });
             } else {
-              return Center(child: Image.asset('assets/loading.gif'));
+              return Center(
+                  child: Column(
+                children: [
+                  Lottie.asset('assets/loading.json', animate: true),
+                  Text('Loading, please wait'),
+                ],
+              ));
             }
           }),
     );

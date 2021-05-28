@@ -2,7 +2,6 @@ import 'package:add_2_calendar/add_2_calendar.dart';
 import 'package:e_commerce/Contents/EventsContent/EventDetail/event_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:fluttericon/entypo_icons.dart';
 
 import '../../../main.dart';
 
@@ -11,6 +10,7 @@ class EventDetailScreen extends StatefulWidget {
   final ticketName;
   final ticketDate;
   final ticketDescription;
+  final ticketLocation;
   final ticketAvailable;
   final ticketImage;
 
@@ -21,7 +21,8 @@ class EventDetailScreen extends StatefulWidget {
       this.ticketImage,
       this.ticketName,
       this.ticketDate,
-      this.ticketAvailable});
+      this.ticketAvailable,
+      this.ticketLocation});
   @override
   _EventDetailScreenState createState() => _EventDetailScreenState();
 }
@@ -77,81 +78,26 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
             }),
         elevation: 0,
         actions: [
-          PopupMenuButton(
-            icon: Icon(
-              Icons.more_vert,
-              color: Colors.black,
-            ),
-            itemBuilder: (context) {
-              var list = List<PopupMenuEntry<Object>>();
-              list.add(PopupMenuItem(
-                child: FlatButton.icon(
-                    icon: Icon(
-                      Icons.calendar_today,
-                      color: Colors.blue,
-                    ),
-                    label: Text('Add to calendar'),
-                    onPressed: () {
-                      Navigator.pop(context);
-                      Add2Calendar.addEvent2Cal(event, androidNoUI: false)
-                          .then((success) {
-                        scaffoldMessengerKey.currentState.showSnackBar(SnackBar(
-                            content: Text(success ? 'Success' : 'Error')));
-                      });
-                    }),
-              ));
-              // list.add(PopupMenuItem(
-              //   child: FlatButton(
-              //     child: Text('Schedule'),
-              //     onPressed: () {
-              //       scheduleAlarm();
-              //     },
-              //   ),
-              // ));
-              // list.add(PopupMenuDivider(
-              //   height: 10,
-              // ));
-              list.add(PopupMenuItem(
-                child: FlatButton.icon(
-                    icon: Icon(
-                      Entypo.ticket,
-                      color: Colors.green,
-                    ),
-                    label: Text('Tickets available'),
-                    onPressed: () {
-                      Navigator.pop(context);
-                      showModalBottomSheet(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return Container(
-                              child: Wrap(
-                                children: [
-                                  ListTile(
-                                      title: Text('Tickets available at',
-                                          style: TextStyle(
-                                              color: Colors.blueGrey[700]))),
-                                  ListTile(
-                                    title: Text(widget.ticketAvailable,
-                                        style: TextStyle(
-                                            color: Colors.blueGrey[700])),
-                                  )
-                                ],
-                              ),
-                              height: 150,
-                            );
-                          });
-                    }),
-              ));
-              return list;
-            },
-          ),
+          IconButton(
+              icon: Icon(
+                Icons.calendar_today,
+                color: Colors.blue,
+              ),
+              tooltip: 'Add to calendar',
+              onPressed: () {
+                Navigator.pop(context);
+                Add2Calendar.addEvent2Cal(event).then((success) {
+                  scaffoldMessengerKey.currentState.showSnackBar(
+                      SnackBar(content: Text(success ? 'Success' : 'Error')));
+                });
+              }),
         ],
         backgroundColor: Colors.white24,
       ),
       /*bottomNavigationBar: Container(
         color: Colors.blue,
         height: 50,
-        child: FlatButton.icon(
+        child: TextButton.icon(
           icon: Icon(
             Icons.attach_money,
             color: Colors.white,
@@ -163,12 +109,12 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                       title: Text('Buy ticket?'),
                       content: const Text('Do you want to buy this ticket?'),
                       actions: [
-                        FlatButton(
+                        TextButton(
                             onPressed: () {
                               Navigator.pop(context);
                             },
                             child: Text('Cancel')),
-                        FlatButton(
+                        TextButton(
                           onPressed: () {
                             Ussd.runUssd(
                                 "*806*0907268733*${widget.ticketPrice}#");
@@ -185,6 +131,8 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
         ),
       ),*/
       body: EventDetail(
+        eventLocation: widget.ticketLocation,
+        eventAvailable: widget.ticketAvailable,
         eventDate: widget.ticketDate,
         eventDetail: widget.ticketDescription,
         eventPicture: widget.ticketImage,

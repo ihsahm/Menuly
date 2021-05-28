@@ -50,12 +50,13 @@ class _RegisterBusinessState extends State<RegisterBusiness> {
                   key: formKey,
                   child: ListView(
                     children: [
-                      OutlineButton(
+                      OutlinedButton(
                           onPressed: () {
                             getImage();
                           },
-                          borderSide:
-                              BorderSide(color: Colors.grey, width: 1.0),
+                          style: OutlinedButton.styleFrom(
+                            side: BorderSide(width: 1.0, color: Colors.grey),
+                          ),
                           child: (image1 != null)
                               ? Container(
                                   height: 200,
@@ -95,16 +96,18 @@ class _RegisterBusinessState extends State<RegisterBusiness> {
                       SizedBox(height: 20),
                       Container(
                         height: 50,
-                        child: RaisedButton(
-                          child: Text(
-                            'Send',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          onPressed: () {
-                            uploadImageandSaveItem();
-                          },
-                          color: Colors.blue,
-                        ),
+                        child: ElevatedButton(
+                            child: Text(
+                              'Send',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            onPressed: () {
+                              uploadImageandSaveItem();
+                            },
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                  Colors.greenAccent[400]),
+                            )),
                       )
                     ],
                   )),
@@ -187,7 +190,7 @@ class _RegisterBusinessState extends State<RegisterBusiness> {
                     content: const Text(
                         'Registration requested please wait for confirmation'),
                     actions: [
-                      FlatButton(
+                      TextButton(
                           child: Text('Okay'),
                           onPressed: () {
                             Navigator.pop(context);

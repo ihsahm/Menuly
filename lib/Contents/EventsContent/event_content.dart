@@ -4,6 +4,7 @@ import 'package:e_commerce/Screen/EventPage/EventDetail/event_detail_screen.dart
 import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:intl/intl.dart';
+import 'package:lottie/lottie.dart';
 
 class EventContent extends StatefulWidget {
   @override
@@ -34,8 +35,8 @@ class _EventContentState extends State<EventContent> {
                 scrollDirection: Axis.vertical,
                 itemCount: snapshot.data.docs.length,
                 itemBuilder: (BuildContext context, int index) {
-                  DateTime eventDay =
-                      (snapshot.data.documents[index].data()['date']).toDate();
+                  DateTime eventDay = DateTime.fromMillisecondsSinceEpoch(
+                      (snapshot.data.documents[index].data()['date']));
                   return Container(
                     child: Column(
                       children: [
@@ -52,6 +53,8 @@ class _EventContentState extends State<EventContent> {
                                               "${snapshot.data.documents[index].data()['available']}",
                                           ticketDescription:
                                               "${snapshot.data.documents[index].data()['details']}",
+                                          ticketLocation:
+                                              "${snapshot.data.documents[index].data()['location']}",
                                           ticketImage:
                                               "${snapshot.data.documents[index].data()['image']}",
                                           ticketName:
@@ -97,6 +100,8 @@ class _EventContentState extends State<EventContent> {
                                           ticketDate: eventDay,
                                           ticketAvailable:
                                               "${snapshot.data.documents[index].data()['available']}",
+                                          ticketLocation:
+                                              "${snapshot.data.documents[index].data()['location']}",
                                           ticketDescription:
                                               "${snapshot.data.documents[index].data()['details']}",
                                           ticketImage:
@@ -140,9 +145,9 @@ class _EventContentState extends State<EventContent> {
                                     Align(
                                         alignment: Alignment.bottomCenter,
                                         child: Text(
-                                          'Tap to see more',
-                                          style:
-                                              TextStyle(color: Colors.blueGrey),
+                                          'Tap to see more...',
+                                          style: TextStyle(
+                                              color: Colors.blue[800]),
                                         ))
                                   ],
                                 )),
@@ -153,7 +158,13 @@ class _EventContentState extends State<EventContent> {
                   );
                 });
           } else {
-            return Center(child: Image.asset('assets/loading.gif'));
+            return Center(
+                child: Column(
+              children: [
+                Lottie.asset('assets/loading.json', animate: true),
+                Text('Loading, please wait'),
+              ],
+            ));
           }
         });
   }

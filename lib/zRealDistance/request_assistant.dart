@@ -14,7 +14,7 @@ class RequestAssistant {
         return 'Failed, No Response.';
       }
     } catch (exp) {
-      return "Failed.";
+      print(exp.toString());
     }
   }
 }

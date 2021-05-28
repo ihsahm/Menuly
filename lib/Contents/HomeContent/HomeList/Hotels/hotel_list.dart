@@ -1,12 +1,11 @@
 import 'dart:async';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:e_commerce/Contents/HomeContent/HomeList/Hotels/HotelDetails/hotel_details.dart';
 import 'package:e_commerce/Database/Download/getData.dart';
-import 'package:e_commerce/zRealDistance/AssistantMethods.dart';
+import 'package:e_commerce/Services/GetCurrentLocation/getLocation.dart';
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:lottie/lottie.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 
 class HotelList extends StatefulWidget {
@@ -28,29 +27,7 @@ class _HotelListState extends State<HotelList> {
     super.initState();
   }
 
-  double distance = 0;
-  var locationMessage = "";
-  var passlat;
-  var passlong;
-
-  Future<String> getCurrentLocation(String slatitude, String slongitude) async {
-    var slat = double.parse(slatitude);
-    var slon = double.parse(slongitude);
-    var position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.bestForNavigation);
-    passlat = position.latitude;
-    passlong = position.longitude;
-    // distance = Geolocator.distanceBetween(
-    //     position.latitude, position.longitude, slat, slon);
-    // distance = distance.roundToDouble() / 1000;
-    // String temp = distance.toStringAsFixed(2);
-
-    LatLng a = LatLng(passlat, passlong);
-    LatLng b = LatLng(slat, slon);
-
-    var details = await AssistantMethods.obtainDirectionDetails(a, b);
-    return details.distanceText;
-  }
+  LocationProvider locationProvider = new LocationProvider();
 
   @override
   Widget build(BuildContext context) {
@@ -77,6 +54,8 @@ class _HotelListState extends State<HotelList> {
                                         "${doc[index].data()['restaurantName']}",
                                     room: doc[index].documentID,
                                     email: "${doc[index].data()['email']}",
+                                    rating:
+                                        doc[index].data()["rating"].toDouble(),
                                     instagram:
                                         "${doc[index].data()['instagram']}",
                                     facebook:
@@ -91,8 +70,10 @@ class _HotelListState extends State<HotelList> {
                                         "${doc[index].data()['latitude']}",
                                     longitude:
                                         "${doc[index].data()['longitude']}",
-                                    userlocationLatitude: passlat,
-                                    userlocationLongitude: passlong,
+                                    userlocationLatitude:
+                                        locationProvider.passlat,
+                                    userlocationLongitude:
+                                        locationProvider.passlong,
                                   )));
                     },
                     child: Card(
@@ -133,6 +114,9 @@ class _HotelListState extends State<HotelList> {
                                               name:
                                                   "${doc[index].data()['restaurantName']}",
                                               room: doc[index].documentID,
+                                              rating: doc[index]
+                                                  .data()["rating"]
+                                                  .toDouble(),
                                               info:
                                                   "${doc[index].data()['info']}",
                                               image:
@@ -149,8 +133,10 @@ class _HotelListState extends State<HotelList> {
                                                   "${doc[index].data()['latitude']}",
                                               longitude:
                                                   "${doc[index].data()['longitude']}",
-                                              userlocationLatitude: passlat,
-                                              userlocationLongitude: passlong,
+                                              userlocationLatitude:
+                                                  locationProvider.passlat,
+                                              userlocationLongitude:
+                                                  locationProvider.passlong,
                                             )));
                               },
                               title: Text(
@@ -158,34 +144,52 @@ class _HotelListState extends State<HotelList> {
                                 style: TextStyle(
                                     fontSize: 17, fontWeight: FontWeight.w500),
                               ),
-                              subtitle: FutureBuilder<String>(
-                                future: getCurrentLocation(
-                                    '${doc[index].data()['latitude']}',
-                                    '${doc[index].data()['longitude']}'),
-                                builder: (BuildContext context,
-                                    AsyncSnapshot<String> snapshot) {
-                                  List<Widget> children;
-                                  if (snapshot.hasData) {
-                                    children = <Widget>[
-                                      Text('Distance: ${snapshot.data}'),
-                                    ];
-                                  } else {
-                                    children = <Widget>[
-                                      JumpingText(
-                                        'Calculating distance...',
-                                      ),
-                                    ];
-                                  }
+                              subtitle: ListView(
+                                  physics: NeverScrollableScrollPhysics(),
+                                  shrinkWrap: true,
+                                  children: [
+                                    FutureBuilder<String>(
+                                      future: locationProvider.getCurrentLocation(
+                                          '${doc[index].data()['latitude']}',
+                                          '${doc[index].data()['longitude']}'),
+                                      builder: (BuildContext context,
+                                          AsyncSnapshot<String> snapshot) {
+                                        List<Widget> children;
+                                        if (snapshot.hasData) {
+                                          children = <Widget>[
+                                            Text('Distance: ${snapshot.data}'),
+                                          ];
+                                        } else {
+                                          children = <Widget>[
+                                            JumpingText(
+                                              'Calculating distance...',
+                                            ),
+                                          ];
+                                        }
 
-                                  return Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: children,
-                                  );
-                                },
-                              ),
-                            )
+                                        return Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: children,
+                                        );
+                                      },
+                                    ),
+                                    RatingBarIndicator(
+                                      rating: doc[index]
+                                          .data()["rating"]
+                                          .toDouble(),
+                                      itemBuilder: (context, index) => Icon(
+                                        Icons.star,
+                                        color: Colors.amber,
+                                      ),
+                                      itemCount: 5,
+                                      itemSize: 20.0,
+                                      direction: Axis.horizontal,
+                                    ),
+                                  ]),
+                            ),
                           ],
                         ),
                       ),
@@ -196,7 +200,13 @@ class _HotelListState extends State<HotelList> {
             } else {
               return Padding(
                 padding: const EdgeInsets.only(top: 18.0),
-                child: Center(child: Image.asset('assets/loading.gif')),
+                child: Center(
+                    child: Column(
+                  children: [
+                    Lottie.asset('assets/loading.json', animate: true),
+                    Text('Loading, please wait'),
+                  ],
+                )),
               );
             }
           }),

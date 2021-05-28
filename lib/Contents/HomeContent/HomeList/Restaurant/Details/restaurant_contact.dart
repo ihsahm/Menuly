@@ -1,14 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce/Database/Download/getData.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttericon/entypo_icons.dart';
-import 'package:fluttericon/font_awesome5_icons.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:lottie/lottie.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AreaDetails extends StatefulWidget {
   final menuDoc;
   final type;
   final email;
+  final rating;
   final facebook;
   final image;
   final phone;
@@ -22,7 +23,8 @@ class AreaDetails extends StatefulWidget {
       this.facebook,
       this.phone,
       this.instagram,
-      this.image});
+      this.image,
+      this.rating});
 
   @override
   _AreaDetailsState createState() => _AreaDetailsState();
@@ -35,7 +37,7 @@ class _AreaDetailsState extends State<AreaDetails> {
 
   @override
   void initState() {
-    crudObj.getMenuData().then((results) {
+    crudObj.getRestaurantData().then((results) {
       setState(() {
         items = results;
       });
@@ -48,11 +50,7 @@ class _AreaDetailsState extends State<AreaDetails> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-      stream: db
-          .collection('Restaurant')
-          .doc(widget.menuDoc)
-          .collection('Menu')
-          .snapshots(),
+      stream: db.collection('Restaurant').snapshots(),
       builder: (context, snapshot) {
         if (snapshot.data != null) {
           return SingleChildScrollView(
@@ -72,18 +70,37 @@ class _AreaDetailsState extends State<AreaDetails> {
                             Icons.info,
                             color: Colors.blue[900],
                           ),
-                          title: Text(widget.type),
+                          title: Text('Type'),
+                          subtitle: Text(widget.type),
                         ),
                         ListTile(
                           leading: Icon(
                             Icons.phone,
                             color: Colors.green,
                           ),
-                          title: Text(widget.phone),
+                          title: Text('Phone number'),
+                          subtitle: Text(widget.phone),
                           onTap: () {
                             launch('tel:${widget.phone}');
                           },
                         ),
+                        ListTile(
+                          leading: Icon(
+                            Icons.favorite,
+                            color: Colors.red,
+                          ),
+                          title: Text('Rating'),
+                          subtitle: RatingBarIndicator(
+                            rating: widget.rating.toDouble(),
+                            itemBuilder: (context, index) => Icon(
+                              Icons.star,
+                              color: Colors.amber,
+                            ),
+                            itemCount: 5,
+                            itemSize: 20.0,
+                            direction: Axis.horizontal,
+                          ),
+                        )
                         /*   ((widget.email != null)
                             ? ListTile(
                                 leading: Icon(
@@ -120,7 +137,10 @@ class _AreaDetailsState extends State<AreaDetails> {
             ),
           );
         } else {
-          return Center(child: Image.asset('assets/loading.gif'));
+          return Container(
+            child: Lottie.asset('assets/loading.json', fit: BoxFit.cover),
+            height: 20,
+          );
         }
       },
     );

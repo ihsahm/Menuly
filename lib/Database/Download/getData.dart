@@ -28,8 +28,8 @@ class GetData {
     return FirebaseFirestore.instance.collection('Shopping').snapshots();
   }
 
-  getParkingData() async {
-    return FirebaseFirestore.instance.collection('Parking').snapshots();
+  getHospitalData() async {
+    return FirebaseFirestore.instance.collection('Hospital').snapshots();
   }
 
   getMenuData() async {

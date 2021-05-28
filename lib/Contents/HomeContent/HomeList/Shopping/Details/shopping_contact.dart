@@ -25,20 +25,23 @@ class _ShoppingContactState extends State<ShoppingContact> {
           indent: 30,
         ),
         ListTile(
-          title: Text(widget.name),
+          title: Text('Name'),
+          subtitle: Text(widget.name),
           leading: Icon(
             Icons.business_outlined,
             color: Colors.red[900],
           ),
         ),
         ListTile(
-          title: Text(widget.type),
-          leading: Icon(Icons.info_outline, color: Colors.blue),
+          title: Text('Type'),
+          subtitle: Text(widget.type),
+          leading: Icon(Icons.info, color: Colors.blue),
         ),
         ListTile(
-          title: Text(widget.phone),
+          title: Text('Phone number'),
+          subtitle: Text(widget.phone),
           leading: Icon(
-            Icons.phone_android_outlined,
+            Icons.phone,
             color: Colors.green[800],
           ),
         ),

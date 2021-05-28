@@ -1,16 +1,16 @@
-import 'package:flutter/material.dart';
-import 'address.dart';
+// import 'package:flutter/material.dart';
+// import 'address.dart';
 
-class AppData extends ChangeNotifier {
-  Address pickUpLocation, dropOffLocation;
+// class AppData extends ChangeNotifier {
+//   Address pickUpLocation, dropOffLocation;
 
-  void updatePickUpLocationAddress(Address pickUpAddress) {
-    pickUpLocation = pickUpAddress;
-    notifyListeners();
-  }
+//   void updatePickUpLocationAddress(Address pickUpAddress) {
+//     pickUpLocation = pickUpAddress;
+//     notifyListeners();
+//   }
 
-  void updatedropOffLocationAddress(Address dropOffAddress) {
-    dropOffLocation = dropOffAddress;
-    notifyListeners();
-  }
-}
+//   void updatedropOffLocationAddress(Address dropOffAddress) {
+//     dropOffLocation = dropOffAddress;
+//     notifyListeners();
+//   }
+// }

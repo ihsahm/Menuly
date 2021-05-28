@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce/Database/Download/getData.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttericon/linecons_icons.dart';
+import 'package:lottie/lottie.dart';
 
 class FoodMenu extends StatefulWidget {
   final menuList;
@@ -47,7 +48,7 @@ class _FoodMenuState extends State<FoodMenu> {
                       alignment: Alignment.topLeft,
                       child: Text(
                         'Tap to see food content',
-                        style: TextStyle(color: Colors.blueGrey),
+                        style: TextStyle(color: Colors.blue[600]),
                       )),
                 ),
                 ListView.separated(
@@ -61,86 +62,76 @@ class _FoodMenuState extends State<FoodMenu> {
                   itemCount: snapshot.data.docs.length,
                   itemBuilder: (BuildContext context, int index) {
                     var doc = snapshot.data.docs;
-                    return ListTile(
-                      onTap: () {
-                        showModalBottomSheet(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return Container(
-                                  height: 200,
-                                  child: ListView(
-                                    children: [
-                                      ListTile(
-                                          title: Text(
-                                        'Contents',
-                                        style:
-                                            TextStyle(color: Colors.blueGrey),
-                                      )),
-                                      ListTile(
-                                        title: Text(
-                                          ((doc[index].data()['contents'] !=
-                                                  null)
-                                              ? doc[index].data()['contents']
-                                              : 'Contents not provided'),
+                    if (db != null) {
+                      return ListTile(
+                        onTap: () {
+                          showModalBottomSheet(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return Container(
+                                    height: 200,
+                                    child: ListView(
+                                      children: [
+                                        ListTile(
+                                            title: Text(
+                                          'Contents',
                                           style:
                                               TextStyle(color: Colors.blueGrey),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Align(
-                                          alignment: Alignment.bottomRight,
-                                          child: ButtonTheme(
-                                            minWidth: 30,
-                                            child: FlatButton(
-                                              child: Text(
-                                                'Okay',
-                                                style: TextStyle(
-                                                    color: Colors.blue),
-                                              ),
-                                              onPressed: () {
-                                                Navigator.pop(context);
-                                              },
-                                            ),
+                                        )),
+                                        ListTile(
+                                          title: Text(
+                                            ((doc[index].data()['contents'] !=
+                                                    null)
+                                                ? doc[index].data()['contents']
+                                                : 'Contents not provided'),
+                                            style: TextStyle(
+                                                color: Colors.blueGrey),
                                           ),
                                         ),
-                                      )
-                                    ],
-                                  ));
-                            });
-                        // showDialog<void>(
-                        //   context: context,
-                        //   builder: (BuildContext context) => showModalBottomSheet(
-                        //     title: Text('Contents'),
-                        //     content: Text(
-                        //         ((doc[index].data()['contents'] != null)
-                        //             ? doc[index].data()['contents']
-                        //             : 'Contents not provided')),
-                        //     actions: [
-                        //       FlatButton(
-                        //           child: Text('Okay'),
-                        //           onPressed: () {
-                        //             Navigator.pop(context);
-                        //           })
-                        //     ],
-                        //   ),
-                        // );
-                      },
-                      leading: Icon(
-                        Linecons.food,
-                        color: Colors.amber[900],
-                      ),
-                      title: Text("${doc[index].data()['foodName']}"),
-                      subtitle: Text("${doc[index].data()['price']} Br."),
-                    );
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Align(
+                                            alignment: Alignment.bottomRight,
+                                            child: ButtonTheme(
+                                              minWidth: 30,
+                                              child: TextButton(
+                                                child: Text(
+                                                  'Okay',
+                                                  style: TextStyle(
+                                                      color: Colors.blue),
+                                                ),
+                                                onPressed: () {
+                                                  Navigator.pop(context);
+                                                },
+                                              ),
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                    ));
+                              });
+                        },
+                        leading: Icon(
+                          Linecons.food,
+                          color: Colors.amber[900],
+                        ),
+                        title: Text((doc[index].data()['foodName'] != null)
+                            ? doc[index].data()['foodName']
+                            : Text('Menu not provided')),
+                        subtitle: Text("${doc[index].data()['price']} Br."),
+                      );
+                    } else {
+                      return Text('Menu not provided');
+                    }
                   },
                 ),
               ],
             ),
           );
         } else {
-          return Center(
-            child: Image.asset('assets/loading.gif'),
+          return Container(
+            child: Lottie.asset('assets/loading.json', fit: BoxFit.cover),
+            height: 10,
           );
         }
       },

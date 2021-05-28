@@ -60,7 +60,11 @@ class _NavigationState extends State<Navigation> {
     ];
     final _items = <BottomNavigationBarItem>[
       BottomNavigationBarItem(
-          icon: Icon(Icons.home_outlined), title: Text('Home')),
+          icon: Icon(
+            Icons.home_outlined,
+            size: 25,
+          ),
+          title: Text('Home')),
       // BottomNavigationBarItem(
       //     icon: Icon(Icons.search_outlined), title: Text('Search')),
       BottomNavigationBarItem(
@@ -96,7 +100,7 @@ class _NavigationState extends State<Navigation> {
               content: Text(
                   'Can not find an internet connection please check your internet settings!'),
               actions: [
-                FlatButton(
+                TextButton(
                     child: Text('Okay'),
                     onPressed: () {
                       Navigator.pop(context);

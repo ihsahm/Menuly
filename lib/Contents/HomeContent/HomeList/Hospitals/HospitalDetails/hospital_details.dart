@@ -1,17 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:e_commerce/Contents/HomeContent/HomeList/Hotels/HotelMenu/hotel_contact.dart';
+import 'package:e_commerce/Contents/HomeContent/HomeList/Hospitals/HospitalContact/hospital_contact.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class HotelDetails extends StatefulWidget {
+class HospitalDetails extends StatefulWidget {
   final name;
+  final type;
   final phone;
-  final rating;
-  final instagram;
   final image;
-  final facebook;
-  final room;
   final latitude;
   final userlocationLatitude;
   final userlocationLongitude;
@@ -19,13 +16,10 @@ class HotelDetails extends StatefulWidget {
   final info;
   final email;
 
-  const HotelDetails(
+  const HospitalDetails(
       {Key key,
       this.name,
       this.phone,
-      this.instagram,
-      this.facebook,
-      this.room,
       this.latitude,
       this.longitude,
       this.email,
@@ -33,13 +27,13 @@ class HotelDetails extends StatefulWidget {
       this.userlocationLongitude,
       this.image,
       this.info,
-      this.rating})
+      this.type})
       : super(key: key);
   @override
-  _HotelDetailsState createState() => _HotelDetailsState();
+  _HospitalDetailsState createState() => _HospitalDetailsState();
 }
 
-class _HotelDetailsState extends State<HotelDetails> {
+class _HospitalDetailsState extends State<HospitalDetails> {
   Future<void> _launchInApp() async {
     var url =
         "https://www.google.com/maps/dir/${widget.userlocationLatitude},${widget.userlocationLongitude}/${widget.latitude},${widget.longitude}/@8.9817088,38.7284248,15z";
@@ -115,11 +109,9 @@ class _HotelDetailsState extends State<HotelDetails> {
               room: widget.room,
               //  price: widget.,
             ),*/
-                HotelContact(
-              facebook: widget.facebook,
-              instagram: widget.instagram,
-              rating: widget.rating,
+                HospitalContact(
               phone: widget.phone,
+              type: widget.type,
               email: widget.email,
               info: widget.info,
             ),

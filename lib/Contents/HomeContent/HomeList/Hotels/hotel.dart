@@ -14,7 +14,7 @@ class _HotelState extends State<Hotel> {
       //   children: [
       //     Padding(
       //       padding: EdgeInsets.only(left: 5.0, right: 5.0, top: 10.0),
-      //       child: RaisedButton(
+      //       child: ElevatedButton(
       //         textColor: Colors.white,
       //         color: Colors.orange,
       //         child: Text("< 200 br"),
@@ -26,7 +26,7 @@ class _HotelState extends State<Hotel> {
       //     ),
       //     Padding(
       //       padding: EdgeInsets.only(left: 5.0, right: 5.0, top: 10.0),
-      //       child: RaisedButton(
+      //       child: ElevatedButton(
       //         textColor: Colors.white,
       //         color: Colors.orange,
       //         child: Text("250 br-450 br"),
@@ -38,7 +38,7 @@ class _HotelState extends State<Hotel> {
       //     ),
       //     Padding(
       //       padding: EdgeInsets.only(left: 5.0, right: 5.0, top: 10.0),
-      //       child: RaisedButton(
+      //       child: ElevatedButton(
       //         textColor: Colors.white,
       //         color: Colors.orange,
       //         child: Text("500 br-1000 br"),
@@ -50,7 +50,7 @@ class _HotelState extends State<Hotel> {
       //     ),
       //     Padding(
       //       padding: EdgeInsets.only(left: 5.0, right: 5.0),
-      //       child: RaisedButton(
+      //       child: ElevatedButton(
       //         textColor: Colors.white,
       //         color: Colors.orange,
       //         child: Text("1000 br-5000 br"),
@@ -62,7 +62,7 @@ class _HotelState extends State<Hotel> {
       //     ),
       //     Padding(
       //       padding: EdgeInsets.only(left: 5.0, right: 5.0),
-      //       child: RaisedButton(
+      //       child: ElevatedButton(
       //         textColor: Colors.white,
       //         color: Colors.orange,
       //         child: Text("> 5000 br"),

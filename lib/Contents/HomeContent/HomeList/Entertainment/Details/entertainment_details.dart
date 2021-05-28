@@ -58,10 +58,13 @@ class _EntertainmentDetailsState extends State<EntertainmentDetails> {
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         // borderRadius: BorderRadius.circular(50),
-                        color: Colors.grey[600],
+                        color: Colors.white,
                       ),
                       child: IconButton(
-                        icon: Icon(Icons.arrow_back),
+                        icon: Icon(
+                          Icons.arrow_back,
+                          color: Colors.black,
+                        ),
                         onPressed: () {
                           Navigator.pop(context);
                         },
@@ -70,17 +73,16 @@ class _EntertainmentDetailsState extends State<EntertainmentDetails> {
                   ),
                   floating: false,
                   snap: false,
-                  backgroundColor: Colors.blueGrey,
+                  backgroundColor: Colors.white,
                   pinned: true,
                   expandedHeight: 300,
                   flexibleSpace: Stack(
                     children: [
                       Positioned.fill(
-                        child: CachedNetworkImage(
-                          imageUrl: widget.image,
-                          fit: BoxFit.cover,
-                        ),
-                      )
+                          child: CachedNetworkImage(
+                        imageUrl: widget.image,
+                        fit: BoxFit.cover,
+                      ))
                     ],
                   ),
                 ),
@@ -97,16 +99,18 @@ class _EntertainmentDetailsState extends State<EntertainmentDetails> {
                   indent: 30,
                 ),
                 ListTile(
-                  title: Text(widget.name),
+                  title: Text('Name'),
+                  subtitle: Text(widget.name),
                   leading: Icon(
                     Icons.business_outlined,
                     color: Colors.red[900],
                   ),
                 ),
                 ListTile(
-                  title: Text(widget.phone),
+                  title: Text('Phone number'),
+                  subtitle: Text(widget.phone),
                   leading: Icon(
-                    Icons.phone_android_outlined,
+                    Icons.phone,
                     color: Colors.green[800],
                   ),
                 ),
@@ -119,7 +123,7 @@ class _EntertainmentDetailsState extends State<EntertainmentDetails> {
       ),
       bottomNavigationBar: Container(
         height: 50,
-        child: FlatButton.icon(
+        child: TextButton.icon(
           icon: Icon(
             FontAwesome.direction,
             color: Colors.white,
@@ -131,7 +135,9 @@ class _EntertainmentDetailsState extends State<EntertainmentDetails> {
             'Get direction',
             style: TextStyle(color: Colors.white),
           ),
-          color: Colors.blue,
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+          ),
         ),
       ),
     );

@@ -1,12 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce/Contents/HomeContent/HomeList/Entertainment/Details/entertainment_details.dart';
 import 'package:e_commerce/Contents/HomeContent/HomeList/Entertainment/entertainment.dart';
+import 'package:e_commerce/Contents/HomeContent/HomeList/Hospitals/hospital.dart';
 import 'package:e_commerce/Contents/HomeContent/HomeList/Hotels/HotelDetails/hotel_details.dart';
 import 'package:e_commerce/Contents/HomeContent/HomeList/Hotels/hotel.dart';
 import 'package:e_commerce/Contents/HomeContent/HomeList/Restaurant/RestaurantDetailPage/restaurant_detail_screen.dart';
 import 'package:e_commerce/Contents/HomeContent/HomeList/Restaurant/restaurant.dart';
 import 'package:e_commerce/Contents/HomeContent/HomeList/Shopping/Details/shopping_details.dart';
 import 'package:e_commerce/Contents/HomeContent/HomeList/Shopping/shopping.dart';
+import 'package:e_commerce/Services/GetCurrentLocation/getLocation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:geolocator/geolocator.dart';
@@ -26,6 +28,7 @@ class _TabNavigationState extends State<TabNavigation> {
 
       Shopping(),
       Entertainment(),
+      Hospital()
       // Parking(),
     ];
     final tabIcon = <Tab>[
@@ -85,6 +88,17 @@ class _TabNavigationState extends State<TabNavigation> {
               color: Colors.black54, fontWeight: FontWeight.w400, fontSize: 13),
         ),
       ),
+      Tab(
+        icon: Icon(
+          FontAwesome.hospital,
+          color: Colors.orangeAccent[700],
+        ),
+        child: Text(
+          'Hospitals',
+          style: TextStyle(
+              color: Colors.black54, fontWeight: FontWeight.w400, fontSize: 13),
+        ),
+      ),
       // Tab(
       //   icon: Icon(
       //     FontAwesome5.parking,
@@ -128,7 +142,7 @@ class _TabNavigationState extends State<TabNavigation> {
 
 class DataSearch extends SearchDelegate<String> {
   List<dynamic> searchwords = [];
-
+  LocationProvider locationProvider = new LocationProvider();
   final recentsearchwords = [];
 
   var selectedsearchwords = "";
@@ -136,7 +150,6 @@ class DataSearch extends SearchDelegate<String> {
 
   @override
   List<Widget> buildActions(BuildContext context) {
-    // TODO: implement buildActions
     return [
       IconButton(
         icon: Icon(Icons.clear),
@@ -153,21 +166,21 @@ class DataSearch extends SearchDelegate<String> {
 
   getCurrentLocation() async {
     var position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.bestForNavigation);
-    passlat = position.latitude;
-    passlong = position.longitude;
+        desiredAccuracy: LocationAccuracy.best);
+    locationProvider.passlat = position.latitude;
+    locationProvider.passlong = position.longitude;
   }
 
   @override
   Widget buildLeading(BuildContext context) {
-    // TODO: implement buildLeading
     return IconButton(
       icon: AnimatedIcon(
         icon: AnimatedIcons.menu_arrow,
         progress: transitionAnimation,
       ),
       onPressed: () {
-        close(context, null);
+        Navigator.pop(context);
+        // close(context, null);
       },
     );
   }
@@ -200,7 +213,6 @@ class DataSearch extends SearchDelegate<String> {
       notfound = false;
       selectedsearchwords = "";
     }
-    // TODO: implement buildResults
     return notfound ? Container() : Container();
   }
 
@@ -235,8 +247,8 @@ class DataSearch extends SearchDelegate<String> {
                       image: "${snapshot.docs[0].data()['image']}",
                       latitude: "${snapshot.docs[0].data()['latitude']}",
                       longitude: "${snapshot.docs[0].data()['longitude']}",
-                      userlocationLatitude: passlat,
-                      userlocationLongitude: passlong,
+                      userlocationLatitude: locationProvider.passlat,
+                      userlocationLongitude: locationProvider.passlong,
                     )));
         return 0;
       }
@@ -263,8 +275,8 @@ class DataSearch extends SearchDelegate<String> {
                       image: "${snapshot.docs[0].data()['image']}",
                       latitude: "${snapshot.docs[0].data()['latitude']}",
                       longitude: "${snapshot.docs[0].data()['longitude']}",
-                      userlocationLatitude: passlat,
-                      userlocationLongitude: passlong,
+                      userlocationLatitude: locationProvider.passlat,
+                      userlocationLongitude: locationProvider.passlong,
                     )));
         return 0;
       }
@@ -285,7 +297,6 @@ class DataSearch extends SearchDelegate<String> {
             MaterialPageRoute(
                 builder: (BuildContext context) => HotelDetails(
                       name: "${snapshot.docs[0].data()['restaurantName']}",
-                      room: snapshot.docs[0].documentID,
                       email: "${snapshot.docs[0].data()['email']}",
                       instagram: "${snapshot.docs[0].data()['instagram']}",
                       facebook: "${snapshot.docs[0].data()['facebook']}",
@@ -297,8 +308,8 @@ class DataSearch extends SearchDelegate<String> {
                       image: "${snapshot.docs[0].data()['image']}",
                       latitude: "${snapshot.docs[0].data()['latitude']}",
                       longitude: "${snapshot.docs[0].data()['longitude']}",
-                      userlocationLatitude: passlat,
-                      userlocationLongitude: passlong,
+                      userlocationLatitude: locationProvider.passlat,
+                      userlocationLongitude: locationProvider.passlong,
                     )));
         return 0;
       }
@@ -328,8 +339,8 @@ class DataSearch extends SearchDelegate<String> {
                           "${snapshot.docs[0].data()['facebook']}",
                       restaurantPhone: "${snapshot.docs[0].data()['phone']}",
                       restaurantType: "${snapshot.docs[0].data()['type']}",
-                      userlocationLatitude: passlat,
-                      userlocationLongtiude: passlong,
+                      userlocationLatitude: locationProvider.passlat,
+                      userlocationLongtiude: locationProvider.passlong,
                     )));
         return 0;
       }
