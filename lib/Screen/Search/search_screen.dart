@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce/Contents/HomeContent/HomeList/Restaurant/RestaurantDetailPage/restaurant_detail_screen.dart';
 import 'package:e_commerce/Database/Search/search.dart';
+import 'package:e_commerce/Services/GetCurrentLocation/getLocation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/get.dart';
@@ -13,6 +14,7 @@ class SearchScreen extends StatefulWidget {
 class _SearchScreenState extends State<SearchScreen> {
   QuerySnapshot snapshot;
   final TextEditingController searchController = new TextEditingController();
+  LocationProvider locationProvider = new LocationProvider();
 
   QuerySnapshot snapshotData;
   bool isExecuted = false;
@@ -50,6 +52,8 @@ class _SearchScreenState extends State<SearchScreen> {
                                     "${snapshotData.docs[index].data()['phone']}",
                                 restaurantType:
                                     "${snapshotData.docs[index].data()['type']}",
+                                restaurantLatitude: locationProvider.passlat,
+                                restaurantLongtitude: locationProvider.passlong,
                               )));
                 },
                 leading: CircleAvatar(

@@ -2,7 +2,6 @@ import 'package:e_commerce/zRealDistance/AssistantMethods.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:sort/sort.dart';
 
 class LocationProvider with ChangeNotifier {
   var locationMessage = "";
@@ -16,24 +15,20 @@ class LocationProvider with ChangeNotifier {
     var slon = double.parse(slongitude);
     var position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.bestForNavigation);
-    if (position != null) {
-      passlat = position.latitude;
-      passlong = position.longitude;
+    passlat = position.latitude;
+    passlong = position.longitude;
 
-      LatLng a = LatLng(passlat, passlong);
-      LatLng b = LatLng(slat, slon);
+    LatLng a = LatLng(passlat, passlong);
+    LatLng b = LatLng(slat, slon);
 
-      var details = await AssistantMethods.obtainDirectionDetails(a, b);
+    var details = await AssistantMethods.obtainDirectionDetails(a, b);
 
-      List<int> disList = [];
-      disList.add(details.distanceValue);
-      print(disList.quickSort());
-      this.permissionAllowed = true;
+    // List<int> disList = [];
+    // disList.add(details.distanceValue);
+    // print(disList.quickSort());
+    // this.permissionAllowed = true;
 
-      return details.distanceValue.toString();
-    } else {
-      print('Permission not allowed');
-    }
+    return details.distanceValue.toString();
   }
 }
 
@@ -41,7 +36,7 @@ class LocationProvider with ChangeNotifier {
 // Future<String> jsonResponse.sort((a, b) {
 //   var distance1 = new GreatCircleDistance.fromDegrees(latitude1: double.parse(widget.lat), longitude1: double.parse(widget.lng), latitude2: double.parse(a.lat), longitude2: double.parse(a.lng));
 //   var totaldistance1 = distance1.haversineDistance().toStringAsFixed(2);
-//   double distanceDouble1 = double.parse(totaldistance1);
+//   double distanceDouble1 = double.parse (totaldistance1);
 //   var distance2 = new GreatCircleDistance.fromDegrees(latitude1: double.parse(widget.lat), longitude1: double.parse(widget.lng), latitude2: double.parse(b.lat), longitude2: double.parse(b.lng));
 //   var totaldistance2 = distance2.haversineDistance().toStringAsFixed(2);
 //   double distanceDouble2 = double.parse(totaldistance2);

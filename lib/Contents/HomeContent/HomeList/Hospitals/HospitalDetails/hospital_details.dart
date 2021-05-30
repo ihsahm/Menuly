@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:e_commerce/Contents/HomeContent/HomeList/Hospitals/HospitalContact/hospital_contact.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class HospitalDetails extends StatefulWidget {
@@ -119,25 +118,25 @@ class _HospitalDetailsState extends State<HospitalDetails> {
           //  ]),
           // ),
           ),
-      bottomNavigationBar: Container(
-        height: 50,
-        child: TextButton.icon(
-          icon: Icon(
-            FontAwesome.direction,
-            color: Colors.white,
-          ),
-          onPressed: () {
-            _launchInApp();
-          },
-          label: Text(
-            'Get direction',
-            style: TextStyle(color: Colors.white),
-          ),
-          style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
-          ),
-        ),
-      ),
+      // bottomNavigationBar: Container(
+      //   height: 50,
+      //   child: TextButton.icon(
+      //     icon: Icon(
+      //       FontAwesome.direction,
+      //       color: Colors.white,
+      //     ),
+      //     onPressed: () {
+      //       _launchInApp();
+      //     },
+      //     label: Text(
+      //       'Get direction',
+      //       style: TextStyle(color: Colors.white),
+      //     ),
+      //     style: ButtonStyle(
+      //       backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+      //     ),
+      //   ),
+      // ),
     );
   }
 }

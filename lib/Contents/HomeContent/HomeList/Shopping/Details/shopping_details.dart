@@ -97,25 +97,25 @@ class _ShoppingDetailsState extends State<ShoppingDetails> {
           info: widget.info,
         ),
       ),
-      bottomNavigationBar: Container(
-        height: 50,
-        child: TextButton.icon(
-          icon: Icon(
-            FontAwesome.direction,
-            color: Colors.white,
-          ),
-          onPressed: () {
-            _launchInApp();
-          },
-          label: Text(
-            'Get direction',
-            style: TextStyle(color: Colors.white),
-          ),
-          style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
-          ),
-        ),
-      ),
+      // bottomNavigationBar: Container(
+      //   height: 50,
+      //   // child: TextButton.icon(
+      //   //   icon: Icon(
+      //   //     FontAwesome.direction,
+      //   //     color: Colors.white,
+      //   //   ),
+      //   //   onPressed: () {
+      //   //     _launchInApp();
+      //   //   },
+      //   //   label: Text(
+      //   //     'Get direction',
+      //   //     style: TextStyle(color: Colors.white),
+      //   //   ),
+      //   //   style: ButtonStyle(
+      //   //     backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+      //   //   ),
+      //   // ),
+      // ),
     );
   }
 }

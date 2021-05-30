@@ -4,7 +4,6 @@ import 'package:e_commerce/Database/Download/getData.dart';
 import 'package:e_commerce/Services/GetCurrentLocation/getLocation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:lottie/lottie.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 
@@ -109,28 +108,28 @@ class _RestaurantListState extends State<RestaurantList> {
                             ),
                             ListTile(
                               onTap: () {
-                                // Navigator.push(
-                                //     context,
-                                //     MaterialPageRoute(
-                                //         builder: (BuildContext context) =>
-                                //             AreaDetailScreen(
-                                //               restaurantName:
-                                //                   "${doc[index].data()['name']}",
-                                //               restaurantImage:
-                                //                   "${doc[index].data()['image']}",
-                                //               restaurantMenu:
-                                //                   doc[index].documentID,
-                                //               restaurantEmail:
-                                //                   "${doc[index].data()['email']}",
-                                //               restaurantInstagram:
-                                //                   "${doc[index].data()['instagram']}",
-                                //               restaurantFacebook:
-                                //                   "${doc[index].data()['facebook']}",
-                                //               restaurantPhone:
-                                //                   "${doc[index].data()['phone']}",
-                                //               restaurantType:
-                                //                   "${doc[index].data()['type']}",
-                                //             )));
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (BuildContext context) =>
+                                            AreaDetailScreen(
+                                              restaurantName:
+                                                  "${doc[index].data()['name']}",
+                                              restaurantImage:
+                                                  "${doc[index].data()['image']}",
+                                              restaurantMenu:
+                                                  doc[index].documentID,
+                                              restaurantEmail:
+                                                  "${doc[index].data()['email']}",
+                                              restaurantInstagram:
+                                                  "${doc[index].data()['instagram']}",
+                                              restaurantFacebook:
+                                                  "${doc[index].data()['facebook']}",
+                                              restaurantPhone:
+                                                  "${doc[index].data()['phone']}",
+                                              restaurantType:
+                                                  "${doc[index].data()['type']}",
+                                            )));
                               },
                               title: Text(
                                 '${doc[index].data()['name']}',

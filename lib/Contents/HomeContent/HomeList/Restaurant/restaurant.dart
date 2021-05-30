@@ -91,31 +91,31 @@ class _RestaurantMenuState extends State<RestaurantMenu> {
                     ),
                     ListTile(
                       onTap: () {
-                        // Navigator.push(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //         builder: (BuildContext context) =>
-                        //             AreaDetailScreen(
-                        //               restaurantName:
-                        //                   "${snapshotData.docs[index].data()['name']}",
-                        //               restaurantMenu:
-                        //                   snapshotData.docs[index].id,
-                        //               restaurantImage:
-                        //                   "${snapshotData.docs[index].data()['image']}",
-                        //               restaurantEmail:
-                        //                   "${snapshotData.docs[index].data()['email']}",
-                        //               restaurantInstagram:
-                        //                   "${snapshotData.docs[index].data()['instagram']}",
-                        //               restaurantFacebook:
-                        //                   "${snapshotData.docs[index].data()['facebook']}",
-                        //               restaurantPhone:
-                        //                   "${snapshotData.docs[index].data()['phone']}",
-                        //               restaurantType:
-                        //                   "${snapshotData.docs[index].data()['type']}",
-                        //               restaurantRating: snapshotData.docs[index]
-                        //                   .data()["rating"]
-                        //                   .toDouble(),
-                        //             )));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (BuildContext context) =>
+                                    AreaDetailScreen(
+                                      restaurantName:
+                                          "${snapshotData.docs[index].data()['name']}",
+                                      restaurantMenu:
+                                          snapshotData.docs[index].id,
+                                      restaurantImage:
+                                          "${snapshotData.docs[index].data()['image']}",
+                                      restaurantEmail:
+                                          "${snapshotData.docs[index].data()['email']}",
+                                      restaurantInstagram:
+                                          "${snapshotData.docs[index].data()['instagram']}",
+                                      restaurantFacebook:
+                                          "${snapshotData.docs[index].data()['facebook']}",
+                                      restaurantPhone:
+                                          "${snapshotData.docs[index].data()['phone']}",
+                                      restaurantType:
+                                          "${snapshotData.docs[index].data()['type']}",
+                                      restaurantRating: snapshotData.docs[index]
+                                          .data()["rating"]
+                                          .toDouble(),
+                                    )));
                       },
                       title: Text(
                         "${snapshotData.docs[index].data()['name']}",

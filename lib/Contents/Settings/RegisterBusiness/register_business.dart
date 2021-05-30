@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce/Screen/Shared/loadingScreen.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:uuid/uuid.dart';
 
@@ -12,12 +13,15 @@ class RegisterBusiness extends StatefulWidget {
 }
 
 class _RegisterBusinessState extends State<RegisterBusiness> {
-  final formKey = GlobalKey<FormState>();
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
   File image1;
   File file;
-  String restaurantName;
+  String businessName;
   String phoneNumber;
+  bool imageSelected = false;
   bool loading = false;
+  TextEditingController nameController = new TextEditingController();
+  TextEditingController phoneController = new TextEditingController();
 
   final imagePicker = ImagePicker();
   @override
@@ -42,40 +46,50 @@ class _RegisterBusinessState extends State<RegisterBusiness> {
           ),
           automaticallyImplyLeading: false,
         ),
-        body: Container(
-          margin: EdgeInsets.only(left: 10, right: 10, top: 10),
-          child: loading
-              ? LoadingScreen()
-              : Form(
-                  key: formKey,
-                  child: ListView(
-                    children: [
-                      OutlinedButton(
-                          onPressed: () {
-                            getImage();
-                          },
-                          style: OutlinedButton.styleFrom(
-                            side: BorderSide(width: 1.0, color: Colors.grey),
-                          ),
-                          child: (image1 != null)
-                              ? Container(
-                                  height: 200,
-                                  child: Image.file(
-                                    image1,
-                                    fit: BoxFit.fitWidth,
-                                  ),
-                                )
-                              : Padding(
-                                  padding:
-                                      EdgeInsets.fromLTRB(8.0, 26, 8.0, 26),
+        body: Form(
+          key: formKey,
+          child: SingleChildScrollView(
+            child: loading
+                ? Center(child: CircularProgressIndicator())
+                : Column(children: [
+                    OutlinedButton(
+                        onPressed: () {
+                          getImage();
+                        },
+                        style: OutlinedButton.styleFrom(
+                          side: BorderSide(width: 1.0, color: Colors.grey),
+                        ),
+                        child: (image1 != null)
+                            ? Container(
+                                height: 100,
+                                child: Image.file(
+                                  image1,
+                                  fit: BoxFit.cover,
+                                ),
+                              )
+                            : Padding(
+                                padding: EdgeInsets.fromLTRB(8.0, 26, 8.0, 26),
+                                child: TextButton(
                                   child: Text(
-                                    'Click to add a photo of \n your license(የንግድ ፈቃድ)',
-                                  ),
-                                )),
-                      SizedBox(height: 20),
-                      TextFormField(
+                                      'First click to add a photo of \n your license(የንግድ ፈቃድ)'),
+                                  onPressed: () {
+                                    getImage();
+                                  },
+                                ),
+                              )),
+                    SizedBox(height: 20),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10.0, right: 10),
+                      child: TextFormField(
+                        controller: nameController,
                         onChanged: (value) {
-                          this.restaurantName = value;
+                          this.businessName = value;
+                        },
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter business name';
+                          }
+                          return null;
                         },
                         textInputAction: TextInputAction.next,
                         textCapitalization: TextCapitalization.words,
@@ -83,147 +97,106 @@ class _RegisterBusinessState extends State<RegisterBusiness> {
                             hintText: 'Business name',
                             border: OutlineInputBorder()),
                       ),
-                      SizedBox(height: 20),
-                      TextFormField(
+                    ),
+                    SizedBox(height: 20),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10.0, right: 10),
+                      child: TextFormField(
+                        controller: phoneController,
                         onChanged: (value) {
                           this.phoneNumber = value;
+                        },
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter a phone number';
+                          }
+                          return null;
                         },
                         keyboardType: TextInputType.number,
                         decoration: InputDecoration(
                             hintText: 'Phone number',
                             border: OutlineInputBorder()),
                       ),
-                      SizedBox(height: 20),
-                      Container(
-                        height: 50,
-                        child: ElevatedButton(
-                            child: Text(
-                              'Send',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            onPressed: () {
-                              uploadImageandSaveItem();
-                            },
-                            style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all<Color>(
-                                  Colors.greenAccent[400]),
-                            )),
-                      )
-                    ],
-                  )),
+                    ),
+                    SizedBox(height: 20),
+                    Container(
+                      margin: EdgeInsets.only(left: 20, right: 20),
+                      height: 50,
+                      width: double.infinity,
+                      child: ElevatedButton(
+                          child: Text(
+                            'Send',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          onPressed: () {
+                            uploadImageandSaveItem();
+                          },
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all<Color>(
+                                Colors.greenAccent[400]),
+                          )),
+                    ),
+                  ]),
+          ),
         ));
   }
 
   Future getImage() async {
     var image = await ImagePicker()
         .getImage(source: ImageSource.gallery, imageQuality: 50);
-    setState(() {
-      image1 = File(image.path);
-    });
-  }
-
-  void validateAndUpload() async {
-    if (formKey.currentState.validate()) {
-      setState(() => loading = true);
-      if (image1 != null) {
-        if (restaurantName.isNotEmpty) {
-          String imageUrl1;
-
-          final StorageReference storage =
-              FirebaseStorage.instance.ref().child("licenserequest");
-          final String picture =
-              "1${DateTime.now().millisecondsSinceEpoch.toString()}.jpg";
-          StorageUploadTask uploadtask = storage.child(picture).putFile(image1);
-          StorageTaskSnapshot taskSnapshot =
-              await uploadtask.onComplete.then((snapshot) async {
-            imageUrl1 = await snapshot.ref.getDownloadURL();
-            final itemsRef =
-                FirebaseFirestore.instance.collection('Registration request');
-
-            itemsRef.doc(restaurantName).set(
-              {
-                'name': restaurantName,
-                'phone': phoneNumber,
-                'image': imageUrl1,
-              },
-            );
-
-            formKey.currentState.reset();
-
-            setState(() => loading = false);
-          });
-        } else {
-          setState(() => loading = false);
-          showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  title: Text('Unable to register please try later'),
-                );
-              });
-        }
-      } else {
-        setState(() => loading = false);
-        showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                title: Text('Enter phone'),
-              );
-            });
-      }
+    if (image != null) {
+      setState(() {
+        image1 = File(image.path);
+        imageSelected = true;
+      });
+    } else {
+      return Fluttertoast.showToast(msg: 'Please select an image');
     }
   }
 
+  // ignore: missing_return
   Future<String> uploadImageandSaveItem() async {
     String imageDownloadUrl = await uploadItemImage(image1);
     if (formKey.currentState.validate()) {
-      setState(() => loading = true);
-      if (restaurantName.isNotEmpty) {
-        if (image1 != null) {
-          saveItem(imageDownloadUrl);
-          formKey.currentState.reset();
-          setState(() => loading = false);
-          showDialog<String>(
-              context: context,
-              builder: (BuildContext context) => AlertDialog(
-                    content: const Text(
-                        'Registration requested please wait for confirmation'),
-                    actions: [
-                      TextButton(
-                          child: Text('Okay'),
-                          onPressed: () {
-                            Navigator.pop(context);
-                          })
-                    ],
-                  ));
+      setState(() {
+        loading = true;
+      });
+      if (image1 != null) {
+        if (businessName.isNotEmpty) {
+          if (phoneNumber.isNotEmpty) {
+            saveItem(imageDownloadUrl);
+            showDialog<String>(
+                context: context,
+                builder: (BuildContext context) => AlertDialog(
+                      title: const Text('Posted'),
+                      content: const Text('Item uploaded succesfully'),
+                      actions: [
+                        TextButton(
+                            child: Text('Okay'),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            })
+                      ],
+                    ));
+          }
         } else {
-          showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  title: Text('Unable to register please try later'),
-                );
-              });
-          setState(() => loading = false);
+          setState(() {
+            loading = false;
+          });
+          Fluttertoast.showToast(msg: 'Please check and try again');
         }
       } else {
-        showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                title: Text('Enter an image'),
-              );
-            });
-        setState(() => loading = false);
-        // Fluttertoast.showToast(msg: 'Enter a price');
+        setState(() {
+          loading = false;
+        });
+        Fluttertoast.showToast(msg: 'Please check and try again');
       }
     }
   }
 
   Future<String> uploadItemImage(file) async {
     final StorageReference storageReference =
-        FirebaseStorage.instance.ref().child("licenselist");
+        FirebaseStorage.instance.ref().child("license");
 
     StorageUploadTask task = storageReference
         .child("${DateTime.now().millisecondsSinceEpoch}")
@@ -234,7 +207,21 @@ class _RegisterBusinessState extends State<RegisterBusiness> {
   }
 
   saveItem(imageDownloadUrl) {
-    var id = Uuid();
-    String productId = id.v1();
+    // var id = Uuid();
+    // String productId = id.v1();
+    final itemsRef = FirebaseFirestore.instance.collection('Requests');
+
+    itemsRef.doc(businessName).set(
+      {
+        'name': businessName,
+        'phone': phoneNumber,
+        'image': imageDownloadUrl,
+      },
+    );
+
+    setState(() {
+      loading = false;
+      formKey.currentState.reset();
+    });
   }
 }

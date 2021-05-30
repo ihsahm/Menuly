@@ -81,6 +81,7 @@ class _EventContentState extends State<EventContent> {
                             //           blurRadius: 5),
                             //     ]),
                             child: Container(
+                              width: double.infinity,
                               child: CachedNetworkImage(
                                 imageUrl:
                                     "${snapshot.data.documents[index].data()['image']}",
@@ -147,7 +148,7 @@ class _EventContentState extends State<EventContent> {
                                         child: Text(
                                           'Tap to see more...',
                                           style: TextStyle(
-                                              color: Colors.blue[800]),
+                                              color: Colors.blue[600]),
                                         ))
                                   ],
                                 )),
