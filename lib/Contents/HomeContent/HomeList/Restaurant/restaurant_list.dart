@@ -191,7 +191,7 @@ class _RestaurantListState extends State<RestaurantList> {
               return Column(
                 children: [
                   Lottie.asset('assets/loading.json', animate: true),
-                  Text('Loading, please wait'),
+                  //  Text('Loading, please wait'),
                 ],
               );
             }

@@ -8,6 +8,7 @@ class HotelDetails extends StatefulWidget {
   final name;
   final phone;
   final rating;
+  final dis;
   final instagram;
   final image;
   final facebook;
@@ -33,7 +34,8 @@ class HotelDetails extends StatefulWidget {
       this.userlocationLongitude,
       this.image,
       this.info,
-      this.rating})
+      this.rating,
+      this.dis})
       : super(key: key);
   @override
   _HotelDetailsState createState() => _HotelDetailsState();

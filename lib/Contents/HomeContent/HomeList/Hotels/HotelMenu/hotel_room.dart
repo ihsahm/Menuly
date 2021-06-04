@@ -57,7 +57,7 @@ class _RoomDetailsState extends State<RoomDetails> {
             child: Column(
               children: [
                 Lottie.asset('assets/loading.json', animate: true),
-                Text('Loading, please wait'),
+                //Text('Loading, please wait'),
               ],
             ),
           );

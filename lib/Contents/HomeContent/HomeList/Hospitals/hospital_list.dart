@@ -171,7 +171,7 @@ class _HospitalListState extends State<HospitalList> {
                     child: Column(
                   children: [
                     Lottie.asset('assets/loading.json', animate: true),
-                    Text('Loading, please wait'),
+                    // Text('Loading, please wait'),
                   ],
                 )),
               );

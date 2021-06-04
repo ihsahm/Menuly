@@ -82,7 +82,7 @@ class _HotelContactState extends State<HotelContact> {
                         color: Colors.blue[700]),
                     title: Text('Visit our website'),
                     onTap: () {
-                      // launch('url: ${widget.website}').toString();
+                      //launch('url: ${widget.website}').toString();
                     },
                   ),
                 ],

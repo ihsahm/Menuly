@@ -127,8 +127,8 @@ class _EntertainmentListState extends State<EntertainmentList> {
                               ),
                               subtitle: FutureBuilder<String>(
                                 future: locationProvider.getCurrentLocation(
-                                    '${doc[index].data()['latitude']}',
-                                    '${doc[index].data()['longitude']}'),
+                                    doc[index].data()['latitude'],
+                                    doc[index].data()['longitude']),
                                 builder: (BuildContext context,
                                     AsyncSnapshot<String> snapshot) {
                                   List<Widget> children;
@@ -165,7 +165,7 @@ class _EntertainmentListState extends State<EntertainmentList> {
                   child: Column(
                 children: [
                   Lottie.asset('assets/loading.json', animate: true),
-                  Text('Loading, please wait'),
+                  // Text('Loading, please wait'),
                 ],
               ));
             }

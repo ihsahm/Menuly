@@ -42,7 +42,7 @@ dependencies:
   fluttericon: ^2.0.0
   google_maps_flutter:
   image_picker: ^0.6.7+6
-
+  paginate_firestore:
   firebase_storage: ^4.0.0
   uuid: ^2.2.2
   geolocator: ^6.2.0
@@ -63,6 +63,7 @@ dependencies:
   great_circle_distance2: ^1.0.1+1
   sort: ^0.0.2
   multi_sort: ^3.0.0
+  sortedmap:
 
 dev_dependencies:
   flutter_test:

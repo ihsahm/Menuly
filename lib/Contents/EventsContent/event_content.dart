@@ -162,7 +162,7 @@ class _EventContentState extends State<EventContent> {
             return Center(
                 child: Column(
               children: [
-                Lottie.asset('assets/loading.json', animate: true),
+                Lottie.asset('assets/loading.json', animate: false),
                 Text('Loading, please wait'),
               ],
             ));

@@ -9,6 +9,7 @@ import 'package:e_commerce/Contents/HomeContent/HomeList/Restaurant/restaurant.d
 import 'package:e_commerce/Contents/HomeContent/HomeList/Shopping/Details/shopping_details.dart';
 import 'package:e_commerce/Contents/HomeContent/HomeList/Shopping/shopping.dart';
 import 'package:e_commerce/Services/GetCurrentLocation/getLocation.dart';
+import 'package:e_commerce/Services/TestDirection/directionTest.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:geolocator/geolocator.dart';
@@ -27,6 +28,7 @@ class _TabNavigationState extends State<TabNavigation> {
       Hotel(),
 
       Shopping(),
+      //NearbyTest(),
       Entertainment(),
       Hospital()
       // Parking(),
