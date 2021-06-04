@@ -1,4 +1,4 @@
-import 'package:e_commerce/Contents/EventsContent/event_content.dart';
+import 'package:e_commerce/Screen/EventPage/EventsContent/event_content.dart';
 import 'package:flutter/material.dart';
 
 class EventPage extends StatefulWidget {

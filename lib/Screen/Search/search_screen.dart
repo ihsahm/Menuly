@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:e_commerce/Contents/HomeContent/HomeList/Restaurant/RestaurantDetailPage/restaurant_detail_screen.dart';
 import 'package:e_commerce/Database/Search/search.dart';
+import 'package:e_commerce/Screen/HomeContent/HomeList/Restaurant/RestaurantDetailPage/restaurant_detail_screen.dart';
 import 'package:e_commerce/Services/GetCurrentLocation/getLocation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
@@ -36,7 +36,8 @@ class _SearchScreenState extends State<SearchScreen> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (BuildContext context) => AreaDetailScreen(
+                          builder: (BuildContext context) =>
+                              RestaurantDetailScreen(
                                 restaurantName:
                                     "${snapshotData.docs[index].data()['name']}",
                                 restaurantMenu: snapshotData.docs[index].id,

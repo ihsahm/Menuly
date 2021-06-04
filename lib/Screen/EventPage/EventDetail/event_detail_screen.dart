@@ -1,5 +1,5 @@
 import 'package:add_2_calendar/add_2_calendar.dart';
-import 'package:e_commerce/Contents/EventsContent/EventDetail/event_detail.dart';
+import 'package:e_commerce/Screen/EventPage/EventsContent/EventDetail/event_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 

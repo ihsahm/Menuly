@@ -1,4 +1,4 @@
-import 'package:e_commerce/Contents/Settings/settingcontent.dart';
+import 'package:e_commerce/Screen/Settings/Contents/settingcontent.dart';
 import 'package:flutter/material.dart';
 
 class SettingsPage extends StatefulWidget {
