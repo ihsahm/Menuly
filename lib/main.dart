@@ -1,13 +1,12 @@
-import 'package:connectivity/connectivity.dart';
-import 'package:e_commerce/Navigation/navigation.dart';
+import 'package:e_commerce/Consts/styles.dart';
+import 'package:e_commerce/Provider/darkThemeprovider.dart';
+import 'package:e_commerce/Screen/Settings/Contents/RegisterBusiness/licenseImage.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:provider/provider.dart';
 
-final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-    FlutterLocalNotificationsPlugin();
+import 'Shared/Navigation/navigation.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,45 +14,66 @@ void main() async {
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   await Firebase.initializeApp();
 
-  // var initializationSettingsAndroid =
-  //     AndroidInitializationSettings('ic_launcher');
-  // var initializationSettingsIOS = IOSInitializationSettings(
-  //     requestAlertPermission: true,
-  //     requestBadgePermission: true,
-  //     requestSoundPermission: true,
-  //     (onDidReceiveLocalNotification:
-  //         (int id, String title, String body, String payload) async {}));
-  // var initializationSettings = InitializationSettings(
-  //     android: initializationSettingsAndroid, iOS: initializationSettingsIOS);
-  // await flutterLocalNotificationsPlugin.initialize(initializationSettings,
-  //     (onSelectNotification: (String payload) async {
-  //   if (payload != null) {
-  //     debugPrint('notification payload' + payload);
-  //   }
-  // })!);
+  runApp(Main());
+  // var connection = await Connectivity().checkConnectivity();
 
-  var connection = await Connectivity().checkConnectivity();
-  //bool result= await DataConnectionChecker().hasConnection;
+  // if (connection == ConnectivityResult.none) {
+  //   Fluttertoast.showToast(
+  //       msg: 'Please check your internet connection and open again',
+  //       textColor: ColorsConst.white,
+  //       backgroundColor: Colors.grey);
+  // } else if (connection == ConnectivityResult.mobile) {
+  //   return runApp(MaterialApp(
+  //     home: Navigation(),
+  //     theme: ThemeData.dark(),
+  //     debugShowCheckedModeBanner: false,
+  //   ));
+  // } else if (connection == ConnectivityResult.wifi) {
+  //   return runApp(MaterialApp(
+  //     home: Navigation(),
+  //     debugShowCheckedModeBanner: false,
+  //   ));
+  // }
+}
 
-  if (connection == ConnectivityResult.none) {
-    Fluttertoast.showToast(
-        msg: 'Please check your internet connection and open again',
-        textColor: Colors.white,
-        backgroundColor: Colors.grey);
-  } else if (connection == ConnectivityResult.mobile) {
-    return runApp(MaterialApp(
-      home: Navigation(),
-      debugShowCheckedModeBanner: false,
-    ));
-  } else if (connection == ConnectivityResult.wifi) {
-    return runApp(MaterialApp(
-      home: Navigation(),
-      debugShowCheckedModeBanner: false,
-    ));
+class Main extends StatefulWidget {
+  @override
+  _MainState createState() => _MainState();
+}
+
+class _MainState extends State<Main> {
+  DarkThemeProvider themeChangeProvider = DarkThemeProvider();
+  void getCurrentAppTheme() async {
+    themeChangeProvider.darkTheme =
+        await themeChangeProvider.darkThemePreferences.getTheme();
   }
 
-  // runApp(MaterialApp(
-  //   home: Navigation(),
-  //   debugShowCheckedModeBanner: false,
-  // ));
+  @override
+  void initState() {
+    getCurrentAppTheme();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (_) {
+            return themeChangeProvider;
+          }),
+          ChangeNotifierProvider(create: (_) {
+            return LicenseImage();
+          }),
+          // ChangeNotifierProvider(create: (_) {
+          //   return LocationProvider();
+          // })
+        ],
+        child:
+            Consumer<DarkThemeProvider>(builder: (context, themeData, child) {
+          return MaterialApp(
+            theme: Styles.themeData(themeChangeProvider.darkTheme, context),
+            home: Navigation(),
+          );
+        }));
+  }
 }

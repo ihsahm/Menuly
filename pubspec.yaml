@@ -31,8 +31,7 @@ dependencies:
   firebase_auth: ^0.18.0+1
   cloud_firestore: ^0.14.0+2
   firebase_core: ^0.5.0
-  shared_preferences: ^0.5.8
-  extended_image: ^1.1.2
+  shared_preferences: ^0.5.12+4
   fluttertoast: ^7.0.2
   get: ^3.25.4
   cached_network_image: ^2.3.2+1
@@ -41,9 +40,11 @@ dependencies:
   #ussd: ^0.0.2+1
   fluttericon: ^2.0.0
   google_maps_flutter:
+  geocoder: ^0.2.1
   image_picker: ^0.6.7+6
+  location: ^3.2.1
   paginate_firestore:
-  firebase_storage: ^4.0.0
+  firebase_storage: ^5.2.0
   uuid: ^2.2.2
   geolocator: ^6.2.0
   #mongo_dart: ^0.4.4
@@ -55,15 +56,14 @@ dependencies:
   intl: ^0.16.1
   add_2_calendar: ^2.0.2
   get_it: ^6.1.1
-  syncfusion_flutter_maps: ^19.1.57-beta.1
   connectivity: ^3.0.3
   flutter_rating_bar: ^4.0.0
   #data_connection_checker: ^0.3.4
   lottie: ^0.7.0+1
-  great_circle_distance2: ^1.0.1+1
-  sort: ^0.0.2
-  multi_sort: ^3.0.0
   sortedmap:
+  shimmer: ^2.0.0
+  latlong: ^0.6.1
+  list_tile_switch: ^1.0.0
 
 dev_dependencies:
   flutter_test:

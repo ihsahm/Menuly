@@ -36,66 +36,62 @@ class _EventDetailState extends State<EventDetail> {
           width: double.infinity,
           child: CachedNetworkImage(
             imageUrl: widget.eventPicture,
-            // cache: true,
             fit: BoxFit.cover,
           ),
         ),
         Padding(
           padding: const EdgeInsets.only(top: 18.0, bottom: 10, left: 5.0),
-          child: RichText(
-            text: TextSpan(
-                text: 'Price: ',
-                style: TextStyle(
-                    fontSize: 17,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.blueGrey[500]),
-                children: <TextSpan>[
-                  TextSpan(
-                    text: "${widget.eventPrice} br.",
-                    style: TextStyle(color: Colors.blueAccent, fontSize: 18),
-                  )
-                ]),
+          child: Text(
+            'Price: ${widget.eventPrice}',
+            style: TextStyle(
+              fontSize: 17,
+              fontWeight: FontWeight.w600,
+            ),
+            // children: <TextSpan>[
+            //   TextSpan(
+            //     text: "${widget.eventPrice} br.",
+            //     style: TextStyle(color: Colors.blueAccent, fontSize: 18),
+            //   )
+            // ]),
           ),
         ),
         Padding(
           padding: const EdgeInsets.only(top: 4.0, bottom: 10, left: 5.0),
-          child: RichText(
-            text: TextSpan(
-                text: 'Location: ',
-                style: TextStyle(
-                    fontSize: 17,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.blueGrey[500]),
-                children: <TextSpan>[
-                  TextSpan(
-                    text: "${widget.eventLocation}",
-                    style: TextStyle(color: Colors.blueAccent, fontSize: 18),
-                  )
-                ]),
+          child: Text(
+            'Location: ${widget.eventLocation}',
+            style: TextStyle(
+              fontSize: 17,
+              fontWeight: FontWeight.w600,
+            ),
+            // children: <TextSpan>[
+            //   TextSpan(
+            //     text: "${widget.eventLocation}",
+            //     style: TextStyle(color: Colors.blueAccent, fontSize: 18),
+            //   )
+            // ]),
           ),
         ),
         Padding(
           padding: const EdgeInsets.only(top: 4.0, bottom: 10, left: 5.0),
-          child: RichText(
-            text: TextSpan(
-                text: 'Tickets available at: ',
-                style: TextStyle(
-                    fontSize: 17,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.blueGrey[500]),
-                children: <TextSpan>[
-                  TextSpan(
-                    text: widget.eventAvailable,
-                    style: TextStyle(color: Colors.blueAccent, fontSize: 18),
-                  )
-                ]),
+          child: Text(
+            'Tickets available at: ${widget.eventAvailable}',
+            style: TextStyle(
+              fontSize: 17,
+              fontWeight: FontWeight.w600,
+            ),
+            // children: <TextSpan>[
+            //   TextSpan(
+            //     text: widget.eventAvailable,
+            //     style: TextStyle(color: Colors.blueAccent, fontSize: 18),
+            //   )
+            // ]),
           ),
         ),
         Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
               widget.eventDetail,
-              style: TextStyle(color: Colors.blueGrey[800]),
+              //style: TextStyle(color: Colors.blueGrey[800]),
             ))
       ],
     );

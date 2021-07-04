@@ -1,10 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:e_commerce/Consts/loading.dart';
 import 'package:e_commerce/Database/Download/getData.dart';
-import 'package:e_commerce/Screen/EventPage/EventDetail/event_detail_screen.dart';
+import 'package:e_commerce/Screen/EventPage/EventsContent/event_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:intl/intl.dart';
-import 'package:lottie/lottie.dart';
 
 class EventContent extends StatefulWidget {
   @override
@@ -62,24 +62,7 @@ class _EventContentState extends State<EventContent> {
                                         )));
                           },
                           child: Container(
-                            // margin: const EdgeInsets.only(
-                            //     left: 3, right: 3, bottom: 4),
                             height: MediaQuery.of(context).size.height / 1.6,
-                            //   width: MediaQuery.of(context).size.width / 1.02,
-                            // decoration: BoxDecoration(
-                            //     color: Colors.white,
-                            //     // image: DecorationImage(
-                            //     //     fit: BoxFit.cover,
-                            //     //     image: NetworkImage(
-                            //     //       "${snapshot.data.documents[index].data()['image']}",
-                            //     //     )),
-                            //     borderRadius: BorderRadius.circular(15),
-                            //     boxShadow: [
-                            //       BoxShadow(
-                            //           color: Colors.grey[300],
-                            //           offset: Offset(-2, -1),
-                            //           blurRadius: 5),
-                            //     ]),
                             child: Container(
                               width: double.infinity,
                               child: CachedNetworkImage(
@@ -125,7 +108,6 @@ class _EventContentState extends State<EventContent> {
                                         child: Text(
                                           "${snapshot.data.documents[index].data()['ticketName']}",
                                           style: TextStyle(
-                                              color: Colors.black,
                                               fontSize: 24,
                                               fontWeight: FontWeight.w600),
                                         ),
@@ -159,13 +141,7 @@ class _EventContentState extends State<EventContent> {
                   );
                 });
           } else {
-            return Center(
-                child: Column(
-              children: [
-                Lottie.asset('assets/loading.json', animate: false),
-                Text('Loading, please wait'),
-              ],
-            ));
+            return LoadingShow.loadingProgress;
           }
         });
   }

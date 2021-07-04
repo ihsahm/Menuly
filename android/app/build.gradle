@@ -74,7 +74,7 @@ flutter {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'com.android.support:multidex:1.0.3'
+    implementation 'androidx.multidex:multidex:2.0.1'
     implementation "com.google.firebase:firebase-messaging:20.1.6"
     implementation platform('com.google.firebase:firebase-bom:26.5.0')
 }
