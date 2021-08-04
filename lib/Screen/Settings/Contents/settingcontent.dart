@@ -1,4 +1,5 @@
-import 'package:e_commerce/Provider/darkThemeprovider.dart';
+import 'package:e_commerce/Consts/colors.dart';
+import 'package:e_commerce/Provider/themeProvider.dart';
 import 'package:e_commerce/Screen/Settings/Contents/RegisterBusiness/register_business.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
@@ -30,7 +31,7 @@ class SettingsList extends StatefulWidget {
 class _SettingsListState extends State<SettingsList> {
   @override
   Widget build(BuildContext context) {
-    final themeChange = Provider.of<DarkThemeProvider>(context);
+    final themeProvider = Provider.of<ThemeProvider>(context);
     return ListView(
       shrinkWrap: true,
       children: [
@@ -67,11 +68,10 @@ class _SettingsListState extends State<SettingsList> {
           thickness: 1,
         ),
         ListTileSwitch(
-          value: themeChange.darkTheme,
+          value: themeProvider.isDarkMode,
           onChanged: (value) {
-            setState(() {
-              themeChange.darkTheme = value;
-            });
+            final provider = Provider.of<ThemeProvider>(context, listen: false);
+            provider.toggleTheme(value);
           },
           visualDensity: VisualDensity.comfortable,
           leading: const Icon(FontAwesome.moon),
@@ -113,7 +113,7 @@ class _SettingsListState extends State<SettingsList> {
                               Text('Copyright '),
                               Icon(
                                 Icons.copyright_outlined,
-                                color: Colors.grey[400],
+                                color: ColorsConst.grey400,
                                 size: 16,
                               ),
                               Text("Metrix IO"),
@@ -125,7 +125,7 @@ class _SettingsListState extends State<SettingsList> {
                         TextButton(
                           child: Text(
                             'Okay',
-                            style: TextStyle(color: Colors.blue),
+                            style: TextStyle(color: ColorsConst.blue),
                           ),
                           onPressed: () {
                             Navigator.pop(context);

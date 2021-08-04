@@ -138,7 +138,7 @@ class _RestaurantMenuState extends State<RestaurantMenu> {
                                       itemBuilder: (context, index) =>
                                           const Icon(
                                         Icons.star,
-                                        color: Colors.amber,
+                                        color: ColorsConst.amber,
                                       ),
                                       itemCount: 5,
                                       itemSize: 18.0,
@@ -154,9 +154,6 @@ class _RestaurantMenuState extends State<RestaurantMenu> {
                                     "${_getDistance(snapshotData.docs[index].data()['location'])} km",
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
-                                      color: themeChange.darkTheme
-                                          ? Colors.white
-                                          : Colors.blueGrey[700],
                                       fontSize: 12.0,
                                     ),
                                   ),
@@ -187,7 +184,10 @@ class _RestaurantMenuState extends State<RestaurantMenu> {
                         const EdgeInsets.only(left: 5.0, right: 5.0, top: 1.0),
                     child: ElevatedButton(
                       style: ColorsConst.buttonTheme,
-                      child: Text("All"),
+                      child: Text(
+                        "All",
+                        style: TextStyle(color: ColorsConst.white),
+                      ),
                       onPressed: () {
                         val.getAllData().then((value) {
                           snapshotData = value;
@@ -208,7 +208,10 @@ class _RestaurantMenuState extends State<RestaurantMenu> {
                         const EdgeInsets.only(left: 5.0, right: 5.0, top: 1.0),
                     child: ElevatedButton(
                       style: ColorsConst.buttonTheme,
-                      child: Text("Restaurant"),
+                      child: Text(
+                        "Restaurant",
+                        style: TextStyle(color: ColorsConst.white),
+                      ),
                       onPressed: () {
                         val.getRestaurantData().then((value) {
                           snapshotData = value;
@@ -229,7 +232,10 @@ class _RestaurantMenuState extends State<RestaurantMenu> {
                         const EdgeInsets.only(left: 5.0, right: 5.0, top: 1.0),
                     child: ElevatedButton(
                       style: ColorsConst.buttonTheme,
-                      child: Text("Cafe"),
+                      child: Text(
+                        "Cafe",
+                        style: TextStyle(color: ColorsConst.white),
+                      ),
                       onPressed: () {
                         val.getCafeData().then((value) {
                           snapshotData = value;
@@ -250,7 +256,10 @@ class _RestaurantMenuState extends State<RestaurantMenu> {
                         const EdgeInsets.only(left: 5.0, right: 5.0, top: 1.0),
                     child: ElevatedButton(
                       style: ColorsConst.buttonTheme,
-                      child: Text("Burger&Pizza"),
+                      child: Text(
+                        "Burger&Pizza",
+                        style: TextStyle(color: ColorsConst.white),
+                      ),
                       onPressed: () {
                         val.getBurgerData().then((value) {
                           snapshotData = value;
@@ -271,7 +280,10 @@ class _RestaurantMenuState extends State<RestaurantMenu> {
                         const EdgeInsets.only(left: 5.0, right: 5.0, top: 1.0),
                     child: ElevatedButton(
                       style: ColorsConst.buttonTheme,
-                      child: Text("Fasting"),
+                      child: Text(
+                        "Fasting",
+                        style: TextStyle(color: ColorsConst.white),
+                      ),
                       onPressed: () {
                         val.getFastingData().then((value) {
                           snapshotData = value;
@@ -292,7 +304,10 @@ class _RestaurantMenuState extends State<RestaurantMenu> {
                         const EdgeInsets.only(left: 5.0, right: 5.0, top: 1.0),
                     child: ElevatedButton(
                       style: ColorsConst.buttonTheme,
-                      child: Text("Pasta"),
+                      child: Text(
+                        "Pasta",
+                        style: TextStyle(color: ColorsConst.white),
+                      ),
                       onPressed: () {
                         val.getPastaData().then((value) {
                           snapshotData = value;

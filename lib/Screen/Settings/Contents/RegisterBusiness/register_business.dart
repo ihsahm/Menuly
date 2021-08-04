@@ -1,6 +1,4 @@
 import 'dart:io';
-import 'package:e_commerce/Consts/colors.dart';
-import 'package:e_commerce/Provider/darkThemeprovider.dart';
 import 'package:e_commerce/Screen/Settings/Contents/RegisterBusiness/licenseImage.dart';
 import 'package:e_commerce/Screen/Settings/Contents/RegisterBusiness/registerForm.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +24,6 @@ class _RegisterBusinessState extends State<RegisterBusiness> {
   final imagePicker = ImagePicker();
   @override
   Widget build(BuildContext context) {
-    final themeChange = Provider.of<DarkThemeProvider>(context);
     final _licenseData = Provider.of<LicenseImage>(context);
     return Scaffold(
         appBar: AppBar(
@@ -38,7 +35,6 @@ class _RegisterBusinessState extends State<RegisterBusiness> {
           leading: IconButton(
             icon: Icon(
               Icons.clear,
-              color: themeChange.darkTheme ? Colors.white : ColorsConst.black,
             ),
             onPressed: () {
               Navigator.pop(context);

@@ -1,11 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:e_commerce/Consts/colors.dart';
 import 'package:e_commerce/Consts/icons.dart';
-import 'package:e_commerce/Provider/darkThemeprovider.dart';
 import 'package:e_commerce/Screen/HomeContent/Restaurant/RestaurantDetailPage/Details/Contact/restaurant_contact.dart';
 import 'package:e_commerce/Screen/HomeContent/Restaurant/RestaurantDetailPage/Details/Menu/restaurant_menu.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class RestaurantDetailScreen extends StatefulWidget {
@@ -59,8 +57,6 @@ class _RestaurantDetailScreenState extends State<RestaurantDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final themeChange = Provider.of<DarkThemeProvider>(context);
-
     return Scaffold(
       body: DefaultTabController(
         length: 2,

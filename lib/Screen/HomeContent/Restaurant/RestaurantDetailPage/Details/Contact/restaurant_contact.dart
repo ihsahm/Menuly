@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:e_commerce/Consts/colors.dart';
 import 'package:e_commerce/Consts/icons.dart';
 import 'package:e_commerce/Consts/loading.dart';
 import 'package:e_commerce/Database/Download/getData.dart';
@@ -82,14 +83,14 @@ class _AreaDetailsState extends State<AreaDetails> {
                         ListTile(
                           leading: Icon(
                             Icons.favorite,
-                            color: Colors.red,
+                            color: ColorsConst.red,
                           ),
                           title: Text('Rating'),
                           subtitle: RatingBarIndicator(
                             rating: widget.rating.toDouble(),
                             itemBuilder: (context, index) => Icon(
                               Icons.star,
-                              color: Colors.amber,
+                              color: ColorsConst.amber,
                             ),
                             itemCount: 5,
                             itemSize: 20.0,

@@ -45,7 +45,6 @@ class _RegisterFormState extends State<RegisterForm> {
   // }
 
   final _formKey = GlobalKey<FormState>();
-  var _addressTextController = TextEditingController();
   var _nameTextController = TextEditingController();
   var _phoneTextController = TextEditingController();
   @override
@@ -81,40 +80,40 @@ class _RegisterFormState extends State<RegisterForm> {
                         prefixIcon: Icon(Icons.business_center)),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(14.0),
-                  child: TextFormField(
-                    controller: _addressTextController,
-                    maxLines: 6,
-                    validator: (value) {
-                      if (value.isEmpty) {
-                        return 'Please press navigation button';
-                      }
-                      if (_licenseData.shopLatitude == null) {
-                        return 'Please press navigation button';
-                      }
-                      return null;
-                    },
-                    textInputAction: TextInputAction.next,
-                    textCapitalization: TextCapitalization.words,
-                    decoration: InputDecoration(
-                        hintText: 'Business area',
-                        border: OutlineInputBorder(),
-                        suffixIcon: IconButton(
-                          icon: Icon(Icons.location_searching),
-                          onPressed: () {
-                            _licenseData.getCurrentAddress().then((address) {
-                              if (address != null) {
-                                _addressTextController.text =
-                                    '${_licenseData.placeName}\n${_licenseData.shopAddress}';
-                              } else {
-                                return Fluttertoast.showToast(msg: 'Error');
-                              }
-                            });
-                          },
-                        )),
-                  ),
-                ),
+                // Padding(
+                //   padding: const EdgeInsets.all(14.0),
+                //   child: TextFormField(
+                //     controller: _addressTextController,
+                //     maxLines: 6,
+                //     validator: (value) {
+                //       if (value.isEmpty) {
+                //         return 'Please press navigation button';
+                //       }
+                //       if (_licenseData.shopLatitude == null) {
+                //         return 'Please press navigation button';
+                //       }
+                //       return null;
+                //     },
+                //     textInputAction: TextInputAction.next,
+                //     textCapitalization: TextCapitalization.words,
+                //     decoration: InputDecoration(
+                //         hintText: 'Business area',
+                //         border: OutlineInputBorder(),
+                //         suffixIcon: IconButton(
+                //           icon: Icon(Icons.location_searching),
+                //           onPressed: () {
+                //             _licenseData.getCurrentAddress().then((address) {
+                //               if (address != null) {
+                //                 _addressTextController.text =
+                //                     '${_licenseData.placeName}\n${_licenseData.shopAddress}';
+                //               } else {
+                //                 return Fluttertoast.showToast(msg: 'Error');
+                //               }
+                //             });
+                //           },
+                //         )),
+                //   ),
+                // ),
                 Padding(
                   padding:
                       const EdgeInsets.only(left: 14.0, right: 14.0, top: 2),
@@ -189,7 +188,7 @@ class _RegisterFormState extends State<RegisterForm> {
                         },
                         style: ButtonStyle(
                           backgroundColor: MaterialStateProperty.all<Color>(
-                              Colors.greenAccent[400]),
+                              ColorsConst.greenAccent400),
                         )),
                   ),
                 ),

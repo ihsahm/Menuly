@@ -1,14 +1,13 @@
 import 'dart:async';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:e_commerce/Consts/colors.dart';
 import 'package:e_commerce/Consts/loading.dart';
 import 'package:e_commerce/Database/Download/getData.dart';
-import 'package:e_commerce/Provider/darkThemeprovider.dart';
 import 'package:e_commerce/Services/getdata.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:provider/provider.dart';
 import 'RestaurantDetailPage/restaurant_detail_screen.dart';
 
 class RestaurantList extends StatefulWidget {
@@ -71,7 +70,7 @@ class _RestaurantListState extends State<RestaurantList> {
 
   @override
   Widget build(BuildContext context) {
-    final themeChange = Provider.of<DarkThemeProvider>(context);
+    // final themeChange = Provider.of<DarkThemeProvider>(context);
     return StreamBuilder(
         stream: _businessServices.getBusiness(),
         builder: (context, snapshot) {
@@ -140,7 +139,7 @@ class _RestaurantListState extends State<RestaurantList> {
                                             itemBuilder: (context, index) =>
                                                 const Icon(
                                               Icons.star,
-                                              color: Colors.amber,
+                                              color: ColorsConst.amber,
                                             ),
                                             itemCount: 5,
                                             itemSize: 18.0,
@@ -156,9 +155,6 @@ class _RestaurantListState extends State<RestaurantList> {
                                             "${_getDistance(doc[index].data()['location'])} km",
                                             overflow: TextOverflow.ellipsis,
                                             style: TextStyle(
-                                              color: themeChange.darkTheme
-                                                  ? Colors.white
-                                                  : Colors.blueGrey[700],
                                               fontSize: 12.0,
                                             ),
                                           )

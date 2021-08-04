@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:e_commerce/Consts/colors.dart';
 import 'package:e_commerce/Consts/loading.dart';
 import 'package:e_commerce/Database/Download/getData.dart';
 import 'package:e_commerce/Screen/EventPage/EventsContent/event_detail_screen.dart';
@@ -130,7 +131,7 @@ class _EventContentState extends State<EventContent> {
                                         child: Text(
                                           'Tap to see more...',
                                           style: TextStyle(
-                                              color: Colors.blue[600]),
+                                              color: ColorsConst.blue600),
                                         ))
                                   ],
                                 )),

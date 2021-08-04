@@ -1,10 +1,8 @@
 import 'package:add_2_calendar/add_2_calendar.dart';
 import 'package:e_commerce/Consts/colors.dart';
 import 'package:e_commerce/Consts/icons.dart';
-import 'package:e_commerce/Provider/darkThemeprovider.dart';
 import 'package:e_commerce/Screen/EventPage/EventsContent/EventDetail/event_detail.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class EventDetailScreen extends StatefulWidget {
   final ticketPrice;
@@ -33,7 +31,6 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
       GlobalKey<ScaffoldMessengerState>();
   @override
   Widget build(BuildContext context) {
-    final themeChange = Provider.of<DarkThemeProvider>(context);
     Event event = Event(
       title: widget.ticketName,
       startDate: widget.ticketDate,
@@ -49,7 +46,6 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
           child: IconButton(
             icon: Icon(
               IconsData.arrowBack,
-              color: themeChange.darkTheme ? Colors.white : ColorsConst.black,
             ),
             onPressed: () {
               Navigator.pop(context);
@@ -61,7 +57,7 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
           IconButton(
               icon: const Icon(
                 Icons.calendar_today,
-                color: Colors.blue,
+                color: ColorsConst.blue,
               ),
               tooltip: 'Add to calendar',
               onPressed: () {
@@ -72,7 +68,6 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                 });
               }),
         ],
-        backgroundColor: ColorsConst.white,
       ),
       body: EventDetail(
         eventLocation: widget.ticketLocation,

@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:e_commerce/Database/Download/getData.dart';
+import 'package:e_commerce/Consts/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttericon/linecons_icons.dart';
 
@@ -14,20 +14,6 @@ class FoodMenu extends StatefulWidget {
 class _FoodMenuState extends State<FoodMenu> {
   @override
   Widget build(BuildContext context) {
-    Stream items;
-
-    GetData crudObj = new GetData();
-
-    @override
-    void initState() {
-      crudObj.getMenuData().then((results) {
-        setState(() {
-          items = results;
-        });
-      });
-      super.initState();
-    }
-
     var db = FirebaseFirestore.instance
         .collection('Restaurant')
         .doc(widget.menuList)
@@ -75,7 +61,7 @@ class _FoodMenuState extends State<FoodMenu> {
                                               title: Text(
                                             'Contents',
                                             style: TextStyle(
-                                                color: Colors.blueGrey),
+                                                color: ColorsConst.blueGrey),
                                           )),
                                           ListTile(
                                             title: Text(
@@ -84,8 +70,6 @@ class _FoodMenuState extends State<FoodMenu> {
                                                   ? doc[index]
                                                       .data()['contents']
                                                   : 'Contents not provided'),
-                                              style: TextStyle(
-                                                  color: Colors.blueGrey),
                                             ),
                                           ),
                                           Padding(

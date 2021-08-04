@@ -1,3 +1,4 @@
+import 'package:e_commerce/Consts/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -9,10 +10,10 @@ class IconsData {
   static const IconData copyright = Icons.copyright_outlined;
   static const Widget info = Icon(
     Icons.info,
-    color: Colors.blue,
+    color: ColorsConst.blue,
   );
   static const Widget phone = Icon(
     Icons.phone,
-    color: Colors.green,
+    color: ColorsConst.green,
   );
 }
