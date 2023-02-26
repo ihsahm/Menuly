@@ -1,6 +1,9 @@
-# e_commerce
+# Menuly
 
-A new Flutter project.
+A Flutter project used to show nearby restaurants and their offerings.
+
+## Playstore
+Use this play store link to install the android version https://play.google.com/store/apps/details?id=com.metrixio.menuly
 
 ## Getting Started
 
