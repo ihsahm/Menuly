@@ -15,25 +15,7 @@ void main() async {
   await Firebase.initializeApp();
 
   runApp(Main());
-  // var connection = await Connectivity().checkConnectivity();
-
-  // if (connection == ConnectivityResult.none) {
-  //   Fluttertoast.showToast(
-  //       msg: 'Please check your internet connection and open again',
-  //       textColor: ColorsConst.white,
-  //       backgroundColor: Colors.grey);
-  // } else if (connection == ConnectivityResult.mobile) {
-  //   return runApp(MaterialApp(
-  //     home: Navigation(),
-  //     theme: ThemeData.dark(),
-  //     debugShowCheckedModeBanner: false,
-  //   ));
-  // } else if (connection == ConnectivityResult.wifi) {
-  //   return runApp(MaterialApp(
-  //     home: Navigation(),
-  //     debugShowCheckedModeBanner: false,
-  //   ));
-  // }
+  
 }
 
 class Main extends StatefulWidget {
@@ -72,21 +54,7 @@ class _MainState extends State<Main> {
                 themeMode: themeProvider.themeMode,
                 theme: MyThemes.lightTheme,
                 darkTheme: MyThemes.darkTheme,
-                // themeMode: ThemeMode.system,
-                // theme: Styles.themeData(themeChangeProvider.darkTheme, context),
                 home: Navigation(),
               );
             })
       ],
-      //  child:
-      //     Consumer<DarkThemeProvider>(builder: (context, themeData, child) {
-
-      //})
-    );
-  }
-}
-
-/*
-    final text = Provider.of<ThemeProvider>(context).themeMode == ThemeMode.dark
-        ? 'DarkTheme'
-        : 'LightTheme';*/
