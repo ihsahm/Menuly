@@ -11,5 +11,5 @@ Use this play store link to install the [android version](https://play.google.co
 This project uses flutter for mobile, firebase for authentication and cloud firestore for storing data. It also utilizes the use of GPS to locate nearby
 restaurants in accordance to the users location.
 
-![alt text](https://github.com/ihsahm/Menuly/blob/master/template.jpg?raw=true)
+![alt text](https://github.com/ihsahm/Menuly/blob/master/tep.png?raw=true)
 
